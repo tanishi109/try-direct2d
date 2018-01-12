@@ -19,3 +19,8 @@
 
 
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください
+#include <d2d1.h>
+#include <d2d1helper.h>
+#include <dwrite.h>
+
+#pragma comment(lib, "d2d1.lib")

@@ -111,6 +111,54 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
+void HelloDirect2D(HWND hWnd)
+{
+    ID2D1Factory* pD2DFactory = NULL;
+    HRESULT hr = D2D1CreateFactory(
+        D2D1_FACTORY_TYPE_SINGLE_THREADED,
+        &pD2DFactory
+    );
+
+    // Obtain the size of the drawing area.
+    RECT rc;
+    GetClientRect(hWnd, &rc);
+
+    // Create a Direct2D render target			
+    ID2D1HwndRenderTarget* pRT = NULL;
+    hr = pD2DFactory->CreateHwndRenderTarget(
+        D2D1::RenderTargetProperties(),
+        D2D1::HwndRenderTargetProperties(
+            hWnd,
+            D2D1::SizeU(
+                rc.right - rc.left,
+                rc.bottom - rc.top)
+        ),
+        &pRT
+    );
+
+    ID2D1SolidColorBrush* pBlackBrush = NULL;
+    if (SUCCEEDED(hr))
+    {
+
+        pRT->CreateSolidColorBrush(
+            D2D1::ColorF(D2D1::ColorF::Black),
+            &pBlackBrush
+        );
+    }
+
+    pRT->BeginDraw();
+
+    pRT->DrawRectangle(
+        D2D1::RectF(
+            rc.left + 100.0f,
+            rc.top + 100.0f,
+            rc.right - 100.0f,
+            rc.bottom - 100.0f),
+        pBlackBrush);
+
+    hr = pRT->EndDraw();
+}
+
 //
 //  関数: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -146,7 +194,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: HDC を使用する描画コードをここに追加してください...
+            // 描画
+            HelloDirect2D(hWnd);
             EndPaint(hWnd, &ps);
         }
         break;
