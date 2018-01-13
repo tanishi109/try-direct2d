@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Scene.h"
+
 class DemoApp
 {
 public:
@@ -42,5 +45,6 @@ private:
     ID2D1HwndRenderTarget* m_pRenderTarget;
     ID2D1SolidColorBrush* m_pLightSlateGrayBrush;
     ID2D1SolidColorBrush* m_pCornflowerBlueBrush;
+    Scene* m_scene;
 };
 

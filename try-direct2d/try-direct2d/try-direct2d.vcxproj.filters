@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ヘッダー ファイル\States">
+      <UniqueIdentifier>{b5dd57f8-8588-4e58-b668-c1ca7ded777f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\States">
+      <UniqueIdentifier>{dc3f5b2e-1601-4a04-9a12-e243673cbe7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -33,6 +39,15 @@
     <ClInclude Include="DemoApp.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="CanvasState.h">
+      <Filter>ヘッダー ファイル\States</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -42,6 +57,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DemoApp.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasState.cpp">
+      <Filter>ソース ファイル\States</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

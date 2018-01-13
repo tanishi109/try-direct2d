@@ -24,5 +24,6 @@
 #include <d2d1helper.h>
 #include <dwrite.h>
 #include <wincodec.h>
+#include <stdio.h>
 
 #pragma comment(lib, "d2d1.lib")

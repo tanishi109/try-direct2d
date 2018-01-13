@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include "DemoApp.h"
 
 template<class Interface>
@@ -33,7 +34,8 @@ m_hwnd(NULL),
 m_pDirect2dFactory(NULL),
 m_pRenderTarget(NULL),
 m_pLightSlateGrayBrush(NULL),
-m_pCornflowerBlueBrush(NULL)
+m_pCornflowerBlueBrush(NULL),
+m_scene(new Scene())
 {
 }
 
@@ -261,6 +263,8 @@ HRESULT DemoApp::OnRender()
 
     if (SUCCEEDED(hr))
     {
+        m_scene->onRender();
+
         m_pRenderTarget->BeginDraw();
 
         m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
