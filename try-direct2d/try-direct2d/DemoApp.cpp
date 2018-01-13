@@ -263,7 +263,7 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             }
 
-            pDemoApp->Update();
+            pDemoApp->UpdateScene();
         }
 
         if (!wasHandled)
@@ -275,7 +275,7 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
     return result;
 }
 
-void DemoApp::Update()
+void DemoApp::UpdateScene()
 {
     m_scene->update();
 }

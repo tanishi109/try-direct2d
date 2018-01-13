@@ -24,7 +24,7 @@ private:
     // Release device-dependent resource.
     void DiscardDeviceResources();
 
-    void Update();
+    void UpdateScene();
 
     // Draw content.
     HRESULT OnRender();
