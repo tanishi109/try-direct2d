@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Scene.h"
+#include "Input.h"
 
 class DemoApp
 {
@@ -22,6 +23,8 @@ private:
 
     // Release device-dependent resource.
     void DiscardDeviceResources();
+
+    void Update();
 
     // Draw content.
     HRESULT OnRender();

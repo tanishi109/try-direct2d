@@ -7,6 +7,6 @@ class CanvasState : public SceneState
 public:
     CanvasState();
     ~CanvasState();
-    virtual void onRender();
+    virtual void update();
 };
 

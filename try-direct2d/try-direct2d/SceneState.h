@@ -7,7 +7,7 @@ class SceneState
 public:
     SceneState();
     ~SceneState();
-    virtual void onRender() {}
+    virtual void update() {}
 
     static CanvasState canvas;
 };

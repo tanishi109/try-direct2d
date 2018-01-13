@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "DemoApp.h"
+#include "Input.h"
 
 template<class Interface>
 inline void SafeRelease(
@@ -243,7 +244,26 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             result = 1;
             wasHandled = true;
             break;
+
+            case WM_LBUTTONDOWN:
+            {
+                Input::m_mouseDownL = true;
             }
+            result = 0;
+            wasHandled = true;
+            break;
+
+            case WM_LBUTTONUP:
+            {
+                Input::m_mouseDownL = false;
+            }
+            result = 0;
+            wasHandled = true;
+            break;
+
+            }
+
+            pDemoApp->Update();
         }
 
         if (!wasHandled)
@@ -255,6 +275,11 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
     return result;
 }
 
+void DemoApp::Update()
+{
+    m_scene->update();
+}
+
 HRESULT DemoApp::OnRender()
 {
     HRESULT hr = S_OK;
@@ -263,8 +288,6 @@ HRESULT DemoApp::OnRender()
 
     if (SUCCEEDED(hr))
     {
-        m_scene->onRender();
-
         m_pRenderTarget->BeginDraw();
 
         m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());

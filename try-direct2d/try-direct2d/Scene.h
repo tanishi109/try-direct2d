@@ -6,7 +6,7 @@ class Scene
 public:
     Scene();
     ~Scene();
-    virtual void onRender();
+    virtual void update();
     SceneState* m_state;
 };
 

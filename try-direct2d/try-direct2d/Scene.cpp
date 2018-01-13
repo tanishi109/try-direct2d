@@ -4,7 +4,6 @@
 #include "SceneState.h"
 #include "CanvasState.h"
 
-
 Scene::Scene()
 {
     m_state = &SceneState::canvas;
@@ -15,7 +14,7 @@ Scene::~Scene()
 {
 }
 
-void Scene::onRender()
+void Scene::update()
 {
-    m_state->onRender();
+    m_state->update();
 };
