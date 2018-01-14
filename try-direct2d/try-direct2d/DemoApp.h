@@ -18,16 +18,10 @@ private:
     // Initialize device-independent resources.
     HRESULT CreateDeviceIndependentResources();
 
-    // Initialize device-dependent resources.
-    HRESULT CreateDeviceResources();
-
     // Release device-dependent resource.
     void DiscardDeviceResources();
 
     void UpdateScene();
-
-    // Draw content.
-    HRESULT OnRender();
 
     // Resize the render target.
     void OnResize(
@@ -43,11 +37,6 @@ private:
         LPARAM lParam
     );
 
-    HWND m_hwnd;
-    ID2D1Factory* m_pDirect2dFactory;
-    ID2D1HwndRenderTarget* m_pRenderTarget;
-    ID2D1SolidColorBrush* m_pLightSlateGrayBrush;
-    ID2D1SolidColorBrush* m_pCornflowerBlueBrush;
     Scene* m_scene;
 };
 

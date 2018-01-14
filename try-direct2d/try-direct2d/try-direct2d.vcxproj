@@ -141,6 +141,7 @@
     <ClInclude Include="CanvasState.h" />
     <ClInclude Include="DemoApp.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Render.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneState.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="CanvasState.cpp" />
     <ClCompile Include="DemoApp.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Render.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneState.cpp" />
     <ClCompile Include="stdafx.cpp">
