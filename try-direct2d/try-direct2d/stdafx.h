@@ -26,5 +26,6 @@
 #include <dwrite.h>
 #include <wincodec.h>
 #include <stdio.h>
+#include <cmath>
 
 #pragma comment(lib, "d2d1.lib")

@@ -12,6 +12,8 @@ public:
     static const int HEIGHT = 10;
     static const int SIZE = 32;
     Terrain* m_tiles[WIDTH][HEIGHT];
+
+    void setWallFromMousePos(int mouseX, int mouseY);
 private:
     Terrain m_floorTerrain;
     Terrain m_wallTerrain;

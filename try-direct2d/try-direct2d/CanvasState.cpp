@@ -32,7 +32,8 @@ void CanvasState::update()
                 static_cast<float>(x * m_world->SIZE),
                 static_cast<float>(y * m_world->SIZE),
                 static_cast<float>(m_world->SIZE),
-                static_cast<float>(m_world->SIZE)
+                static_cast<float>(m_world->SIZE),
+                tile->m_type
             );
         }
     }
@@ -40,8 +41,9 @@ void CanvasState::update()
     bool isClick = Input::GetMouseDownL();
 
     if (isClick) {
-        int x = Input::GetMousePosX();
-        int y = Input::GetMousePosY();
+        const int mouseX = Input::GetMousePosX();
+        const int mouseY = Input::GetMousePosY();
+        m_world->setWallFromMousePos(mouseX, mouseY);
         //char buf[256];
         //sprintf_s(buf, "pos = %d, %d\n", x, y);
         //OutputDebugStringA(buf);

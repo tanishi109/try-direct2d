@@ -37,7 +37,7 @@ void Render::Clear()
     m_renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 }
 
-void Render::DrawRect(float x, float y, float w, float h)
+void Render::DrawRect(float x, float y, float w, float h, int color)
 {
     D2D1_RECT_F rect = D2D1::RectF(
         x,
@@ -46,7 +46,8 @@ void Render::DrawRect(float x, float y, float w, float h)
         y + h
     );
 
-    m_renderTarget->FillRectangle(&rect, m_brush);
+    ID2D1SolidColorBrush* brush = color == 0 ? m_brush_white : m_brush;
+    m_renderTarget->FillRectangle(&rect, brush);
 }
 
 HRESULT Render::CreateDeviceResources()
