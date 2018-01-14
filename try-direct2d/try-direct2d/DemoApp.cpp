@@ -196,6 +196,34 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             wasHandled = true;
             break;
 
+            // 以下は追加したメッセージハンドラ
+            // FIXME: result, wasHandled が正しく決められてる? 何に使ってる?
+
+            case WM_KEYDOWN:
+            {
+                Input::m_keyDown = wParam;
+            }
+            result = 0;
+            wasHandled = true;
+            break;
+
+            case WM_KEYUP:
+            {
+                Input::m_keyDown = NULL;
+            }
+            result = 0;
+            wasHandled = true;
+            break;
+
+            case WM_MOUSEMOVE:
+            {
+                Input::m_mousePos[0] = GET_X_LPARAM(lParam);
+                Input::m_mousePos[1] = GET_Y_LPARAM(lParam);
+            }
+            result = 0;
+            wasHandled = true;
+            break;
+
             case WM_LBUTTONDOWN:
             {
                 Input::m_mouseDownL = true;

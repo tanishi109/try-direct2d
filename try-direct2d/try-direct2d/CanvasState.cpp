@@ -38,9 +38,16 @@ void CanvasState::update()
         }
     }
 
-    bool isClick = Input::GetMouseDownL();
 
-    if (isClick) {
+    bool isMouseDown = Input::GetMouseDownL();
+    bool isGrabKeyDowned = Input::GetKey(VK_SPACE);
+
+    if (isGrabKeyDowned && isMouseDown) {
+        OutputDebugString(_T("ƒXƒNƒ[ƒ‹‚Ìˆ—‚ð‘‚­\n"));
+        return;
+    }
+
+    if (isMouseDown) {
         const int mouseX = Input::GetMousePosX();
         const int mouseY = Input::GetMousePosY();
         m_world->setWallFromMousePos(mouseX, mouseY);

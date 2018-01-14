@@ -3,6 +3,7 @@
 
 bool Input::m_mouseDownL = false;
 int Input::m_mousePos[2] = {0, 0};
+int Input::m_keyDown = NULL;
 
 Input::Input()
 {
@@ -26,4 +27,9 @@ int Input::GetMousePosX()
 int Input::GetMousePosY()
 {
     return m_mousePos[1];
+}
+
+bool Input::GetKey(int keyCode)
+{
+    return m_keyDown == keyCode;
 }
