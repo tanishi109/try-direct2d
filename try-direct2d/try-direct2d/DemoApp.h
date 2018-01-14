@@ -21,6 +21,7 @@ private:
     // Release device-dependent resource.
     void DiscardDeviceResources();
 
+    void EnterScene();
     void UpdateScene();
 
     // Resize the render target.

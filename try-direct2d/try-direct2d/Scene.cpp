@@ -14,6 +14,11 @@ Scene::~Scene()
 {
 }
 
+void Scene::enter()
+{
+    m_state->enter();
+};
+
 void Scene::update()
 {
     m_state->update();

@@ -181,6 +181,7 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             case WM_PAINT:
             {
+                pDemoApp->EnterScene();
                 ValidateRect(hwnd, NULL);
             }
             result = 0;
@@ -225,9 +226,17 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
     return result;
 }
 
+void DemoApp::EnterScene()
+{
+    m_scene->enter();
+}
+
 void DemoApp::UpdateScene()
 {
+    // FIXME: ‚Å‚©‚¢Begin~EndDraw‚ÅˆÍ‚ñ‚Å‚é‚Ì‚¢‚¢‚Ì‚©‚È?
+    Render::Begin();
     m_scene->update();
+    Render::End();
 }
 
 void DemoApp::OnResize(UINT width, UINT height)
