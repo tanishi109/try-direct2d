@@ -36,4 +36,14 @@ void CanvasState::update()
             );
         }
     }
+
+    bool isClick = Input::GetMouseDownL();
+
+    if (isClick) {
+        int x = Input::GetMousePosX();
+        int y = Input::GetMousePosY();
+        //char buf[256];
+        //sprintf_s(buf, "pos = %d, %d\n", x, y);
+        //OutputDebugStringA(buf);
+    }
 }

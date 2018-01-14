@@ -199,6 +199,8 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             case WM_LBUTTONDOWN:
             {
                 Input::m_mouseDownL = true;
+                Input::m_mousePos[0] = GET_X_LPARAM(lParam);
+                Input::m_mousePos[1] = GET_Y_LPARAM(lParam);
             }
             result = 0;
             wasHandled = true;
