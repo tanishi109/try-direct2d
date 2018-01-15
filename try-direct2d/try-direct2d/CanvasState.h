@@ -11,8 +11,8 @@ public:
     virtual void enter();
     virtual void update();
     static World* m_world;
-    static int m_screenPos[2];
 private:
+    static int m_screenPos[2];
     HCURSOR m_grabCursor;
     HCURSOR m_defaultCursor;
 };

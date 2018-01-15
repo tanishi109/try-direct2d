@@ -37,7 +37,7 @@ void Render::Clear()
     m_renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 }
 
-void Render::DrawRect(float x, float y, float w, float h, int color)
+void Render::DrawRect(int x, int y, int w, int h, int color)
 {
     D2D1_RECT_F rect = D2D1::RectF(
         x,

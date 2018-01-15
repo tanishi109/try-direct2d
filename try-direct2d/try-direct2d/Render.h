@@ -9,7 +9,7 @@ public:
     static void Begin();
     static void End();
     static void Clear();
-    static void DrawRect(float x, float y, float w, float h, int color);
+    static void DrawRect(int x, int y, int w, int h, int color);
 //private:
     static HRESULT CreateDeviceResources();
 

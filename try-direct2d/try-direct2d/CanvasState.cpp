@@ -23,19 +23,19 @@ void CanvasState::enter()
 void CanvasState::update()
 {
     Render::Clear();
+
+    int size = m_world->SIZE;
+    int offsetX = m_screenPos[0];
+    int offsetY = m_screenPos[1];
     for (int x = 0; x < m_world->WIDTH; x++) {
         for (int y = 0; y < m_world->HEIGHT; y++) {
+        
             Terrain* tile = m_world->m_tiles[x][y];
-
-            //char buf[256];
-            //sprintf_s(buf, "Tile type = %d\n", tile->m_type);
-            //OutputDebugStringA(buf);
-
             Render::DrawRect(
-                static_cast<float>(x * m_world->SIZE),
-                static_cast<float>(y * m_world->SIZE),
-                static_cast<float>(m_world->SIZE),
-                static_cast<float>(m_world->SIZE),
+                offsetX + x * size,
+                offsetY + y * size,
+                size,
+                size,
                 tile->m_type
             );
         }
@@ -54,9 +54,8 @@ void CanvasState::update()
     if (isGrabKeyDowned && isMouseDown) {
         int deltaX = Input::GetMouseDeltaX();
         int deltaY = Input::GetMouseDeltaY();
-        char buf[256];
-        sprintf_s(buf, "delta = %d, %d\n", deltaX, deltaY);
-        OutputDebugStringA(buf);
+        m_screenPos[0] += deltaX;
+        m_screenPos[1] += deltaY;
         return;
     }
 

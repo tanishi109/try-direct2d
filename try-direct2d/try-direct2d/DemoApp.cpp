@@ -222,8 +222,8 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
                 // ·•ª‚ğŒvZ‚µ‚ÄmouseDelta‚É‚Á‚Ä‚¨‚­
                 if (Input::m_prevMousePos[0] != NULL && Input::m_prevMousePos[1] != NULL) {
-                    Input::m_mouseDelta[0] = Input::m_prevMousePos[0] - mouseX;
-                    Input::m_mouseDelta[1] = Input::m_prevMousePos[1] - mouseY;
+                    Input::m_mouseDelta[0] = mouseX - Input::m_prevMousePos[0];
+                    Input::m_mouseDelta[1] = mouseY - Input::m_prevMousePos[1];
                 }
                 Input::m_prevMousePos[0] = mouseX;
                 Input::m_prevMousePos[1] = mouseY;
