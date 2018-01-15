@@ -5,7 +5,9 @@
 
 World* CanvasState::m_world = new World();
 
-CanvasState::CanvasState()
+CanvasState::CanvasState() :
+m_grabCursor(LoadCursor(NULL, IDC_SIZEALL)),
+m_defaultCursor(LoadCursor(NULL, IDC_ARROW))
 {
 }
 
@@ -41,6 +43,12 @@ void CanvasState::update()
 
     bool isMouseDown = Input::GetMouseDownL();
     bool isGrabKeyDowned = Input::GetKey(VK_SPACE);
+
+    if (isGrabKeyDowned) {
+        SetCursor(m_grabCursor);
+    } else {
+        SetCursor(m_defaultCursor);
+    }
 
     if (isGrabKeyDowned && isMouseDown) {
         OutputDebugString(_T("ƒXƒNƒ[ƒ‹‚Ìˆ—‚ğ‘‚­\n"));
