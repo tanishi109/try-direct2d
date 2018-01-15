@@ -232,6 +232,9 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
                 Input::m_mousePos[0] = mouseX;
                 Input::m_mousePos[1] = mouseY;
             }
+            // mouseMoveイベントハンドラ
+            pDemoApp->m_scene->onMouseMove();
+
             result = 0;
             wasHandled = true;
             break;

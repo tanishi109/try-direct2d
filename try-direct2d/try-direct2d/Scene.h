@@ -8,6 +8,7 @@ public:
     ~Scene();
     virtual void enter();
     virtual void update();
+    virtual void onMouseMove();
     SceneState* m_state;
 };
 

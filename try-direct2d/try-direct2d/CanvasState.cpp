@@ -36,7 +36,8 @@ void CanvasState::update()
                 offsetY + y * size,
                 size,
                 size,
-                tile->m_type
+                //tile->m_type
+                1 // debug
             );
         }
     }
@@ -51,17 +52,23 @@ void CanvasState::update()
         SetCursor(m_defaultCursor);
     }
 
+    if (isMouseDown) {
+        const int mouseX = Input::GetMousePosX();
+        const int mouseY = Input::GetMousePosY();
+        m_world->setWallFromMousePos(mouseX, mouseY);
+    }
+}
+
+void CanvasState::onMouseMove()
+{
+    bool isMouseDown = Input::GetMouseDownL();
+    bool isGrabKeyDowned = Input::GetKey(VK_SPACE);
+
     if (isGrabKeyDowned && isMouseDown) {
         int deltaX = Input::GetMouseDeltaX();
         int deltaY = Input::GetMouseDeltaY();
         m_screenPos[0] += deltaX;
         m_screenPos[1] += deltaY;
         return;
-    }
-
-    if (isMouseDown) {
-        const int mouseX = Input::GetMousePosX();
-        const int mouseY = Input::GetMousePosY();
-        m_world->setWallFromMousePos(mouseX, mouseY);
     }
 }

@@ -10,6 +10,7 @@ public:
     ~CanvasState();
     virtual void enter();
     virtual void update();
+    virtual void onMouseMove();
     static World* m_world;
 private:
     static int m_screenPos[2];

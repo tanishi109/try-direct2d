@@ -9,6 +9,7 @@ public:
     ~SceneState();
     virtual void enter() {}
     virtual void update() {}
+    virtual void onMouseMove() {}
 
     static CanvasState canvas;
 };

@@ -23,3 +23,8 @@ void Scene::update()
 {
     m_state->update();
 };
+
+void Scene::onMouseMove()
+{
+    m_state->onMouseMove();
+};
