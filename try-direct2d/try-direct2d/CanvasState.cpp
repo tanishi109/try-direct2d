@@ -4,6 +4,7 @@
 #include "Render.h"
 
 World* CanvasState::m_world = new World();
+int CanvasState::m_screenPos[2] = {0, 0};
 
 CanvasState::CanvasState() :
 m_grabCursor(LoadCursor(NULL, IDC_SIZEALL)),
@@ -51,7 +52,11 @@ void CanvasState::update()
     }
 
     if (isGrabKeyDowned && isMouseDown) {
-        OutputDebugString(_T("ƒXƒNƒ[ƒ‹‚Ìˆ—‚ð‘‚­\n"));
+        int deltaX = Input::GetMouseDeltaX();
+        int deltaY = Input::GetMouseDeltaY();
+        char buf[256];
+        sprintf_s(buf, "delta = %d, %d\n", deltaX, deltaY);
+        OutputDebugStringA(buf);
         return;
     }
 
@@ -59,8 +64,5 @@ void CanvasState::update()
         const int mouseX = Input::GetMousePosX();
         const int mouseY = Input::GetMousePosY();
         m_world->setWallFromMousePos(mouseX, mouseY);
-        //char buf[256];
-        //sprintf_s(buf, "pos = %d, %d\n", x, y);
-        //OutputDebugStringA(buf);
     }
 }

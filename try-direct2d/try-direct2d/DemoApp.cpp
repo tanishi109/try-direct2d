@@ -217,8 +217,20 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             case WM_MOUSEMOVE:
             {
-                Input::m_mousePos[0] = GET_X_LPARAM(lParam);
-                Input::m_mousePos[1] = GET_Y_LPARAM(lParam);
+                const int mouseX = GET_X_LPARAM(lParam);
+                const int mouseY = GET_Y_LPARAM(lParam);
+
+                // ç∑ï™ÇåvéZÇµÇƒmouseDeltaÇ…éùÇ¡ÇƒÇ®Ç≠
+                if (Input::m_prevMousePos[0] != NULL && Input::m_prevMousePos[1] != NULL) {
+                    Input::m_mouseDelta[0] = Input::m_prevMousePos[0] - mouseX;
+                    Input::m_mouseDelta[1] = Input::m_prevMousePos[1] - mouseY;
+                }
+                Input::m_prevMousePos[0] = mouseX;
+                Input::m_prevMousePos[1] = mouseY;
+
+                // ç¿ïWÇï€ë∂
+                Input::m_mousePos[0] = mouseX;
+                Input::m_mousePos[1] = mouseY;
             }
             result = 0;
             wasHandled = true;
@@ -227,8 +239,6 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             case WM_LBUTTONDOWN:
             {
                 Input::m_mouseDownL = true;
-                Input::m_mousePos[0] = GET_X_LPARAM(lParam);
-                Input::m_mousePos[1] = GET_Y_LPARAM(lParam);
             }
             result = 0;
             wasHandled = true;
