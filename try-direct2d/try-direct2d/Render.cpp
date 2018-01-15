@@ -90,3 +90,13 @@ HRESULT Render::CreateDeviceResources()
 
     return hr;
 }
+
+HRESULT Render::CreateDeviceIndependentResources()
+{
+    HRESULT hr = S_OK;
+
+    // Create a Direct2D factory.
+    hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &Render::m_direct2dFactory);
+
+    return hr;
+}

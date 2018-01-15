@@ -61,7 +61,7 @@ HRESULT DemoApp::Initialize()
 
     // Initialize device-indpendent resources, such
     // as the Direct2D factory.
-    hr = CreateDeviceIndependentResources();
+    hr = Render::CreateDeviceIndependentResources();
 
     if (SUCCEEDED(hr))
     {
@@ -110,16 +110,6 @@ HRESULT DemoApp::Initialize()
             UpdateWindow(Render::m_hwnd);
         }
     }
-
-    return hr;
-}
-
-HRESULT DemoApp::CreateDeviceIndependentResources()
-{
-    HRESULT hr = S_OK;
-
-    // Create a Direct2D factory.
-    hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &Render::m_direct2dFactory);
 
     return hr;
 }

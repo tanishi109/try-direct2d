@@ -12,6 +12,7 @@ public:
     static void DrawRect(int x, int y, int w, int h, int color);
 //private:
     static HRESULT CreateDeviceResources();
+    static HRESULT CreateDeviceIndependentResources();
 
     static HWND m_hwnd;
     static ID2D1Factory* m_direct2dFactory;
