@@ -8,8 +8,8 @@ public:
     World();
     ~World();
 
-    static const int WIDTH = 10;
-    static const int HEIGHT = 10;
+    static const int WIDTH = 20;
+    static const int HEIGHT = 20;
     static const int SIZE = 32;
     Terrain* m_tiles[WIDTH][HEIGHT];
 

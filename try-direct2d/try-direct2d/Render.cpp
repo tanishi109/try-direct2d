@@ -47,7 +47,7 @@ void Render::DrawRect(int x, int y, int w, int h, int color)
     );
 
     ID2D1SolidColorBrush* brush = color == 0 ? m_brush_white : m_brush;
-    m_renderTarget->FillRectangle(&rect, brush);
+    m_renderTarget->DrawRectangle(&rect, brush);
 }
 
 HRESULT Render::CreateDeviceResources()
