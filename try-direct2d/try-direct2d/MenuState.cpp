@@ -8,7 +8,7 @@
 
 MenuState::MenuState() :
 m_textPosList{{0, 0}, {30, 100}, {30, 200}},
-m_textList{L"Menu", L"Canvas Mode", L"Game Mode"}
+m_textList{L"Menu", L"push 1. Canvas Mode", L"push 2. Game Mode"}
 {
 }
 
@@ -35,10 +35,15 @@ SceneState* MenuState::update()
         Render::DrawText(x, y, width, 40, text);
     }
 
-    bool isMouseDown = Input::GetMouseDownL();
+    bool is1KeyDowned = Input::GetKey(0x31);
+    bool is2KeyDowned = Input::GetKey(0x32);
 
-    if (isMouseDown) {
+    if (is1KeyDowned) {
         return new CanvasState();
+    }
+    if (is2KeyDowned) {
+        OutputDebugString(_T("*** start gameMode\n"));
+        //return new CanvasState();
     }
 
     return NULL;
