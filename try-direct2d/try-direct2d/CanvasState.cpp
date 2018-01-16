@@ -24,8 +24,13 @@ void CanvasState::update()
 {
     Render::Clear();
 
-    std::wstring text = L"(0, 0)";
-    Render::DrawText(0, 0, 100, 40, text);
+    // FIXME: ‚±‚±‚à‚Á‚Æ‚¢‚¢•û–@‚È‚¢‚Ì? ${}‚Ý‚½‚¢‚È
+    std::wstring screenX = std::to_wstring(m_screenPos[0]);
+    std::wstring screenY = std::to_wstring(m_screenPos[1]);
+    std::wstring textLight = L"(";
+    std::wstring textMiddle = L", ";
+    std::wstring textRight = L")";
+    Render::DrawText(0, 0, 100, 40, textLight + screenX + textMiddle + screenY + textRight);
 
     int size = m_world->SIZE;
     int offsetX = m_screenPos[0];

@@ -53,7 +53,7 @@ void Render::DrawRect(int x, int y, int w, int h, int color)
     m_renderTarget->DrawRectangle(&rect, brush);
 }
 
-// FIXME: •¶Žš—ñ‚Ü‚í‚è‚¢‚ë‚ñ‚ÈŒ^‚ª‚ ‚è‚»‚¤‚È‚Ì‚Å‚±‚ê‚ª“K“–‚©•ª‚©‚ç‚È‚¢...
+// FIXME: •¶Žš—ñ‚Ü‚í‚è‚¢‚ë‚ñ‚ÈŒ^‚ª‚ ‚è‚»‚¤‚È‚Ì‚Å‚±‚ê‚ª“K“–‚©’²‚×‚Ä
 void Render::DrawText(int x, int y, int w, int h, std::wstring text)
 {
     // Retrieve the size of the render target.
