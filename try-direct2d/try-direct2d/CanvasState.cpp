@@ -40,8 +40,8 @@ void CanvasState::update()
         
             Terrain* tile = m_world->m_tiles[x][y];
             Render::DrawRect(
-                offsetX + x * size,
-                offsetY + y * size,
+                x * size - offsetX,
+                y * size - offsetY,
                 size,
                 size,
                 //tile->m_type
@@ -75,7 +75,11 @@ void CanvasState::onMouseMove()
     if (isGrabKeyDowned && isMouseDown) {
         int deltaX = Input::GetMouseDeltaX();
         int deltaY = Input::GetMouseDeltaY();
-        m_screenPos[0] += deltaX;
-        m_screenPos[1] += deltaY;
+        m_screenPos[0] -= deltaX;
+        m_screenPos[1] -= deltaY;
+
+        //char buf[256];
+        //sprintf_s(buf, "delta = %d, %d\n", deltaX, deltaY);
+        //OutputDebugStringA(buf);
     }
 }
