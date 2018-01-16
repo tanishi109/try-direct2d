@@ -3,10 +3,12 @@
 #include "SceneState.h"
 #include "MenuState.h"
 #include "CanvasState.h"
-#include "Render.h";
-#include "Input.h";
+#include "Render.h"
+#include "Input.h"
 
-MenuState::MenuState()
+MenuState::MenuState() :
+m_textPosList{{0, 0}, {30, 100}, {30, 200}},
+m_textList{L"Menu", L"Canvas Mode", L"Game Mode"}
 {
 }
 
@@ -23,14 +25,25 @@ SceneState* MenuState::update()
 {
     Render::Clear();
 
-    std::wstring text = L"This is Menu state!";
-    Render::DrawText(0, 0, 100, 40, text);
+    static const int width = 400;
+    for (auto &pos : m_textPosList) {
+        int index = &pos - &m_textPosList[0];
+        int x = pos[0];
+        int y = pos[1];
+        std::wstring text = m_textList[index];
 
-    bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
-    if (isMenuKeyDowned) {
+        Render::DrawText(x, y, width, 40, text);
+    }
+
+    bool isMouseDown = Input::GetMouseDownL();
+
+    if (isMouseDown) {
         return new CanvasState();
     }
 
     return NULL;
 }
 
+void MenuState::onMouseMove()
+{
+}
