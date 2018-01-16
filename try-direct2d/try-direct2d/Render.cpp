@@ -8,6 +8,7 @@ IDWriteFactory* Render::m_dWriteFactory = NULL;
 IDWriteTextFormat* Render::m_textFormat = NULL;
 ID2D1SolidColorBrush* Render::m_brush = NULL;
 ID2D1SolidColorBrush* Render::m_brush_white = NULL;
+ID2D1SolidColorBrush* Render::m_brush_black = NULL;
 
 Render::Render()
 {
@@ -64,7 +65,7 @@ void Render::DrawText(int x, int y, int w, int h, std::wstring text)
         text.size(),
         m_textFormat,
         D2D1::RectF(x, y, w, h), // FIXME: ‚±‚±‚àfloat‚Écast
-        m_brush
+        m_brush_black
     );
 }
 
@@ -102,6 +103,13 @@ HRESULT Render::CreateDeviceResources()
             hr = m_renderTarget->CreateSolidColorBrush(
                 D2D1::ColorF(D2D1::ColorF::White),
                 &m_brush_white
+            );
+        }
+        if (SUCCEEDED(hr))
+        {
+            hr = m_renderTarget->CreateSolidColorBrush(
+                D2D1::ColorF(D2D1::ColorF::Black),
+                &m_brush_black
             );
         }
     }

@@ -24,14 +24,7 @@ void CanvasState::update()
 {
     Render::Clear();
 
-    // FIXME: ‚±‚±‚à‚Á‚Æ‚¢‚¢•û–@‚È‚¢‚Ì? ${}‚Ý‚½‚¢‚È
-    std::wstring screenX = std::to_wstring(m_screenPos[0]);
-    std::wstring screenY = std::to_wstring(m_screenPos[1]);
-    std::wstring textLight = L"(";
-    std::wstring textMiddle = L", ";
-    std::wstring textRight = L")";
-    Render::DrawText(0, 0, 100, 40, textLight + screenX + textMiddle + screenY + textRight);
-
+    // ƒ}ƒX‚Ì•`‰æ
     int size = m_world->SIZE;
     int offsetX = m_screenPos[0];
     int offsetY = m_screenPos[1];
@@ -50,6 +43,15 @@ void CanvasState::update()
         }
     }
 
+
+    // •¶Žš‚Ì•`‰æ
+    // FIXME: ‚±‚±‚à‚Á‚Æ‚¢‚¢•û–@‚È‚¢‚Ì? ${}‚Ý‚½‚¢‚È
+    std::wstring screenX = std::to_wstring(m_screenPos[0]);
+    std::wstring screenY = std::to_wstring(m_screenPos[1]);
+    std::wstring textLight = L"(";
+    std::wstring textMiddle = L", ";
+    std::wstring textRight = L")";
+    Render::DrawText(0, 0, 100, 40, textLight + screenX + textMiddle + screenY + textRight);
 
     bool isMouseDown = Input::GetMouseDownL();
     bool isGrabKeyDowned = Input::GetKey(VK_SPACE);
