@@ -24,6 +24,9 @@ void CanvasState::update()
 {
     Render::Clear();
 
+    std::wstring text = L"(0, 0)";
+    Render::DrawText(0, 0, 100, 40, text);
+
     int size = m_world->SIZE;
     int offsetX = m_screenPos[0];
     int offsetY = m_screenPos[1];

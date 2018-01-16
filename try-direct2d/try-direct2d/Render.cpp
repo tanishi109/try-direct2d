@@ -4,6 +4,8 @@
 ID2D1HwndRenderTarget* Render::m_renderTarget = NULL;
 HWND Render::m_hwnd = NULL;
 ID2D1Factory* Render::m_direct2dFactory = NULL;
+IDWriteFactory* Render::m_dWriteFactory = NULL;
+IDWriteTextFormat* Render::m_textFormat = NULL;
 ID2D1SolidColorBrush* Render::m_brush = NULL;
 ID2D1SolidColorBrush* Render::m_brush_white = NULL;
 
@@ -39,6 +41,7 @@ void Render::Clear()
 
 void Render::DrawRect(int x, int y, int w, int h, int color)
 {
+    // FIXME: float‚Écast‚µ‚½‚¢,ˆø”‚àfloat‚É‚µ‚½‚¢
     D2D1_RECT_F rect = D2D1::RectF(
         x,
         y,
@@ -48,6 +51,21 @@ void Render::DrawRect(int x, int y, int w, int h, int color)
 
     ID2D1SolidColorBrush* brush = color == 0 ? m_brush_white : m_brush;
     m_renderTarget->DrawRectangle(&rect, brush);
+}
+
+// FIXME: •¶Žš—ñ‚Ü‚í‚è‚¢‚ë‚ñ‚ÈŒ^‚ª‚ ‚è‚»‚¤‚È‚Ì‚Å‚±‚ê‚ª“K“–‚©•ª‚©‚ç‚È‚¢...
+void Render::DrawText(int x, int y, int w, int h, std::wstring text)
+{
+    // Retrieve the size of the render target.
+    D2D1_SIZE_F renderTargetSize = m_renderTarget->GetSize();
+
+    m_renderTarget->DrawText(
+        text.c_str(),
+        text.size(),
+        m_textFormat,
+        D2D1::RectF(x, y, w, h), // FIXME: ‚±‚±‚àfloat‚Écast
+        m_brush
+    );
 }
 
 HRESULT Render::CreateDeviceResources()
@@ -96,7 +114,42 @@ HRESULT Render::CreateDeviceIndependentResources()
     HRESULT hr = S_OK;
 
     // Create a Direct2D factory.
-    hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &Render::m_direct2dFactory);
+    hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_direct2dFactory);
+
+    // •¶Žš•`‰æ‚Ì‚½‚ß
+    static const WCHAR msc_fontName[] = L"Verdana";
+    static const FLOAT msc_fontSize = 16;
+
+    if (SUCCEEDED(hr))
+    {
+        // Create a DirectWrite factory.
+        hr = DWriteCreateFactory(
+            DWRITE_FACTORY_TYPE_SHARED,
+            __uuidof(m_dWriteFactory),
+            reinterpret_cast<IUnknown **>(&m_dWriteFactory)
+        );
+    }
+    if (SUCCEEDED(hr))
+    {
+        // Create a DirectWrite text format object.
+        hr = m_dWriteFactory->CreateTextFormat(
+            msc_fontName,
+            NULL,
+            DWRITE_FONT_WEIGHT_NORMAL,
+            DWRITE_FONT_STYLE_NORMAL,
+            DWRITE_FONT_STRETCH_NORMAL,
+            msc_fontSize,
+            L"", //locale
+            &m_textFormat
+        );
+    }
+    if (SUCCEEDED(hr))
+    {
+        // Center the text horizontally and vertically.
+        m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+
+        m_textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+    }
 
     return hr;
 }

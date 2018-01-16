@@ -27,5 +27,7 @@
 #include <wincodec.h>
 #include <stdio.h>
 #include <cmath>
+#include <string>
 
 #pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dwrite.lib")
