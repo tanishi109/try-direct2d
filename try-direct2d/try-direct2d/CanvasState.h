@@ -9,7 +9,7 @@ public:
     CanvasState();
     ~CanvasState();
     virtual void enter();
-    virtual void update();
+    virtual SceneState* update();
     virtual void onMouseMove();
     static World* m_world;
 private:

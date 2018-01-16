@@ -1,16 +1,12 @@
 #pragma once
 
-class CanvasState;
-
 class SceneState
 {
 public:
     SceneState();
     ~SceneState();
     virtual void enter() {}
-    virtual void update() {}
+    virtual SceneState* update() {return NULL;}
     virtual void onMouseMove() {}
-
-    static CanvasState canvas;
 };
 

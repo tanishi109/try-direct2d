@@ -6,7 +6,7 @@
 
 Scene::Scene()
 {
-    m_state = &SceneState::canvas;
+    m_state = new CanvasState();
 }
 
 
@@ -21,7 +21,13 @@ void Scene::enter()
 
 void Scene::update()
 {
-    m_state->update();
+    SceneState* new_scene = m_state->update();
+
+    if (new_scene != NULL) {
+        delete m_state;
+        m_state = new_scene;
+        m_state->enter();
+    }
 };
 
 void Scene::onMouseMove()

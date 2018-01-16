@@ -2,8 +2,7 @@
 #include "SceneState.h"
 
 #include "CanvasState.h"
-
-CanvasState SceneState::canvas = *new CanvasState();
+#include "MenuState.h"
 
 SceneState::SceneState()
 {

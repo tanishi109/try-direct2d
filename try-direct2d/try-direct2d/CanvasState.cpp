@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CanvasState.h"
+#include "MenuState.h"
 #include "Input.h"
 #include "Render.h"
 
@@ -20,7 +21,7 @@ void CanvasState::enter()
 {
 }
 
-void CanvasState::update()
+SceneState* CanvasState::update()
 {
     Render::Clear();
 
@@ -42,7 +43,6 @@ void CanvasState::update()
             );
         }
     }
-
 
     // •¶Žš‚Ì•`‰æ
     // FIXME: ‚±‚±‚à‚Á‚Æ‚¢‚¢•û–@‚È‚¢‚Ì? ${}‚Ý‚½‚¢‚È
@@ -67,6 +67,14 @@ void CanvasState::update()
         const int mouseY = Input::GetMousePosY();
         m_world->setWallFromMousePos(mouseX, mouseY);
     }
+
+
+    bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
+    if (isMenuKeyDowned) {
+        return new MenuState();
+    }
+
+    return NULL;
 }
 
 void CanvasState::onMouseMove()
