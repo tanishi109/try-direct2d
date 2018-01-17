@@ -13,5 +13,6 @@ public:
     virtual void onMouseMove();
 private:
     Player* m_player;
+    bool m_isFocus;
 };
 
