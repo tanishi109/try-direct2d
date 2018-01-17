@@ -20,15 +20,18 @@
 
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください
 #include <wchar.h>
-#include <math.h>
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <dwrite.h>
 #include <wincodec.h>
 #include <stdio.h>
-#include <cmath>
 #include <string>
-// #include <tuple> // Player.h
+// FIXME: M_PIが定義されていないエラーが出るのでstdafx.cppの"#include stdafx.h"より前に移動した
+// #define _USE_MATH_DEFINES
+// #include <cmath>  
+
+// Player.hで使用してる
+// #include <tuple> 
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
