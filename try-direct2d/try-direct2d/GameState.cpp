@@ -3,6 +3,7 @@
 #include "MenuState.h"
 #include "Input.h"
 #include "Render.h"
+#include "Mathtool.h"
 
 GameState::GameState()
 {
@@ -35,7 +36,7 @@ SceneState* GameState::update()
     int dx = mouseX - mainPinX;
     int dy = mouseY - mainPinY;
     double radian = std::atan2(dy, dx);
-    m_player->m_degree = radian * 180 / M_PI;
+    m_player->m_degree = Mathtool::radToDeg(radian);
 
     // Menu
     Render::DrawText(0, 0, 400, 40, L"Click to start game");
