@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneState.h"
+#include "Player.h";
 
 class GameState : public SceneState
 {
@@ -11,5 +12,6 @@ public:
     virtual SceneState* update();
     virtual void onMouseMove();
 private:
+    Player* m_player;
 };
 

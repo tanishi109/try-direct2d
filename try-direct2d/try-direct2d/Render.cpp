@@ -51,6 +51,13 @@ void Render::DrawRect(int x, int y, int w, int h, int color)
     );
 
     ID2D1SolidColorBrush* brush = color == 0 ? m_brush_white : m_brush;
+    if (color == 0) {
+        brush = m_brush_white;
+    } else if (color == 1) {
+        brush = m_brush;
+    } else {
+        brush = m_brush_black;
+    }
     m_renderTarget->DrawRectangle(&rect, brush);
 }
 
