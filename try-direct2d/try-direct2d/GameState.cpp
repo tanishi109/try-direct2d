@@ -6,7 +6,7 @@
 #include "Mathtool.h"
 
 GameState::GameState() :
-m_player(new Player(0, 0, 50, 20)),
+m_player(new Player(40, 60, 50, 20)),
 m_isFocus(false)
 {
 }
@@ -28,6 +28,45 @@ SceneState* GameState::update()
     // Player
     m_player->render();
 
+    // Menu
+    if (!m_isFocus) {
+        Render::DrawText(0, 0, 400, 40, L"Click to start game");
+    } else {
+        Render::DrawText(0, 0, 400, 40, L"Push escape to stop game");
+    }
+
+    bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
+
+    if (isMenuKeyDowned) {
+        ClipCursor(NULL);
+        ShowCursor(true);
+        m_isFocus = false;
+
+        return new MenuState();
+    }
+
+    // FIXME: m_isFocusもチェックしないと何度もShowCursor(false)が呼ばれて、一度のShowCursor(true)の呼び出しだけでは可視化できなくなる
+    if (Input::GetMouseDownL() && m_isFocus != true) {
+        // カーソルの可動範囲を固定
+        RECT rc;
+        GetWindowRect(Render::m_hwnd, &rc);
+        ClipCursor(&rc);
+        // カーソルを不可視に
+        ShowCursor(false);
+        // カーソルをプレイヤーの座標に移動
+        float subPinX;
+        float subPinY;
+        std::tie(subPinX, subPinY) = m_player->getSubPinPosRotated();
+        POINT pt = {subPinX, subPinY};
+        ClientToScreen(Render::m_hwnd, &pt);
+        SetCursorPos(pt.x, pt.y);
+        m_isFocus = true;
+    }
+    return NULL;
+}
+
+void GameState::onMouseMove()
+{
     if (m_isFocus) {
 
         // set player rotation
@@ -51,35 +90,4 @@ SceneState* GameState::update()
         m_player->m_y = mouseY - h;
 
     }
-
-    // Menu
-    if (!m_isFocus) {
-        Render::DrawText(0, 0, 400, 40, L"Click to start game");
-    } else {
-        Render::DrawText(0, 0, 400, 40, L"Push escape to stop game");
-    }
-
-    bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
-
-    if (isMenuKeyDowned) {
-        ClipCursor(NULL);
-        ShowCursor(true);
-        m_isFocus = false;
-
-        return new MenuState();
-    }
-
-    // FIXME: m_isFocusもチェックしないと何度もShowCursor(false)が呼ばれて、一度のShowCursor(true)の呼び出しだけでは可視化できなくなる
-    if (Input::GetMouseDownL() && m_isFocus != true) {
-        RECT rc;
-        GetWindowRect(Render::m_hwnd, &rc);
-        ClipCursor(&rc);
-        ShowCursor(false);
-        m_isFocus = true;
-    }
-    return NULL;
-}
-
-void GameState::onMouseMove()
-{
 }
