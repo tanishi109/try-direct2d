@@ -76,6 +76,12 @@ void Render::DrawText(int x, int y, int w, int h, std::wstring text)
     );
 }
 
+void Render::SetRotation(float degree, float centerX, float centerY)
+{
+    D2D1::Matrix3x2F matrix = D2D1::Matrix3x2F::Rotation(degree, D2D1::Point2F(centerX, centerY));
+    m_renderTarget->SetTransform(matrix);
+}
+
 HRESULT Render::CreateDeviceResources()
 {
     HRESULT hr = S_OK;

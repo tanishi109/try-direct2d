@@ -18,5 +18,9 @@ Player::~Player()
 
 void Player::render()
 {
+    Render::SetRotation(m_degree, m_x, m_y);
+  
     Render::DrawRect(m_x, m_y, m_width, m_height, 2);
+
+    Render::SetRotation(0, 0, 0);
 }
