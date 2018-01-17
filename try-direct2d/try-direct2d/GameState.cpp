@@ -38,6 +38,15 @@ SceneState* GameState::update()
     double radian = std::atan2(dy, dx);
     m_player->m_degree = Mathtool::radToDeg(radian);
 
+    // set player position
+    float subPinX;
+    float subPinY;
+    std::tie(subPinX, subPinY) = m_player->getSubPinPosRotated();
+    float w = subPinX - m_player->m_x;
+    float h = subPinY - m_player->m_y;
+    m_player->m_x = mouseX - w;
+    m_player->m_y = mouseY - h;
+
     // Menu
     Render::DrawText(0, 0, 400, 40, L"Click to start game");
 
