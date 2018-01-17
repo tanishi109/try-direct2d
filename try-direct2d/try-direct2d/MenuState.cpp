@@ -3,6 +3,7 @@
 #include "SceneState.h"
 #include "MenuState.h"
 #include "CanvasState.h"
+#include "GameState.h"
 #include "Render.h"
 #include "Input.h"
 
@@ -42,8 +43,7 @@ SceneState* MenuState::update()
         return new CanvasState();
     }
     if (is2KeyDowned) {
-        OutputDebugString(_T("*** start gameMode\n"));
-        //return new CanvasState();
+        return new GameState();
     }
 
     return NULL;
