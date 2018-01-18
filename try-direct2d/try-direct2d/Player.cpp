@@ -36,7 +36,8 @@ std::tuple<int, int> Player::getMainPinPos()
     return {m_x + m_verticalPinMargin, m_y + m_height / 2};
 }
 
-std::tuple<float, float> Player::getSubPinPosRotated() {
+std::tuple<float, float> Player::getSubPinPosRotated()
+{
     float radian = Mathtool::degToRad(m_degree);
 
     int mainPinX;
