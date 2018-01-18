@@ -171,7 +171,6 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             case WM_PAINT:
             {
-                pDemoApp->EnterScene();
                 ValidateRect(hwnd, NULL);
             }
             result = 0;
