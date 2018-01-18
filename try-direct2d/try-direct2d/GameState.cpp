@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameState.h"
 #include "MenuState.h"
+#include "CanvasState.h"
 #include "Input.h"
 #include "Render.h"
 #include "Mathtool.h"
@@ -24,6 +25,26 @@ void GameState::enter()
 SceneState* GameState::update()
 {
     Render::Clear();
+
+    // World
+    // TODO: CanvasStateから直接取ってきているが、外部ファイルとして保存して読み出す形式にしたい
+    World* world = CanvasState::m_world;
+    int size = world->SIZE;
+    int offsetX = 0; // いったんゼロ
+    int offsetY = 0;
+    for (int x = 0; x < world->WIDTH; x++) {
+        for (int y = 0; y < world->HEIGHT; y++) {
+
+            Terrain* tile = world->m_tiles[x][y];
+            Render::DrawRect(
+                x * size - offsetX,
+                y * size - offsetY,
+                size,
+                size,
+                tile->m_type
+            );
+        }
+    }
 
     // Player
     m_player->render();

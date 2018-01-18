@@ -38,8 +38,7 @@ SceneState* CanvasState::update()
                 y * size - offsetY,
                 size,
                 size,
-                //tile->m_type
-                1 // debug
+                tile->m_type
             );
         }
     }
@@ -87,9 +86,5 @@ void CanvasState::onMouseMove()
         int deltaY = Input::GetMouseDeltaY();
         m_screenPos[0] -= deltaX;
         m_screenPos[1] -= deltaY;
-
-        //char buf[256];
-        //sprintf_s(buf, "delta = %d, %d\n", deltaX, deltaY);
-        //OutputDebugStringA(buf);
     }
 }
