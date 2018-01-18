@@ -61,7 +61,7 @@ SceneState* CanvasState::update()
         SetCursor(m_defaultCursor);
     }
 
-    if (isMouseDown) {
+    if (isMouseDown && !isGrabKeyDowned) {
         const int mouseX = Input::GetMousePosX();
         const int mouseY = Input::GetMousePosY();
         m_world->setWallFromMousePos(mouseX, mouseY);
