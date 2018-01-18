@@ -18,6 +18,6 @@ public:
 private:
     int m_width;
     int m_height;
-    int m_verticalPinMargin;
+    int m_horizontalPinMargin;
 };
 

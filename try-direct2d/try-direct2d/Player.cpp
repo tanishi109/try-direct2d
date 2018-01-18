@@ -9,7 +9,7 @@ m_y(y),
 m_width(w),
 m_height(h),
 m_degree(45),
-m_verticalPinMargin(10)
+m_horizontalPinMargin(10)
 {
 }
 
@@ -33,7 +33,7 @@ void Player::render()
 
 std::tuple<int, int> Player::getMainPinPos()
 {
-    return {m_x + m_verticalPinMargin, m_y + m_height / 2};
+    return {m_x + m_horizontalPinMargin, m_y + m_height / 2};
 }
 
 std::tuple<float, float> Player::getSubPinPosRotated()
@@ -44,14 +44,14 @@ std::tuple<float, float> Player::getSubPinPosRotated()
     int mainPinY;
     std::tie(mainPinX, mainPinY) = getMainPinPos();
 
-    float rx = mainPinX + std::cos(radian) * (m_width - m_verticalPinMargin * 2);
-    float ry = mainPinY + std::sin(radian) * (m_width - m_verticalPinMargin * 2);
+    float rx = mainPinX + std::cos(radian) * (m_width - m_horizontalPinMargin * 2);
+    float ry = mainPinY + std::sin(radian) * (m_width - m_horizontalPinMargin * 2);
 
     return {rx, ry};
 }
 
 void Player::setMainPinPos(int x, int y)
 {
-    m_x = x - m_verticalPinMargin;
+    m_x = x - m_horizontalPinMargin;
     m_y = y - m_height / 2;
 }
