@@ -49,3 +49,9 @@ std::tuple<float, float> Player::getSubPinPosRotated()
 
     return {rx, ry};
 }
+
+void Player::setMainPinPos(int x, int y)
+{
+    m_x = x - m_verticalPinMargin;
+    m_y = y - m_height / 2;
+}

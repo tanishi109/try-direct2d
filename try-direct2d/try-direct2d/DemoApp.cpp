@@ -111,6 +111,10 @@ HRESULT DemoApp::Initialize()
         }
     }
 
+    // Scene‚ÌEnterˆ—
+    // FIXME: ‚±‚±‚Å‚Ù‚ñ‚Æ‚É‘åä•v?
+    EnterScene();
+
     return hr;
 }
 

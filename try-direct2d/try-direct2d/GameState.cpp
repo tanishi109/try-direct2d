@@ -7,7 +7,7 @@
 #include "Mathtool.h"
 
 GameState::GameState() :
-m_player(new Player(40, 60, 50, 20)),
+m_player(new Player(0, 0, 50, 20)),
 m_isFocus(false)
 {
 }
@@ -20,6 +20,14 @@ GameState::~GameState()
 
 void GameState::enter()
 {
+    RECT rc;
+    GetClientRect(Render::m_hwnd, &rc);
+
+    int width = static_cast<int>(rc.right) - static_cast<int>(rc.left);
+    int height = rc.bottom - rc.top;
+
+    // ’†S‚É”z’u
+    m_player->setMainPinPos(width / 2, height / 2);
 }
 
 SceneState* GameState::update()

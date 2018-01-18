@@ -10,6 +10,7 @@ public:
     void render();
     std::tuple<int, int> getMainPinPos(); // FIXME: float‚É“ˆê‚µ‚½‚Ù‚¤‚ª‚¢‚¢
     std::tuple<float, float> getSubPinPosRotated();
+    void setMainPinPos(int x, int y);
 
     int m_x;
     int m_y;
