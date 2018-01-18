@@ -136,6 +136,9 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
         );
 
         result = 1;
+
+        // ゲームループ用のタイマー
+        SetTimer(hwnd, 1, 16.666, NULL);
     }
     else
     {
@@ -187,9 +190,9 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             // 以下は追加したメッセージハンドラ
             // FIXME: result, wasHandled が正しく決められてる? 何に使ってる?
-
             case WM_KEYDOWN:
             {
+                SetCapture(hwnd);
                 Input::m_keyDown = wParam;
             }
             result = 0;
@@ -198,16 +201,39 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             case WM_KEYUP:
             {
+                ReleaseCapture();
                 Input::m_keyDown = NULL;
             }
             result = 0;
             wasHandled = true;
             break;
 
-            case WM_MOUSEMOVE:
+            case WM_LBUTTONDOWN:
             {
-                const int mouseX = GET_X_LPARAM(lParam);
-                const int mouseY = GET_Y_LPARAM(lParam);
+                SetCapture(hwnd);
+                Input::m_mouseDownL = true;
+            }
+            result = 0;
+            wasHandled = true;
+            break;
+
+            case WM_LBUTTONUP:
+            {
+                ReleaseCapture();
+                Input::m_mouseDownL = false;
+            }
+            result = 0;
+            wasHandled = true;
+            break;
+
+            case WM_TIMER:
+            {
+                // マウスカーソル座標に関する更新
+                POINT p;
+                GetCursorPos(&p);
+                ScreenToClient(hwnd, &p);
+                int mouseX = p.x;
+                int mouseY = p.y;
 
                 // 差分を計算してmouseDeltaに持っておく
                 if (Input::m_prevMousePos[0] != NULL && Input::m_prevMousePos[1] != NULL) {
@@ -220,33 +246,20 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
                 // 座標を保存
                 Input::m_mousePos[0] = mouseX;
                 Input::m_mousePos[1] = mouseY;
-            }
-            // mouseMoveイベントハンドラ
-            pDemoApp->m_scene->onMouseMove();
 
-            result = 0;
-            wasHandled = true;
-            break;
+                if (Input::m_mouseDelta[0] != 0 || Input::m_mouseDelta[1] != 0) {
+                    // mouseMoveイベントハンドラ
+                    pDemoApp->m_scene->onMouseMove();
+                }
 
-            case WM_LBUTTONDOWN:
-            {
-                Input::m_mouseDownL = true;
-            }
-            result = 0;
-            wasHandled = true;
-            break;
-
-            case WM_LBUTTONUP:
-            {
-                Input::m_mouseDownL = false;
+                // Sceneを更新
+                pDemoApp->UpdateScene();
             }
             result = 0;
             wasHandled = true;
             break;
 
             }
-
-            pDemoApp->UpdateScene();
         }
 
         if (!wasHandled)
