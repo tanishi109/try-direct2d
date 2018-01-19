@@ -50,7 +50,7 @@ void Render::DrawRect(int x, int y, int w, int h, int color)
         y + h
     );
 
-    ID2D1SolidColorBrush* brush = color == 0 ? m_brush_white : m_brush;
+    ID2D1SolidColorBrush* brush;
     if (color == 0) {
         brush = m_brush_white;
     } else if (color == 1) {
@@ -59,6 +59,25 @@ void Render::DrawRect(int x, int y, int w, int h, int color)
         brush = m_brush_black;
     }
     m_renderTarget->DrawRectangle(&rect, brush);
+}
+
+void Render::DrawCircle(int x, int y, int r, int color)
+{
+    D2D1_ELLIPSE ellipse = D2D1::Ellipse(
+        D2D1::Point2F(x, y),
+        r,
+        r
+    );
+
+    ID2D1SolidColorBrush* brush;
+    if (color == 0) {
+        brush = m_brush_white;
+    } else if (color == 1) {
+        brush = m_brush;
+    } else {
+        brush = m_brush_black;
+    }
+    m_renderTarget->FillEllipse(ellipse, brush);
 }
 
 // FIXME: •¶Žš—ñ‚Ü‚í‚è‚¢‚ë‚ñ‚ÈŒ^‚ª‚ ‚è‚»‚¤‚È‚Ì‚Å‚±‚ê‚ª“K“–‚©’²‚×‚Ä

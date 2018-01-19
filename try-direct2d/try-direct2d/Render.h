@@ -10,6 +10,7 @@ public:
     static void End();
     static void Clear();
     static void DrawRect(int x, int y, int w, int h, int color);
+    static void DrawCircle(int x, int y, int r, int color);
     static void DrawText(int x, int y, int w, int h, std::wstring text);
     static void SetRotation(float degree, float centerX, float centerY);
 //private:
