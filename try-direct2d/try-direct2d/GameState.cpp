@@ -6,6 +6,8 @@
 #include "Render.h"
 #include "Mathtool.h"
 
+int GameState::m_screenPos[2] = {0, 0};
+
 GameState::GameState() :
 m_player(new Player(0, 0, 50, 20)),
 m_isFocus(false)
@@ -38,18 +40,19 @@ SceneState* GameState::update()
     // TODO: CanvasStateから直接取ってきているが、外部ファイルとして保存して読み出す形式にしたい
     World* world = CanvasState::m_world;
     int size = world->SIZE;
-    int offsetX = 0; // いったんゼロ
-    int offsetY = 0;
+    int offsetX = m_screenPos[0];
+    int offsetY = m_screenPos[1];
     for (int x = 0; x < world->WIDTH; x++) {
         for (int y = 0; y < world->HEIGHT; y++) {
 
             Terrain* tile = world->m_tiles[x][y];
             Render::DrawRect(
-                x * size - offsetX,
-                y * size - offsetY,
+                x * size + offsetX,
+                y * size + offsetY,
                 size,
                 size,
                 tile->m_type
+                //1
             );
         }
     }
@@ -58,39 +61,22 @@ SceneState* GameState::update()
     m_player->render();
 
     // Menu
-    if (!m_isFocus) {
-        Render::DrawText(0, 0, 400, 40, L"Click to start game");
-    } else {
-        Render::DrawText(0, 0, 400, 40, L"Push escape to stop game");
-    }
-
     bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
 
+    // Handle focus
     if (isMenuKeyDowned) {
-        ClipCursor(NULL);
-        ShowCursor(true);
         m_isFocus = false;
-
         return new MenuState();
     }
 
-    // FIXME: m_isFocusもチェックしないと何度もShowCursor(false)が呼ばれて、一度のShowCursor(true)の呼び出しだけでは可視化できなくなる
-    if (Input::GetMouseDownL() && m_isFocus != true) {
-        // カーソルの可動範囲を固定
+    if (Input::GetMouseDownL() && !m_isFocus) {
+        m_isFocus = true;
+
         RECT rc;
         GetWindowRect(Render::m_hwnd, &rc);
         ClipCursor(&rc);
-        // カーソルを不可視に
-        ShowCursor(false);
-        // カーソルをプレイヤーの座標に移動
-        float subPinX;
-        float subPinY;
-        std::tie(subPinX, subPinY) = m_player->getSubPinPosRotated();
-        POINT pt = {subPinX, subPinY};
-        ClientToScreen(Render::m_hwnd, &pt);
-        SetCursorPos(pt.x, pt.y);
-        m_isFocus = true;
     }
+
     return NULL;
 }
 
@@ -117,6 +103,5 @@ void GameState::onMouseMove()
         float h = subPinY - m_player->m_y;
         m_player->m_x = mouseX - w;
         m_player->m_y = mouseY - h;
-
     }
 }
