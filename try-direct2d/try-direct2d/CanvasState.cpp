@@ -67,7 +67,6 @@ SceneState* CanvasState::update()
         m_world->setWallFromMousePos(mouseX, mouseY);
     }
 
-
     bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
     if (isMenuKeyDowned) {
         return new MenuState();
