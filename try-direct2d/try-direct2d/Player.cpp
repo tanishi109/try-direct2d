@@ -121,3 +121,14 @@ void Player::setMainPinPos(int x, int y)
     m_x = x - m_horizontalPinMargin;
     m_y = y - m_height / 2;
 }
+
+// subPin‚ª(x, y)‚É—ˆ‚é‚æ‚¤‚È(m_x, m_y)‚ðƒZƒbƒg‚·‚é
+void Player::setSubPinPos(int x, int y)
+{
+    float radian = Mathtool::degToRad(m_degree + 180); // ‹t‚©‚çŒ©‚½Žž‚ÌŠp“x‚É‚·‚é
+    int pinDistance = m_width - m_horizontalPinMargin * 2;
+
+    float mainPinX = x + std::cos(radian) * pinDistance;
+    float mainPinY = y + std::sin(radian) * pinDistance;
+    setMainPinPos(mainPinX, mainPinY);
+}
