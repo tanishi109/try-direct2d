@@ -77,6 +77,39 @@ SceneState* GameState::update()
         ClipCursor(&rc);
     }
 
+    // Check cursor is not so far from center
+    if (m_isFocus) {
+        RECT windowRect;
+        GetClientRect(Render::m_hwnd, &windowRect);
+
+        long width = windowRect.right - windowRect.left;
+        long height = windowRect.bottom - windowRect.top;
+
+        POINT screenCenter = {width / 2, height / 2};
+        ClientToScreen(Render::m_hwnd, &screenCenter);
+
+        POINT cursorPos;
+        GetCursorPos(&cursorPos);
+
+        float distance = Mathtool::getDistance(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
+
+        if (distance > 20) {
+            float radian = Mathtool::getRadFromPos(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
+            int delta = 5;
+                                               
+            float newCursorX = cursorPos.x - std::cos(radian) * delta;
+            float newCursorY = cursorPos.y - std::sin(radian) * delta;
+
+            POINT pt = {newCursorX, newCursorY};
+            ScreenToClient(Render::m_hwnd, &pt);
+            m_player->setSubPinPos(pt.x, pt.y);
+            SetCursorPos(newCursorX, newCursorY);
+            m_screenPos[0] -= std::cos(radian) * delta;
+            m_screenPos[1] -= std::sin(radian) * delta;
+        }
+    }
+
+
     return NULL;
 }
 
