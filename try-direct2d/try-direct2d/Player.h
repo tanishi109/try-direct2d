@@ -5,8 +5,9 @@
 class Player
 {
 public:
-    Player(int x, int y, int w, int h);
+    Player(int x, int y, int w, int h, int childrenCount);
     ~Player();
+    void update();
     void render();
     std::tuple<int, int> getMainPinPos(); // FIXME: float‚É“ˆê‚µ‚½‚Ù‚¤‚ª‚¢‚¢
     std::tuple<float, float> getSubPinPosRotated();
@@ -19,5 +20,9 @@ private:
     int m_width;
     int m_height;
     int m_horizontalPinMargin;
+    const int m_childrenCount;
+    Player* m_children[];
+
+    void updateForChild(Player* parent);
 };
 

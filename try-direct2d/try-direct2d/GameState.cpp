@@ -9,7 +9,7 @@
 int GameState::m_screenPos[2] = {0, 0};
 
 GameState::GameState() :
-m_player(new Player(0, 0, 50, 20)),
+m_player(new Player(0, 0, 50, 10, 3)),
 m_isFocus(false)
 {
 }
@@ -83,25 +83,6 @@ SceneState* GameState::update()
 void GameState::onMouseMove()
 {
     if (m_isFocus) {
-
-        // set player rotation
-        int mouseX = Input::GetMousePosX();
-        int mouseY = Input::GetMousePosY();
-        int mainPinX;
-        int mainPinY;
-        std::tie(mainPinX, mainPinY) = m_player->getMainPinPos();
-        int dx = mouseX - mainPinX;
-        int dy = mouseY - mainPinY;
-        double radian = std::atan2(dy, dx);
-        m_player->m_degree = Mathtool::radToDeg(radian);
-
-        // set player position
-        float subPinX;
-        float subPinY;
-        std::tie(subPinX, subPinY) = m_player->getSubPinPosRotated();
-        float w = subPinX - m_player->m_x;
-        float h = subPinY - m_player->m_y;
-        m_player->m_x = mouseX - w;
-        m_player->m_y = mouseY - h;
+        m_player->update();
     }
 }
