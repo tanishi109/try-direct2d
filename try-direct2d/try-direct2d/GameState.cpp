@@ -38,24 +38,7 @@ SceneState* GameState::update()
 
     // World
     // TODO: CanvasStateから直接取ってきているが、外部ファイルとして保存して読み出す形式にしたい
-    World* world = CanvasState::m_world;
-    int size = world->SIZE;
-    int offsetX = m_screenPos[0];
-    int offsetY = m_screenPos[1];
-    for (int x = 0; x < world->WIDTH; x++) {
-        for (int y = 0; y < world->HEIGHT; y++) {
-
-            Terrain* tile = world->m_tiles[x][y];
-            Render::DrawRect(
-                x * size + offsetX,
-                y * size + offsetY,
-                size,
-                size,
-                tile->m_type
-                //1
-            );
-        }
-    }
+    CanvasState::m_world->render(m_screenPos[0], m_screenPos[1]);
 
     // Player
     m_player->render();

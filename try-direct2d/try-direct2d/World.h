@@ -14,6 +14,7 @@ public:
     Terrain* m_tiles[WIDTH][HEIGHT];
 
     void setWallFromMousePos(int mouseX, int mouseY);
+    void render(int screenX, int screenY);
 private:
     Terrain m_floorTerrain;
     Terrain m_wallTerrain;

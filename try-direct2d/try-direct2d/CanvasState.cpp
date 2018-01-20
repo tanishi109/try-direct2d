@@ -26,22 +26,7 @@ SceneState* CanvasState::update()
     Render::Clear();
 
     // ƒ}ƒX‚Ì•`‰æ
-    int size = m_world->SIZE;
-    int offsetX = m_screenPos[0];
-    int offsetY = m_screenPos[1];
-    for (int x = 0; x < m_world->WIDTH; x++) {
-        for (int y = 0; y < m_world->HEIGHT; y++) {
-        
-            Terrain* tile = m_world->m_tiles[x][y];
-            Render::DrawRect(
-                x * size - offsetX,
-                y * size - offsetY,
-                size,
-                size,
-                tile->m_type
-            );
-        }
-    }
+    m_world->render(m_screenPos[0], m_screenPos[1]);
 
     // •¶Žš‚Ì•`‰æ
     // FIXME: ‚±‚±‚à‚Á‚Æ‚¢‚¢•û–@‚È‚¢‚Ì? ${}‚Ý‚½‚¢‚È
