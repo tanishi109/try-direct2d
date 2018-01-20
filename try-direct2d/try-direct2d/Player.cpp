@@ -87,7 +87,10 @@ void Player::render()
     std::tie(mainPinX, mainPinY) = getMainPinPos();
     Render::SetRotation(m_degree, mainPinX, mainPinY);
   
+    // プレイヤーの矩形
     Render::DrawRect(m_x, m_y, m_width, m_height, 2);
+    // 当たり判定の円
+    Render::DrawCircle(mainPinX, mainPinY, m_collisionRadius, 2);
 
     Render::SetRotation(0, 0, 0);
 

@@ -17,6 +17,7 @@ public:
     int m_x;
     int m_y;
     float m_degree;
+    static const int m_collisionRadius = 3;
 private:
     int m_width;
     int m_height;
