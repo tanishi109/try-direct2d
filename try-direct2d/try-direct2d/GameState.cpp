@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Mathtool.h"
+#include "Collision.h"
 
 int GameState::m_screenPos[2] = {0, 0};
 
@@ -30,6 +31,51 @@ void GameState::enter()
 
     // 中心に配置
     m_player->setMainPinPos(width / 2, height / 2);
+}
+
+bool GameState::checkCollision()
+{
+    bool isHit = false;
+
+    int size = CanvasState::m_world->SIZE;
+    int offsetX = m_screenPos[0];
+    int offsetY = m_screenPos[1];
+    for (int x = 0; x < CanvasState::m_world->WIDTH; x++) {
+        for (int y = 0; y < CanvasState::m_world->HEIGHT; y++) {
+            Terrain* tile = CanvasState::m_world->m_tiles[x][y];
+            if (tile->m_type == 0) {
+                continue;
+            }
+
+            int mainPinX;
+            int mainPinY;
+            std::tie(mainPinX, mainPinY) = m_player->getMainPinPos();
+            isHit = Collision::CheckCircleCollision(
+                x * size + offsetX, y * size + offsetY, size / 2,
+                mainPinX, mainPinY, m_player->m_collisionRadius
+            );
+            if (isHit) {
+                return isHit;
+            }
+
+            for (int c = 0; c < m_player->m_childrenCount; c++) {
+                Player* child = m_player->getNthChild(c);
+
+                int childMainPinX;
+                int childMainPinY;
+                std::tie(childMainPinX, childMainPinY) = child->getMainPinPos();
+                isHit = Collision::CheckCircleCollision(
+                    x * size + offsetX, y * size + offsetY, size / 2,
+                    childMainPinX, childMainPinY, child->m_collisionRadius
+                );
+                if (isHit) {
+                    return isHit;
+                }
+            }
+        }
+    }
+
+    return false;
 }
 
 SceneState* GameState::update()
@@ -93,6 +139,12 @@ SceneState* GameState::update()
         }
     }
 
+    // 当たり判定チェック
+    // FIXME: 総当たり以外の方法がある
+    bool isHit = checkCollision();
+    if (isHit) {
+        log("hit top = %d!\n", isHit);
+    }
 
     return NULL;
 }

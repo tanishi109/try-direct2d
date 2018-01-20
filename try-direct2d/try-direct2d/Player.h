@@ -13,16 +13,17 @@ public:
     std::tuple<float, float> getSubPinPosRotated();
     void setMainPinPos(int x, int y);
     void setSubPinPos(int x, int y);
+    Player* getNthChild(int n);
 
     int m_x;
     int m_y;
     float m_degree;
     static const int m_collisionRadius = 3;
+    const int m_childrenCount;
 private:
     int m_width;
     int m_height;
     int m_horizontalPinMargin;
-    const int m_childrenCount;
     Player* m_children[];
 
     void updateForChild(Player* parent);

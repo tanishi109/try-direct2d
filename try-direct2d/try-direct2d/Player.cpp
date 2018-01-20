@@ -135,3 +135,12 @@ void Player::setSubPinPos(int x, int y)
     float mainPinY = y + std::sin(radian) * pinDistance;
     setMainPinPos(mainPinX, mainPinY);
 }
+
+
+Player* Player::getNthChild(int n)
+{
+    if (n < 0 || n > m_childrenCount) {
+        return NULL;
+    }
+    return m_children[n];
+}
