@@ -49,6 +49,7 @@ SceneState* GameState::update()
     // Handle focus
     if (isMenuKeyDowned) {
         m_isFocus = false;
+        ClipCursor(NULL);
         return new MenuState();
     }
 
