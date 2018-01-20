@@ -15,6 +15,8 @@ m_isFocus(false)
 {
 }
 
+// FIXME; こういうのやるならresourceに書くべき
+int SCROLL_DISTANCE = 100;
 
 GameState::~GameState()
 {
@@ -26,7 +28,7 @@ void GameState::enter()
     RECT rc;
     GetClientRect(Render::m_hwnd, &rc);
 
-    int width = static_cast<int>(rc.right) - static_cast<int>(rc.left);
+    int width = rc.right - rc.left;
     int height = rc.bottom - rc.top;
 
     // 中心に配置
@@ -123,16 +125,29 @@ SceneState* GameState::update()
 
         float distance = Mathtool::getDistance(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
 
-        if (distance > 20) {
+        if (distance > SCROLL_DISTANCE) {
             float radian = Mathtool::getRadFromPos(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
             int delta = 5;
                                                
             float newCursorX = cursorPos.x - std::cos(radian) * delta;
             float newCursorY = cursorPos.y - std::sin(radian) * delta;
 
+            // プレイヤーをスクロールのために移動
             POINT pt = {newCursorX, newCursorY};
             ScreenToClient(Render::m_hwnd, &pt);
             m_player->setSubPinPos(pt.x, pt.y);
+            // プレイヤーのchildrenも移動
+            int parentMainPinX;
+            int parentMainPinY;
+            std::tie(parentMainPinX, parentMainPinY) = m_player->getMainPinPos();
+            for (int c = 0; c < m_player->m_childrenCount; c++) {
+                Player* child = m_player->getNthChild(c);
+
+                child->setSubPinPos(parentMainPinX, parentMainPinY);
+
+                std::tie(parentMainPinX, parentMainPinY) = child->getMainPinPos();
+            }
+            // カーソルをスクロールのために移動
             SetCursorPos(newCursorX, newCursorY);
             m_screenPos[0] -= std::cos(radian) * delta;
             m_screenPos[1] -= std::sin(radian) * delta;
@@ -151,6 +166,7 @@ SceneState* GameState::update()
 
 void GameState::onMouseMove()
 {
+    // FIXME: スクロールのためにマウスカーソルを動かしたときもonMouseMoveがハンドリングされてupdateされてしまい、微妙に位置が更新されている。。どう解決すればいいんだ
     if (m_isFocus) {
         m_player->update();
     }
