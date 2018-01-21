@@ -28,15 +28,15 @@ World::~World()
 
 void World::setWallFromMousePos(int mouseX, int mouseY)
 {
-    int x = std::floor(mouseX / SIZE);
-    int y = std::floor(mouseY / SIZE);
+    int x = std::floor(mouseX / TILE_SIZE);
+    int y = std::floor(mouseY / TILE_SIZE);
 
     m_tiles[x][y] = &m_wallTerrain;
 }
 
 void World::render(int screenX, int screenY)
 {
-    int size = SIZE;
+    int size = TILE_SIZE;
     int offsetX = screenX;
     int offsetY = screenY;
     for (int x = 0; x < WIDTH; x++) {

@@ -10,7 +10,7 @@ public:
 
     static const int WIDTH = 20;
     static const int HEIGHT = 20;
-    static const int SIZE = 32;
+    static const int TILE_SIZE = 32;
     Terrain* m_tiles[WIDTH][HEIGHT];
 
     void setWallFromMousePos(int mouseX, int mouseY);
