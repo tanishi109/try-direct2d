@@ -68,7 +68,7 @@ void CanvasState::onMouseMove()
     if (isGrabKeyDowned && isMouseDown) {
         int deltaX = Input::GetMouseDeltaX();
         int deltaY = Input::GetMouseDeltaY();
-        m_screenPos[0] -= deltaX;
-        m_screenPos[1] -= deltaY;
+        m_screenPos[0] += deltaX;
+        m_screenPos[1] += deltaY;
     }
 }
