@@ -9,6 +9,7 @@ IDWriteTextFormat* Render::m_textFormat = NULL;
 ID2D1SolidColorBrush* Render::m_brush = NULL;
 ID2D1SolidColorBrush* Render::m_brush_white = NULL;
 ID2D1SolidColorBrush* Render::m_brush_black = NULL;
+ID2D1SolidColorBrush* Render::m_brush_pink = NULL;
 
 Render::Render()
 {
@@ -55,8 +56,10 @@ void Render::DrawRect(int x, int y, int w, int h, int color)
         brush = m_brush_white;
     } else if (color == 1) {
         brush = m_brush;
-    } else {
+    } else if (color == 2){
         brush = m_brush_black;
+    } else if (color == 3){
+        brush = m_brush_pink;
     }
     m_renderTarget->DrawRectangle(&rect, brush);
 }
@@ -74,8 +77,10 @@ void Render::DrawCircle(int x, int y, int r, int color)
         brush = m_brush_white;
     } else if (color == 1) {
         brush = m_brush;
-    } else {
+    } else if (color == 2){
         brush = m_brush_black;
+    } else if (color == 3){
+        brush = m_brush_pink;
     }
     m_renderTarget->FillEllipse(ellipse, brush);
 }
@@ -142,6 +147,13 @@ HRESULT Render::CreateDeviceResources()
             hr = m_renderTarget->CreateSolidColorBrush(
                 D2D1::ColorF(D2D1::ColorF::Black),
                 &m_brush_black
+            );
+        }
+        if (SUCCEEDED(hr))
+        {
+            hr = m_renderTarget->CreateSolidColorBrush(
+                D2D1::ColorF(D2D1::ColorF::LightPink),
+                &m_brush_pink
             );
         }
     }

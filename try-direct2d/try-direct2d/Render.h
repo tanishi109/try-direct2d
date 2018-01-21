@@ -25,5 +25,6 @@ public:
     static ID2D1SolidColorBrush* m_brush; // FIXME: ブラシやテキストのフォーマットあらかじめ用意しておかないといけないのはどうにかならない?
     static ID2D1SolidColorBrush* m_brush_white;
     static ID2D1SolidColorBrush* m_brush_black;
+    static ID2D1SolidColorBrush* m_brush_pink;
 };
 

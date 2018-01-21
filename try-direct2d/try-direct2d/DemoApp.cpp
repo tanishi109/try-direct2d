@@ -36,9 +36,9 @@ m_scene(new Scene())
 {
 }
 
-
 DemoApp::~DemoApp()
 {
+    // TODO Render‚ÉˆÚ“®
     SafeRelease(&Render::m_direct2dFactory);
     SafeRelease(&Render::m_renderTarget);
     SafeRelease(&Render::m_brush);
@@ -120,6 +120,7 @@ HRESULT DemoApp::Initialize()
 
 void DemoApp::DiscardDeviceResources()
 {
+    // TODO: Render‚ÉˆÚ“®
     SafeRelease(&Render::m_renderTarget);
     SafeRelease(&Render::m_brush);
 }
