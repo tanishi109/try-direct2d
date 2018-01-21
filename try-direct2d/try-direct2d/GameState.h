@@ -16,6 +16,7 @@ private:
     Player* m_player;
     bool m_isFocus;
 
+    void scroll();
     bool checkCollision();
 };
 

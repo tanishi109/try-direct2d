@@ -44,6 +44,51 @@ void GameState::enter()
     m_player->setMainPinPos(width / 2, height / 2);
 }
 
+// カーソルが中央から離れていたらスクロールさせる
+void GameState::scroll()
+{
+    RECT windowRect;
+    GetClientRect(Render::m_hwnd, &windowRect);
+
+    long width = windowRect.right - windowRect.left;
+    long height = windowRect.bottom - windowRect.top;
+
+    POINT screenCenter = { width / 2, height / 2 };
+    ClientToScreen(Render::m_hwnd, &screenCenter);
+
+    POINT cursorPos;
+    GetCursorPos(&cursorPos);
+
+    float distance = Mathtool::getDistance(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
+
+    if (distance > SCROLL_DISTANCE) {
+        float radian = Mathtool::getRadFromPos(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
+
+        float newCursorX = cursorPos.x - std::cos(radian) * SCROLL_SPEED;
+        float newCursorY = cursorPos.y - std::sin(radian) * SCROLL_SPEED;
+
+        // プレイヤーをスクロールのために移動
+        POINT pt = { newCursorX, newCursorY };
+        ScreenToClient(Render::m_hwnd, &pt);
+        m_player->setSubPinPos(pt.x, pt.y);
+        // 子も再帰的に移動
+        Player* child = m_player->m_child;
+        while (child != NULL) {
+            int parentMainPinX;
+            int parentMainPinY;
+            std::tie(parentMainPinX, parentMainPinY) = child->m_parent->getMainPinPos();
+
+            child->setSubPinPos(parentMainPinX, parentMainPinY);
+
+            child = child->m_child;
+        }
+        // カーソルをスクロールのために移動
+        SetCursorPos(newCursorX, newCursorY);
+        m_screenPos[0] -= std::cos(radian) * SCROLL_SPEED;
+        m_screenPos[1] -= std::sin(radian) * SCROLL_SPEED;
+    }
+}
+
 bool GameState::checkCollision()
 {
     bool isHit = false;
@@ -109,48 +154,8 @@ SceneState* GameState::update()
         ClipCursor(&rc);
     }
 
-    // Check cursor is not so far from center
     if (m_isFocus) {
-        RECT windowRect;
-        GetClientRect(Render::m_hwnd, &windowRect);
-
-        long width = windowRect.right - windowRect.left;
-        long height = windowRect.bottom - windowRect.top;
-
-        POINT screenCenter = {width / 2, height / 2};
-        ClientToScreen(Render::m_hwnd, &screenCenter);
-
-        POINT cursorPos;
-        GetCursorPos(&cursorPos);
-
-        float distance = Mathtool::getDistance(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
-
-        if (distance > SCROLL_DISTANCE) {
-            float radian = Mathtool::getRadFromPos(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
-                                               
-            float newCursorX = cursorPos.x - std::cos(radian) * SCROLL_SPEED;
-            float newCursorY = cursorPos.y - std::sin(radian) * SCROLL_SPEED;
-
-            // プレイヤーをスクロールのために移動
-            POINT pt = {newCursorX, newCursorY};
-            ScreenToClient(Render::m_hwnd, &pt);
-            m_player->setSubPinPos(pt.x, pt.y);
-            // 子も再帰的に移動
-            Player* child = m_player->m_child;
-            while(child != NULL) {
-                int parentMainPinX;
-                int parentMainPinY;
-                std::tie(parentMainPinX, parentMainPinY) = child->m_parent->getMainPinPos();
-
-                child->setSubPinPos(parentMainPinX, parentMainPinY);
-
-                child = child->m_child;
-            }
-            // カーソルをスクロールのために移動
-            SetCursorPos(newCursorX, newCursorY);
-            m_screenPos[0] -= std::cos(radian) * SCROLL_SPEED;
-            m_screenPos[1] -= std::sin(radian) * SCROLL_SPEED;
-        }
+        scroll();
     }
 
     // 当たり判定チェック
