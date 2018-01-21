@@ -10,13 +10,15 @@
 int GameState::m_screenPos[2] = {0, 0};
 
 GameState::GameState() :
-m_player(new Player(0, 0, 50, 10, 3)),
+m_player(new Player(0, 0, 50, 10)),
 m_isFocus(false)
 {
 }
 
 // FIXME; こういうのやるならresourceに書くべき
 int SCROLL_DISTANCE = 100;
+int SCROLL_SPEED = 5;
+int CHILD_COUNT = 3;
 
 GameState::~GameState()
 {
@@ -25,54 +27,52 @@ GameState::~GameState()
 
 void GameState::enter()
 {
+    // 子を追加
+    Player* parent = m_player;
+    for (int i = 0; i < CHILD_COUNT; i++) {
+        parent->addChild();
+        parent = parent->m_child;
+    }
+
+    // 中心に配置
     RECT rc;
     GetClientRect(Render::m_hwnd, &rc);
 
     int width = rc.right - rc.left;
     int height = rc.bottom - rc.top;
 
-    // 中心に配置
     m_player->setMainPinPos(width / 2, height / 2);
 }
 
 bool GameState::checkCollision()
 {
     bool isHit = false;
-
     int size = CanvasState::m_world->SIZE;
     int offsetX = m_screenPos[0];
     int offsetY = m_screenPos[1];
+
     for (int x = 0; x < CanvasState::m_world->WIDTH; x++) {
         for (int y = 0; y < CanvasState::m_world->HEIGHT; y++) {
+
             Terrain* tile = CanvasState::m_world->m_tiles[x][y];
             if (tile->m_type == 0) {
                 continue;
             }
 
-            int mainPinX;
-            int mainPinY;
-            std::tie(mainPinX, mainPinY) = m_player->getMainPinPos();
-            isHit = Collision::CheckCircleCollision(
-                x * size + offsetX, y * size + offsetY, size / 2,
-                mainPinX, mainPinY, m_player->m_collisionRadius
-            );
-            if (isHit) {
-                return isHit;
-            }
-
-            for (int c = 0; c < m_player->m_childrenCount; c++) {
-                Player* child = m_player->getNthChild(c);
-
-                int childMainPinX;
-                int childMainPinY;
-                std::tie(childMainPinX, childMainPinY) = child->getMainPinPos();
+            Player* player = m_player;
+            while(player != NULL) {
+                int mainPinX;
+                int mainPinY;
+                std::tie(mainPinX, mainPinY) = player->getMainPinPos();
                 isHit = Collision::CheckCircleCollision(
                     x * size + offsetX, y * size + offsetY, size / 2,
-                    childMainPinX, childMainPinY, child->m_collisionRadius
+                    mainPinX, mainPinY, player->m_collisionRadius
                 );
                 if (isHit) {
                     return isHit;
                 }
+                // 子がいればその当たり判定もチェック
+                player = player->m_child;
             }
         }
     }
@@ -127,30 +127,29 @@ SceneState* GameState::update()
 
         if (distance > SCROLL_DISTANCE) {
             float radian = Mathtool::getRadFromPos(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
-            int delta = 5;
                                                
-            float newCursorX = cursorPos.x - std::cos(radian) * delta;
-            float newCursorY = cursorPos.y - std::sin(radian) * delta;
+            float newCursorX = cursorPos.x - std::cos(radian) * SCROLL_SPEED;
+            float newCursorY = cursorPos.y - std::sin(radian) * SCROLL_SPEED;
 
             // プレイヤーをスクロールのために移動
             POINT pt = {newCursorX, newCursorY};
             ScreenToClient(Render::m_hwnd, &pt);
             m_player->setSubPinPos(pt.x, pt.y);
-            // プレイヤーのchildrenも移動
-            int parentMainPinX;
-            int parentMainPinY;
-            std::tie(parentMainPinX, parentMainPinY) = m_player->getMainPinPos();
-            for (int c = 0; c < m_player->m_childrenCount; c++) {
-                Player* child = m_player->getNthChild(c);
+            // 子も再帰的に移動
+            Player* child = m_player->m_child;
+            while(child != NULL) {
+                int parentMainPinX;
+                int parentMainPinY;
+                std::tie(parentMainPinX, parentMainPinY) = child->m_parent->getMainPinPos();
 
                 child->setSubPinPos(parentMainPinX, parentMainPinY);
 
-                std::tie(parentMainPinX, parentMainPinY) = child->getMainPinPos();
+                child = child->m_child;
             }
             // カーソルをスクロールのために移動
             SetCursorPos(newCursorX, newCursorY);
-            m_screenPos[0] -= std::cos(radian) * delta;
-            m_screenPos[1] -= std::sin(radian) * delta;
+            m_screenPos[0] -= std::cos(radian) * SCROLL_SPEED;
+            m_screenPos[1] -= std::sin(radian) * SCROLL_SPEED;
         }
     }
 

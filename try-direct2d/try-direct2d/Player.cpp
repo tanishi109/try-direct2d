@@ -4,79 +4,84 @@
 #include "Mathtool.h"
 #include "Input.h"
 
-Player::Player(int x, int y, int w, int h, const int childrenCount) :
+Player::Player(int x, int y, int w, int h) :
 m_x(x),
 m_y(y),
 m_width(w),
 m_height(h),
 m_degree(45),
 m_horizontalPinMargin(10),
-m_childrenCount(childrenCount)
+m_parent(NULL),
+m_child(NULL)
 {
-    m_children[m_childrenCount];
-    for (int i = 0; i < m_childrenCount; i++) {
-        m_children[i] = new Player(x, y, w, h, 0);
-    }
 }
 
 
 Player::~Player()
 {
-    delete[] m_children;
+    Player* child = m_child;
+    while(child != NULL) {
+        Player* nextChild = child->m_child;
+
+        delete m_child;
+
+        child = nextChild;
+    }
 }
 
 void Player::update()
 {
-    // set player rotation
-    int mouseX = Input::GetMousePosX();
-    int mouseY = Input::GetMousePosY();
-    int mainPinX;
-    int mainPinY;
-    std::tie(mainPinX, mainPinY) = getMainPinPos();
-    int dx = mouseX - mainPinX;
-    int dy = mouseY - mainPinY;
-    double radian = std::atan2(dy, dx);
-    m_degree = Mathtool::radToDeg(radian);
-
-    // set player position
-    float subPinX;
-    float subPinY;
-    std::tie(subPinX, subPinY) = getSubPinPosRotated();
-    float w = subPinX - m_x;
-    float h = subPinY - m_y;
-    m_x = mouseX - w;
-    m_y = mouseY - h;
-
-    // childrenのupdate
-    for (int i = 0; i < m_childrenCount; i++) {
-        Player* parent = this;
-        if (i > 0) {
-            parent = m_children[i - 1];
-        }
-        m_children[i]->updateForChild(parent);
-    }
+    move();
 }
 
-void Player::updateForChild(Player* parent)
+void Player::move()
 {
-    int parentX;
-    int parentY;
-    std::tie(parentX, parentY) = parent->getMainPinPos();
-    int childX;
-    int childY;
-    std::tie(childX, childY) = getMainPinPos();
-    int dx = parentX - childX;
-    int dy = parentY - childY;
-    double radian = std::atan2(dy, dx);
-    m_degree = Mathtool::radToDeg(radian);
+    if (m_parent == NULL) {
+        // 親nodeがいない場合はマウスを基準に移動
+        int mouseX = Input::GetMousePosX();
+        int mouseY = Input::GetMousePosY();
+        int mainPinX;
+        int mainPinY;
+        std::tie(mainPinX, mainPinY) = getMainPinPos();
+        int dx = mouseX - mainPinX;
+        int dy = mouseY - mainPinY;
+        double radian = std::atan2(dy, dx);
+        m_degree = Mathtool::radToDeg(radian);
 
-    float childSubX;
-    float childSubY;
-    std::tie(childSubX, childSubY) = getSubPinPosRotated();
-    float w = childSubX - m_x;
-    float h = childSubY - m_y;
-    m_x = parent->m_x - w + m_horizontalPinMargin;
-    m_y = parent->m_y - h + m_height / 2;
+        float subPinX;
+        float subPinY;
+        std::tie(subPinX, subPinY) = getSubPinPosRotated();
+        float w = subPinX - m_x;
+        float h = subPinY - m_y;
+        m_x = mouseX - w;
+        m_y = mouseY - h;
+    } else {
+        // 親nodeがいる場合は親の位置を基準に移動
+        int parentX;
+        int parentY;
+        std::tie(parentX, parentY) = m_parent->getMainPinPos();
+        int childX;
+        int childY;
+        std::tie(childX, childY) = getMainPinPos();
+        int dx = parentX - childX;
+        int dy = parentY - childY;
+        double radian = std::atan2(dy, dx);
+        m_degree = Mathtool::radToDeg(radian);
+
+        float childSubX;
+        float childSubY;
+        std::tie(childSubX, childSubY) = getSubPinPosRotated();
+        float w = childSubX - m_x;
+        float h = childSubY - m_y;
+        // FIXME: ここの計算だけどうにかなれば親の有無で分けている処理をもっとまとめられそう
+        m_x = m_parent->m_x - w + m_horizontalPinMargin;
+        m_y = m_parent->m_y - h + m_height / 2;
+    }
+
+    // 子を再帰的に移動
+    if (m_child != NULL) {
+        m_child->move();
+    }
 }
 
 void Player::render()
@@ -94,9 +99,9 @@ void Player::render()
 
     Render::SetRotation(0, 0, 0);
 
-    // childrenのrender
-    for (int i = 0; i < m_childrenCount; i++) {
-        m_children[i]->render();
+    // 子を再帰的に描画
+    if (m_child != NULL) {
+        m_child->render();
     }
 }
 
@@ -136,11 +141,8 @@ void Player::setSubPinPos(int x, int y)
     setMainPinPos(mainPinX, mainPinY);
 }
 
-
-Player* Player::getNthChild(int n)
+void Player::addChild()
 {
-    if (n < 0 || n > m_childrenCount) {
-        return NULL;
-    }
-    return m_children[n];
+    m_child = new Player(m_x, m_y, m_width, m_height);
+    m_child->m_parent = this;
 }
