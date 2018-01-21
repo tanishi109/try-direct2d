@@ -2,5 +2,6 @@
 
 enum TerrainType {
     TerrainType_floor,
-    TerrainType_wall
+    TerrainType_wall,
+    TerrainType_goal
 };

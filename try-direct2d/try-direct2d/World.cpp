@@ -5,12 +5,15 @@
 
 World::World() :
 m_floorTerrain(TerrainType_floor, BrushType_white),
-m_wallTerrain(TerrainType_wall, BrushType_green)
+m_wallTerrain(TerrainType_wall, BrushType_green),
+m_goalTerrain(TerrainType_goal, BrushType_pink)
 {
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
             if (isOuter(x, y)) {
                 m_tiles[x][y] = &m_wallTerrain;
+            } else if (isRightBottom(x, y)) {
+                m_tiles[x][y] = &m_goalTerrain;
             } else {
                 m_tiles[x][y] = &m_floorTerrain;
             }
@@ -57,4 +60,10 @@ bool World::isOuter(int x, int y)
     bool isRightBottomOuter = x == WIDTH - 1 || y == HEIGHT - 1;
 
     return isLeftTopOuter || isRightBottomOuter;
+}
+
+// •Ç“à‚ÌÅ‚à‰E‰º‚©”»’è
+bool World::isRightBottom(int x, int y)
+{
+    return x == WIDTH - 2 && y == HEIGHT - 2;
 }
