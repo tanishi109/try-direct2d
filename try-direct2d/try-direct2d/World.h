@@ -18,5 +18,7 @@ public:
 private:
     Terrain m_floorTerrain;
     Terrain m_wallTerrain;
+
+    bool isOuter(int x, int y);
 };
 

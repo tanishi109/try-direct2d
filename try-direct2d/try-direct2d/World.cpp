@@ -10,7 +10,11 @@ m_wallTerrain(TerrainType_Wall)
     // init all tile by floorTerrain
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
-            m_tiles[x][y] = &m_floorTerrain;
+            if (isOuter(x, y)) {
+                m_tiles[x][y] = &m_wallTerrain;
+            } else {
+                m_tiles[x][y] = &m_floorTerrain;
+            }
         }
     }
 }
@@ -45,4 +49,13 @@ void World::render(int screenX, int screenY)
             );
         }
     }
+}
+
+// ŠOŽü‚©”»’è
+bool World::isOuter(int x, int y)
+{
+    bool isLeftTopOuter = x == 0 || y == 0;
+    bool isRightBottomOuter = x == WIDTH - 1 || y == HEIGHT - 1;
+
+    return isLeftTopOuter || isRightBottomOuter;
 }
