@@ -13,7 +13,7 @@ public:
     static const int TILE_SIZE = 32;
     Terrain* m_tiles[WIDTH][HEIGHT];
 
-    void setWallFromMousePos(int mouseX, int mouseY);
+    void setWallFromPos(int x, int y);
     void render(int screenX, int screenY);
 private:
     Terrain m_floorTerrain;

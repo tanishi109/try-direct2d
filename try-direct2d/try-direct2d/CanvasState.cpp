@@ -37,7 +37,7 @@ SceneState* CanvasState::update()
     std::wstring textRight = L")";
     Render::DrawText(0, 0, 100, 40, textLight + screenX + textMiddle + screenY + textRight);
 
-    bool isMouseDown = Input::GetMouseDownL();
+    bool isMouseDownL = Input::GetMouseDownL();
     bool isGrabKeyDowned = Input::GetKey(VK_SPACE);
 
     if (isGrabKeyDowned) {
@@ -46,10 +46,10 @@ SceneState* CanvasState::update()
         SetCursor(m_defaultCursor);
     }
 
-    if (isMouseDown && !isGrabKeyDowned) {
+    if (isMouseDownL && !isGrabKeyDowned) {
         const int mouseX = Input::GetMousePosX();
         const int mouseY = Input::GetMousePosY();
-        m_world->setWallFromMousePos(mouseX, mouseY);
+        m_world->setWallFromPos(mouseX - m_screenPos[0], mouseY - m_screenPos[1]);
     }
 
     bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);

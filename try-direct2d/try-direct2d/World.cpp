@@ -26,12 +26,12 @@ World::~World()
 {
 }
 
-void World::setWallFromMousePos(int mouseX, int mouseY)
+void World::setWallFromPos(int x, int y)
 {
-    int x = std::floor(mouseX / TILE_SIZE);
-    int y = std::floor(mouseY / TILE_SIZE);
+    int tileX = std::floor(x / TILE_SIZE);
+    int tileY = std::floor(y / TILE_SIZE);
 
-    m_tiles[x][y] = &m_wallTerrain;
+    m_tiles[tileX][tileY] = &m_wallTerrain;
 }
 
 void World::render(int screenX, int screenY)
