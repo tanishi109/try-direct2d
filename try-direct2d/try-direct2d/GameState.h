@@ -2,6 +2,7 @@
 
 #include "SceneState.h"
 #include "Player.h"
+#include "Terrain.h"
 
 class GameState : public SceneState
 {
@@ -17,6 +18,6 @@ private:
     bool m_isFocus;
 
     void scroll();
-    bool checkCollision();
+    Terrain* checkCollision();
 };
 

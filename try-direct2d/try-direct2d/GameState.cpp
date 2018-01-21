@@ -89,7 +89,7 @@ void GameState::scroll()
     }
 }
 
-bool GameState::checkCollision()
+Terrain* GameState::checkCollision()
 {
     bool isHit = false;
     int size = CanvasState::m_world->SIZE;
@@ -100,7 +100,10 @@ bool GameState::checkCollision()
         for (int y = 0; y < CanvasState::m_world->HEIGHT; y++) {
 
             Terrain* tile = CanvasState::m_world->m_tiles[x][y];
-            if (tile->m_type == 0) {
+
+            // floorなら衝突チェックはしない
+            // FIXME: Terrainにcollidable的なフィールドを足す
+            if (tile->m_type == TerrainType_floor) {
                 continue;
             }
 
@@ -114,7 +117,7 @@ bool GameState::checkCollision()
                     mainPinX, mainPinY, player->m_collisionRadius
                 );
                 if (isHit) {
-                    return isHit;
+                    return tile;
                 }
                 // 子がいればその当たり判定もチェック
                 player = player->m_child;
@@ -122,7 +125,7 @@ bool GameState::checkCollision()
         }
     }
 
-    return false;
+    return NULL;
 }
 
 SceneState* GameState::update()
@@ -160,9 +163,9 @@ SceneState* GameState::update()
 
     // 当たり判定チェック
     // FIXME: 総当たり以外の方法がある
-    bool isHit = checkCollision();
-    if (isHit) {
-        log("hit top = %d!\n", isHit);
+    Terrain* hitTerrain = checkCollision();
+    if (hitTerrain != NULL) {
+        log("hit! type = %d!\n", hitTerrain->m_type);
     }
 
     return NULL;
