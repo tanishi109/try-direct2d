@@ -27,7 +27,6 @@ GameState::~GameState()
 
 void GameState::enter()
 {
-
     // 子を追加
     Player* parent = m_player;
     for (int i = 0; i < CHILD_COUNT; i++) {
@@ -35,22 +34,7 @@ void GameState::enter()
         parent = parent->m_child;
     }
 
-    RECT rc;
-    GetClientRect(Render::m_hwnd, &rc);
-
-    int width = rc.right - rc.left;
-    int height = rc.bottom - rc.top;
-
-    // スタート地点が画面中央に来るようにscreenを配置
-    m_screenPos[0] = width / 2  - World::TILE_SIZE * 2;
-    m_screenPos[1] = height / 2 - World::TILE_SIZE * 2;
-
-    // 中心に配置
-    Player* player = m_player;
-    while (player != NULL) {
-        player->setMainPinPos(width / 2, height / 2);
-        player = player->m_child;
-    }
+    initPosition();
 }
 
 // カーソルが中央から離れていたらスクロールさせる
@@ -165,12 +149,7 @@ SceneState* GameState::update()
         GetWindowRect(Render::m_hwnd, &rc);
         ClipCursor(&rc);
 
-        int mainPinX;
-        int mainPinY;
-        std::tie(mainPinX, mainPinY) = m_player->getMainPinPos();
-        POINT center = {mainPinX, mainPinY};
-        ClientToScreen(Render::m_hwnd, &center);
-        SetCursorPos(center.x, center.y);
+        setCursorOnPlayer();
     }
 
     if (m_isFocus) {
@@ -181,7 +160,13 @@ SceneState* GameState::update()
     // FIXME: 総当たり以外の方法がある
     Terrain* hitTerrain = checkCollision();
     if (hitTerrain != NULL) {
-        log("hit! type = %d!\n", hitTerrain->m_type);
+        if (hitTerrain->m_type == TerrainType_wall) {
+            initPosition();
+            setCursorOnPlayer();
+        }
+        if (hitTerrain->m_type == TerrainType_goal) {
+            Render::DrawText(0, 0, 100, 32, L"Clear!");
+        }
     }
 
     return NULL;
@@ -193,4 +178,34 @@ void GameState::onMouseMove()
     if (m_isFocus) {
         m_player->update();
     }
+}
+
+void GameState::initPosition()
+{
+    RECT rc;
+    GetClientRect(Render::m_hwnd, &rc);
+
+    int width = rc.right - rc.left;
+    int height = rc.bottom - rc.top;
+
+    // スタート地点が画面中央に来るようにscreenを配置
+    m_screenPos[0] = width / 2  - World::TILE_SIZE * 2;
+    m_screenPos[1] = height / 2 - World::TILE_SIZE * 2;
+
+    // 中心に配置
+    Player* player = m_player;
+    while (player != NULL) {
+        player->setMainPinPos(width / 2, height / 2);
+        player = player->m_child;
+    }
+}
+
+void GameState::setCursorOnPlayer()
+{
+    int playerX;
+    int playerY;
+    std::tie(playerX, playerY) = m_player->getSubPinPosRotated();
+    POINT playerPos = {playerX, playerY};
+    ClientToScreen(Render::m_hwnd, &playerPos);
+    SetCursorPos(playerPos.x, playerPos.y);
 }
