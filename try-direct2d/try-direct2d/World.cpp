@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "World.h"
 #include "Render.h"
+#include "TerrainType.h"
 
 World::World() :
-m_floorTerrain(0),
-m_wallTerrain(1)
+m_floorTerrain(TerrainType_Floor),
+m_wallTerrain(TerrainType_Wall)
 {
     // init all tile by floorTerrain
     for (int x = 0; x < WIDTH; x++) {
