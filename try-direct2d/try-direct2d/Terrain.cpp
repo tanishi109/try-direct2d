@@ -2,8 +2,9 @@
 #include "Terrain.h"
 
 
-Terrain::Terrain(int type) :
-m_type(type)
+Terrain::Terrain(TerrainType type, BrushType color) :
+m_type(type),
+m_color(color)
 {
 }
 

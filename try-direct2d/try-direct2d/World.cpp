@@ -1,13 +1,12 @@
 #include "stdafx.h"
 #include "World.h"
 #include "Render.h"
-#include "TerrainType.h"
+#include "BrushType.h"
 
 World::World() :
-m_floorTerrain(TerrainType_Floor),
-m_wallTerrain(TerrainType_Wall)
+m_floorTerrain(TerrainType_floor, BrushType_white),
+m_wallTerrain(TerrainType_wall, BrushType_green)
 {
-    // init all tile by floorTerrain
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
             if (isOuter(x, y)) {
@@ -45,7 +44,7 @@ void World::render(int screenX, int screenY)
                 x * size + offsetX,
                 y * size + offsetY,
                 size / 2,
-                tile->m_type
+                tile->m_color
             );
         }
     }

@@ -138,6 +138,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BrushType.h" />
     <ClInclude Include="CanvasState.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="DemoApp.h" />

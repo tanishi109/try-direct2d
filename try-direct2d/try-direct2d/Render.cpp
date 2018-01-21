@@ -41,7 +41,7 @@ void Render::Clear()
     m_renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 }
 
-void Render::DrawRect(int x, int y, int w, int h, int color)
+void Render::DrawRect(int x, int y, int w, int h, BrushType type)
 {
     // FIXME: float‚Écast‚µ‚½‚¢,ˆø”‚àfloat‚É‚µ‚½‚¢
     D2D1_RECT_F rect = D2D1::RectF(
@@ -51,20 +51,11 @@ void Render::DrawRect(int x, int y, int w, int h, int color)
         y + h
     );
 
-    ID2D1SolidColorBrush* brush;
-    if (color == 0) {
-        brush = m_brush_white;
-    } else if (color == 1) {
-        brush = m_brush;
-    } else if (color == 2){
-        brush = m_brush_black;
-    } else if (color == 3){
-        brush = m_brush_pink;
-    }
+    ID2D1SolidColorBrush* brush = getBrush(type);
     m_renderTarget->DrawRectangle(&rect, brush);
 }
 
-void Render::DrawCircle(int x, int y, int r, int color)
+void Render::DrawCircle(int x, int y, int r, BrushType type)
 {
     D2D1_ELLIPSE ellipse = D2D1::Ellipse(
         D2D1::Point2F(x, y),
@@ -72,16 +63,7 @@ void Render::DrawCircle(int x, int y, int r, int color)
         r
     );
 
-    ID2D1SolidColorBrush* brush;
-    if (color == 0) {
-        brush = m_brush_white;
-    } else if (color == 1) {
-        brush = m_brush;
-    } else if (color == 2){
-        brush = m_brush_black;
-    } else if (color == 3){
-        brush = m_brush_pink;
-    }
+    ID2D1SolidColorBrush* brush = getBrush(type);
     m_renderTarget->FillEllipse(ellipse, brush);
 }
 
@@ -204,4 +186,22 @@ HRESULT Render::CreateDeviceIndependentResources()
     }
 
     return hr;
+}
+
+ID2D1SolidColorBrush* Render::getBrush(BrushType type)
+{
+    if (type == BrushType_white) {
+        return m_brush_white;
+    }
+    if (type == BrushType_black){
+        return m_brush_black;
+    }
+    if (type == BrushType_green) {
+        return m_brush;
+    }
+    if (type == BrushType_pink){
+        return m_brush_pink;
+    }
+
+    return NULL;
 }

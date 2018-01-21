@@ -1,4 +1,6 @@
 #pragma once
+#include "BrushType.h"
+
 class Render
 {
 friend class DemoApp;
@@ -9,8 +11,8 @@ public:
     static void Begin();
     static void End();
     static void Clear();
-    static void DrawRect(int x, int y, int w, int h, int color);
-    static void DrawCircle(int x, int y, int r, int color);
+    static void DrawRect(int x, int y, int w, int h, BrushType type);
+    static void DrawCircle(int x, int y, int r, BrushType type);
     static void DrawText(int x, int y, int w, int h, std::wstring text);
     static void SetRotation(float degree, float centerX, float centerY);
 //private:
@@ -26,5 +28,6 @@ public:
     static ID2D1SolidColorBrush* m_brush_white;
     static ID2D1SolidColorBrush* m_brush_black;
     static ID2D1SolidColorBrush* m_brush_pink;
+    static ID2D1SolidColorBrush* getBrush(BrushType type);
 };
 

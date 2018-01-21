@@ -1,8 +1,12 @@
 #pragma once
+#include "TerrainType.h"
+#include "BrushType.h"
+
 class Terrain
 {
 public:
-    Terrain(int type);
+    Terrain(TerrainType type, BrushType color);
     ~Terrain();
-    int m_type;
+    TerrainType m_type;
+    BrushType m_color;
 };
