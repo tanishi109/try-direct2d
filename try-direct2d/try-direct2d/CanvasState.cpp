@@ -49,7 +49,13 @@ SceneState* CanvasState::update()
     if (isMouseDownL && !isGrabKeyDowned) {
         const int mouseX = Input::GetMousePosX();
         const int mouseY = Input::GetMousePosY();
-        m_world->setWallFromPos(mouseX - m_screenPos[0], mouseY - m_screenPos[1]);
+        m_world->setTileFromPos(TerrainType_wall, mouseX - m_screenPos[0], mouseY - m_screenPos[1]);
+    }
+    bool isMouseDownR = Input::GetMouseDownR();
+    if (isMouseDownR && !isGrabKeyDowned) {
+        const int mouseX = Input::GetMousePosX();
+        const int mouseY = Input::GetMousePosY();
+        m_world->setTileFromPos(TerrainType_floor, mouseX - m_screenPos[0], mouseY - m_screenPos[1]);
     }
 
     bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);

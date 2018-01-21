@@ -2,6 +2,7 @@
 #include "Input.h"
 
 bool Input::m_mouseDownL = false;
+bool Input::m_mouseDownR = false;
 int Input::m_mousePos[2] = {0, 0}; // ç≈èâNULLÇ™Ç¢Ç¢Ç©Ç‡?
 int Input::m_mouseDelta[2] = {0, 0};
 int Input::m_prevMousePos[2] = {NULL, NULL};
@@ -19,6 +20,11 @@ Input::~Input()
 bool Input::GetMouseDownL()
 {
     return m_mouseDownL;
+}
+
+bool Input::GetMouseDownR()
+{
+    return m_mouseDownR;
 }
 
 int Input::GetMousePosX()

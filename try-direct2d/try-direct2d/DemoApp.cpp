@@ -231,6 +231,24 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             wasHandled = true;
             break;
 
+            case WM_RBUTTONDOWN:
+            {
+                SetCapture(hwnd);
+                Input::m_mouseDownR = true;
+            }
+            result = 0;
+            wasHandled = true;
+            break;
+
+            case WM_RBUTTONUP:
+            {
+                ReleaseCapture();
+                Input::m_mouseDownR = false;
+            }
+            result = 0;
+            wasHandled = true;
+            break;
+
             case WM_TIMER:
             {
                 // マウスカーソル座標に関する更新

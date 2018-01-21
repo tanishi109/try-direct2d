@@ -26,12 +26,20 @@ World::~World()
 {
 }
 
-void World::setWallFromPos(int x, int y)
+void World::setTileFromPos(TerrainType type, int x, int y)
 {
     int tileX = std::floor(x / TILE_SIZE);
     int tileY = std::floor(y / TILE_SIZE);
 
-    m_tiles[tileX][tileY] = &m_wallTerrain;
+    if (type == TerrainType_floor) {
+        m_tiles[tileX][tileY] = &m_floorTerrain;
+        return;
+    }
+
+    if (type == TerrainType_wall) {
+        m_tiles[tileX][tileY] = &m_wallTerrain;
+        return;
+    }
 }
 
 void World::render(int screenX, int screenY)
