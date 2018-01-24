@@ -13,7 +13,6 @@ public:
     virtual SceneState* update();
     virtual void onMouseMove();
 private:
-    static int m_screenPos[2]; // componentƒpƒ^[ƒ“‚Æ‚©‚ÅCanvasState‚Æ‹¤’Ê‰»‚Å‚«‚È‚¢‚©‚È
     Player* m_player;
     bool m_isFocus;
 

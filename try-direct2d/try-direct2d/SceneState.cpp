@@ -4,7 +4,8 @@
 #include "CanvasState.h"
 #include "MenuState.h"
 
-SceneState::SceneState()
+SceneState::SceneState() :
+m_screen(new Screen())
 {
 }
 

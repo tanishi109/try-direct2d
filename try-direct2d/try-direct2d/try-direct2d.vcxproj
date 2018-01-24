@@ -143,6 +143,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="DemoApp.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="TerrainType.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Mathtool.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneState.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

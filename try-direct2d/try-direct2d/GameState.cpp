@@ -7,8 +7,6 @@
 #include "Mathtool.h"
 #include "Collision.h"
 
-int GameState::m_screenPos[2] = {0, 0};
-
 GameState::GameState() :
 m_player(new Player(0, 0, 50, 10)),
 m_isFocus(false)
@@ -77,8 +75,8 @@ void GameState::scroll()
         }
         // カーソルをスクロールのために移動
         SetCursorPos(newCursorX, newCursorY);
-        m_screenPos[0] -= std::cos(radian) * SCROLL_SPEED;
-        m_screenPos[1] -= std::sin(radian) * SCROLL_SPEED;
+        m_screen->m_x -= std::cos(radian) * SCROLL_SPEED;
+        m_screen->m_y -= std::sin(radian) * SCROLL_SPEED;
     }
 }
 
@@ -86,8 +84,8 @@ Terrain* GameState::checkCollision()
 {
     bool isHit = false;
     int size = CanvasState::m_world->TILE_SIZE;
-    int offsetX = m_screenPos[0];
-    int offsetY = m_screenPos[1];
+    int offsetX = m_screen->m_x;
+    int offsetY = m_screen->m_y;
 
     for (int x = 0; x < CanvasState::m_world->WIDTH; x++) {
         for (int y = 0; y < CanvasState::m_world->HEIGHT; y++) {
@@ -127,7 +125,7 @@ SceneState* GameState::update()
 
     // World
     // TODO: CanvasStateから直接取ってきているが、外部ファイルとして保存して読み出す形式にしたい
-    CanvasState::m_world->render(m_screenPos[0], m_screenPos[1]);
+    CanvasState::m_world->render(m_screen->m_x, m_screen->m_y);
 
     // Player
     m_player->render();
@@ -189,8 +187,8 @@ void GameState::initPosition()
     int height = rc.bottom - rc.top;
 
     // スタート地点が画面中央に来るようにscreenを配置
-    m_screenPos[0] = width / 2  - World::TILE_SIZE * 2;
-    m_screenPos[1] = height / 2 - World::TILE_SIZE * 2;
+    m_screen->m_x = width / 2  - World::TILE_SIZE * 2;
+    m_screen->m_y = height / 2 - World::TILE_SIZE * 2;
 
     // 中心に配置
     Player* player = m_player;

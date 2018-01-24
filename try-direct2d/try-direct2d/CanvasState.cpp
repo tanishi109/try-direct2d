@@ -5,7 +5,6 @@
 #include "Render.h"
 
 World* CanvasState::m_world = new World();
-int CanvasState::m_screenPos[2] = {0, 0};
 
 CanvasState::CanvasState() :
 m_grabCursor(LoadCursor(NULL, IDC_SIZEALL)),
@@ -26,12 +25,12 @@ SceneState* CanvasState::update()
     Render::Clear();
 
     // ƒ}ƒX‚Ì•`‰æ
-    m_world->render(m_screenPos[0], m_screenPos[1]);
+    m_world->render(m_screen->m_x, m_screen->m_y);
 
     // •¶Žš‚Ì•`‰æ
     // FIXME: ‚±‚±‚à‚Á‚Æ‚¢‚¢•û–@‚È‚¢‚Ì? ${}‚Ý‚½‚¢‚È
-    std::wstring screenX = std::to_wstring(m_screenPos[0]);
-    std::wstring screenY = std::to_wstring(m_screenPos[1]);
+    std::wstring screenX = std::to_wstring(m_screen->m_x);
+    std::wstring screenY = std::to_wstring(m_screen->m_y);
     std::wstring textLight = L"(";
     std::wstring textMiddle = L", ";
     std::wstring textRight = L")";
@@ -49,13 +48,13 @@ SceneState* CanvasState::update()
     if (isMouseDownL && !isGrabKeyDowned) {
         const int mouseX = Input::GetMousePosX();
         const int mouseY = Input::GetMousePosY();
-        m_world->setTileFromPos(TerrainType_wall, mouseX - m_screenPos[0], mouseY - m_screenPos[1]);
+        m_world->setTileFromPos(TerrainType_wall, mouseX - m_screen->m_x, mouseY - m_screen->m_y);
     }
     bool isMouseDownR = Input::GetMouseDownR();
     if (isMouseDownR && !isGrabKeyDowned) {
         const int mouseX = Input::GetMousePosX();
         const int mouseY = Input::GetMousePosY();
-        m_world->setTileFromPos(TerrainType_floor, mouseX - m_screenPos[0], mouseY - m_screenPos[1]);
+        m_world->setTileFromPos(TerrainType_floor, mouseX - m_screen->m_x, mouseY - m_screen->m_y);
     }
 
     bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
@@ -74,7 +73,7 @@ void CanvasState::onMouseMove()
     if (isGrabKeyDowned && isMouseDown) {
         int deltaX = Input::GetMouseDeltaX();
         int deltaY = Input::GetMouseDeltaY();
-        m_screenPos[0] += deltaX;
-        m_screenPos[1] += deltaY;
+        m_screen->m_x += deltaX;
+        m_screen->m_y += deltaY;
     }
 }
