@@ -142,6 +142,7 @@
     <ClInclude Include="CanvasState.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="DemoApp.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="TerrainType.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="CanvasState.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DemoApp.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Mathtool.cpp" />

@@ -42,11 +42,11 @@ void World::setTileFromPos(TerrainType type, int x, int y)
     }
 }
 
-void World::render(int screenX, int screenY)
+void World::render(Screen* screen)
 {
     int size = TILE_SIZE;
-    int offsetX = screenX;
-    int offsetY = screenY;
+    int offsetX = screen->m_x;
+    int offsetY = screen->m_y;
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
 

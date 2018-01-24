@@ -18,15 +18,11 @@ CanvasState::~CanvasState()
 
 void CanvasState::enter()
 {
+    m_gameObjects.push_back(m_world);
 }
 
 SceneState* CanvasState::update()
 {
-    Render::Clear();
-
-    // ƒ}ƒX‚Ì•`‰æ
-    m_world->render(m_screen->m_x, m_screen->m_y);
-
     // •¶Žš‚Ì•`‰æ
     // FIXME: ‚±‚±‚à‚Á‚Æ‚¢‚¢•û–@‚È‚¢‚Ì? ${}‚Ý‚½‚¢‚È
     std::wstring screenX = std::to_wstring(m_screen->m_x);

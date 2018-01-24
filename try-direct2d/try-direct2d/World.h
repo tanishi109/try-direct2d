@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Terrain.h"
+#include "GameObject.h"
 
-class World
+class World : public GameObject
 {
 public:
     World();
@@ -14,7 +15,7 @@ public:
     Terrain* m_tiles[WIDTH][HEIGHT];
 
     void setTileFromPos(TerrainType type, int x, int y);
-    void render(int screenX, int screenY);
+    void render(Screen* screen);
 private:
     Terrain m_floorTerrain;
     Terrain m_wallTerrain;

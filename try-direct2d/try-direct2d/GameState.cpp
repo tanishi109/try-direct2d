@@ -25,6 +25,12 @@ GameState::~GameState()
 
 void GameState::enter()
 {
+    // World
+    // TODO: CanvasStateから直接取ってきているが、外部ファイルとして保存して読み出す形式にしたい
+    m_gameObjects.push_back(CanvasState::m_world);
+    // Player
+    m_gameObjects.push_back(m_player);
+
     // 子を追加
     Player* parent = m_player;
     for (int i = 0; i < CHILD_COUNT; i++) {
@@ -121,15 +127,6 @@ Terrain* GameState::checkCollision()
 
 SceneState* GameState::update()
 {
-    Render::Clear();
-
-    // World
-    // TODO: CanvasStateから直接取ってきているが、外部ファイルとして保存して読み出す形式にしたい
-    CanvasState::m_world->render(m_screen->m_x, m_screen->m_y);
-
-    // Player
-    m_player->render();
-
     // Menu
     bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
 

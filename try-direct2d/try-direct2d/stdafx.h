@@ -26,6 +26,7 @@
 #include <wincodec.h>
 #include <stdio.h>
 #include <string>
+#include <vector>
 // FIXME: M_PIが定義されていないエラーが出るのでstdafx.cppの"#include stdafx.h"より前に移動した
 // #define _USE_MATH_DEFINES
 // #include <cmath>  

@@ -5,8 +5,6 @@
 #include "Input.h"
 
 Player::Player(int x, int y, int w, int h) :
-m_x(x),
-m_y(y),
 m_width(w),
 m_height(h),
 m_degree(45),
@@ -14,6 +12,8 @@ m_horizontalPinMargin(10),
 m_parent(NULL),
 m_child(NULL)
 {
+    m_x = x;
+    m_y = y;
 }
 
 
@@ -84,7 +84,7 @@ void Player::move()
     }
 }
 
-void Player::render()
+void Player::render(Screen* screen)
 {
     int mainPinX;
     int mainPinY;
@@ -101,7 +101,7 @@ void Player::render()
 
     // q‚ğÄ‹A“I‚É•`‰æ
     if (m_child != NULL) {
-        m_child->render();
+        m_child->render(screen);
     }
 }
 

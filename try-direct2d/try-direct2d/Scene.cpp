@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Scene.h"
-
 #include "SceneState.h"
 //#include "CanvasState.h"
 #include "GameState.h"
+#include "Render.h"
 
 Scene::Scene()
 {
@@ -23,6 +23,9 @@ void Scene::enter()
 
 void Scene::update()
 {
+    Render::Clear();
+    m_state->render();
+
     SceneState* new_scene = m_state->update();
 
     if (new_scene != NULL) {
