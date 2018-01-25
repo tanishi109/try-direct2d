@@ -25,7 +25,6 @@ void Scene::update()
 {
     Render::Clear();
     m_state->renderGameObjects();
-    m_state->updateGameObjects();
 
     SceneState* new_scene = m_state->update();
 

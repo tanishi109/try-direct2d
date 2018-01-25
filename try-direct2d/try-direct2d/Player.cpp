@@ -10,8 +10,7 @@ m_height(h),
 m_degree(45),
 m_horizontalPinMargin(10),
 m_parent(NULL),
-m_child(NULL),
-m_movable(true)
+m_child(NULL)
 {
     m_x = x;
     m_y = y;
@@ -27,13 +26,6 @@ Player::~Player()
         delete m_child;
 
         child = nextChild;
-    }
-}
-
-void Player::update(Screen* screen)
-{
-    if (m_movable) {
-        move(screen);
     }
 }
 

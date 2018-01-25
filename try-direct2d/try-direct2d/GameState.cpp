@@ -37,7 +37,6 @@ void GameState::enter()
         parent->addChild();
         parent = parent->m_child;
     }
-    m_player->m_movable = false;
 
     initPosition();
 }
@@ -134,14 +133,12 @@ SceneState* GameState::update()
     // Handle focus
     if (isMenuKeyDowned) {
         m_isFocus = false;
-        m_player->m_movable = false;
         ClipCursor(NULL);
         return new MenuState();
     }
 
     if (Input::GetMouseDownL() && !m_isFocus) {
         m_isFocus = true;
-        m_player->m_movable = true;
 
         RECT rc;
         GetWindowRect(Render::m_hwnd, &rc);
@@ -152,6 +149,7 @@ SceneState* GameState::update()
 
     if (m_isFocus) {
         scroll();
+        m_player->move(m_screen);
     }
 
     // 当たり判定チェック

@@ -9,7 +9,6 @@ public:
     SceneState();
     ~SceneState();
     void renderGameObjects();
-    void updateGameObjects();
     virtual void enter() {}
     virtual SceneState* update() = 0;
     virtual void onMouseMove() {}

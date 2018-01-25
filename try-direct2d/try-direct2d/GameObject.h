@@ -9,6 +9,6 @@ public:
     int m_x;
     int m_y;
     virtual void render(Screen* screen) = 0;
-    virtual void update(Screen* screen);
 };
+
 
