@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+// FIXME: 名前DemoAppじゃなくしたいな
 #include "DemoApp.h"
 #include "Input.h"
 #include "Render.h"
@@ -269,6 +270,26 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
                 // 座標を保存
                 Input::m_mousePos[0] = mouseX;
                 Input::m_mousePos[1] = mouseY;
+
+                // cursorCaptureMode用の処理
+                if (Input::m_captureCursorMode && Input::m_mouseDelta[0] == 0 && Input::m_mouseDelta[1] == 0) {
+                    // 移動量がゼロなら中央に戻す
+                    // FIXME: スクリーンの端に到達したときも中央に戻したい
+                    RECT windowRect;
+                    GetClientRect(hwnd, &windowRect);
+
+                    long width = windowRect.right - windowRect.left;
+                    long height = windowRect.bottom - windowRect.top;
+
+                    POINT screenCenter = { width / 2, height / 2 };
+                    // 中央に戻した際のdeltaは無効化
+                    // FIXME: prevMousePosが正しくなくなるからいじらないで済ませたい気がする
+                    Input::m_prevMousePos[0] = screenCenter.x;
+                    Input::m_prevMousePos[1] = screenCenter.y;
+                    // 中央に戻す
+                    ClientToScreen(hwnd, &screenCenter);
+                    SetCursorPos(screenCenter.x, screenCenter.y);
+                }
 
                 if (Input::m_mouseDelta[0] != 0 || Input::m_mouseDelta[1] != 0) {
                     // mouseMoveイベントハンドラ

@@ -17,6 +17,9 @@ public:
     static int GetMouseDeltaY();
     static bool GetKey(int keyCode);
 
+    // trueの時カーソルが非表示になり、mouseDeltaは座標の差ではなくマウスの移動量を保持する
+    static bool m_captureCursorMode;
+
 private:
     static bool m_mouseDownL;
     static bool m_mouseDownR;

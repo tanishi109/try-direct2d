@@ -7,6 +7,7 @@ int Input::m_mousePos[2] = {0, 0}; // Å‰NULL‚ª‚¢‚¢‚©‚à?
 int Input::m_mouseDelta[2] = {0, 0};
 int Input::m_prevMousePos[2] = {NULL, NULL};
 int Input::m_keyDown = NULL;
+bool Input::m_captureCursorMode = false;
 
 Input::Input()
 {
