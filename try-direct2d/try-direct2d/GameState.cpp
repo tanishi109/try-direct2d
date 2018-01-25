@@ -81,8 +81,8 @@ void GameState::scroll()
         }
         // カーソルをスクロールのために移動
         SetCursorPos(newCursorX, newCursorY);
-        m_screen->m_x -= std::cos(radian) * SCROLL_SPEED;
-        m_screen->m_y -= std::sin(radian) * SCROLL_SPEED;
+        m_screen->m_x += std::cos(radian) * SCROLL_SPEED;
+        m_screen->m_y += std::sin(radian) * SCROLL_SPEED;
     }
 }
 
@@ -110,7 +110,7 @@ Terrain* GameState::checkCollision()
                 int mainPinY;
                 std::tie(mainPinX, mainPinY) = player->getMainPinPos();
                 isHit = Collision::CheckCircleCollision(
-                    x * size + offsetX, y * size + offsetY, size / 2,
+                    x * size - offsetX, y * size - offsetY, size / 2,
                     mainPinX, mainPinY, player->m_collisionRadius
                 );
                 if (isHit) {
@@ -177,8 +177,8 @@ void GameState::initPosition()
     int height = rc.bottom - rc.top;
 
     // スタート地点が画面中央に来るようにscreenを配置
-    m_screen->m_x = width / 2  - World::TILE_SIZE * 2;
-    m_screen->m_y = height / 2 - World::TILE_SIZE * 2;
+    m_screen->m_x = -1 * width / 2  + World::TILE_SIZE * 2;
+    m_screen->m_y = -1 * height / 2 + World::TILE_SIZE * 2;
 
     // 中心に配置
     Player* player = m_player;

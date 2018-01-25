@@ -52,8 +52,8 @@ void World::render(Screen* screen)
 
             Terrain* tile = m_tiles[x][y];
             Render::DrawCircle(
-                x * size + offsetX,
-                y * size + offsetY,
+                x * size - offsetX,
+                y * size - offsetY,
                 size / 2,
                 tile->m_color
             );
