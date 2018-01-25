@@ -90,8 +90,6 @@ Terrain* GameState::checkCollision()
 {
     bool isHit = false;
     int size = CanvasState::m_world->TILE_SIZE;
-    int offsetX = m_screen->m_x;
-    int offsetY = m_screen->m_y;
 
     for (int x = 0; x < CanvasState::m_world->WIDTH; x++) {
         for (int y = 0; y < CanvasState::m_world->HEIGHT; y++) {
@@ -110,7 +108,7 @@ Terrain* GameState::checkCollision()
                 int mainPinY;
                 std::tie(mainPinX, mainPinY) = player->getMainPinPos();
                 isHit = Collision::CheckCircleCollision(
-                    x * size - offsetX, y * size - offsetY, size / 2,
+                    x * size, y * size, size / 2,
                     mainPinX, mainPinY, player->m_collisionRadius
                 );
                 if (isHit) {

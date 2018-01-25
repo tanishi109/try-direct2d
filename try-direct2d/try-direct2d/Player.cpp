@@ -35,6 +35,7 @@ void Player::move(Screen* screen)
         // 親nodeがいない場合はマウスを基準に移動
         int mouseX = Input::GetMousePosX();
         int mouseY = Input::GetMousePosY();
+        std::tie(mouseX, mouseY) = screen->ScreenToWorld(mouseX, mouseY);
         int mainPinX;
         int mainPinY;
         std::tie(mainPinX, mainPinY) = getMainPinPos();
@@ -85,10 +86,14 @@ void Player::render(Screen* screen)
     int mainPinY;
     // FIXME: []で分割代入できるはずだけど
     std::tie(mainPinX, mainPinY) = getMainPinPos();
+    std::tie(mainPinX, mainPinY) = screen->WorldToScreen(mainPinX, mainPinY);
     Render::SetRotation(m_degree, mainPinX, mainPinY);
   
     // プレイヤーの矩形
-    Render::DrawRect(m_x, m_y, m_width, m_height, BrushType_black);
+    int playerX;
+    int playerY;
+    std::tie(playerX, playerY) = screen->WorldToScreen(m_x, m_y);
+    Render::DrawRect(playerX, playerY, m_width, m_height, BrushType_black);
     // 当たり判定の円
     Render::DrawCircle(mainPinX, mainPinY, m_collisionRadius, BrushType_black);
 
