@@ -11,7 +11,6 @@ public:
     ~GameState();
     virtual void enter();
     virtual SceneState* update();
-    virtual void onMouseMove();
 private:
     Player* m_player;
     bool m_isFocus;

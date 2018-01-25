@@ -37,6 +37,7 @@ void GameState::enter()
         parent->addChild();
         parent = parent->m_child;
     }
+    m_player->m_movable = false;
 
     initPosition();
 }
@@ -133,12 +134,14 @@ SceneState* GameState::update()
     // Handle focus
     if (isMenuKeyDowned) {
         m_isFocus = false;
+        m_player->m_movable = false;
         ClipCursor(NULL);
         return new MenuState();
     }
 
     if (Input::GetMouseDownL() && !m_isFocus) {
         m_isFocus = true;
+        m_player->m_movable = true;
 
         RECT rc;
         GetWindowRect(Render::m_hwnd, &rc);
@@ -165,14 +168,6 @@ SceneState* GameState::update()
     }
 
     return NULL;
-}
-
-void GameState::onMouseMove()
-{
-    // FIXME: スクロールのためにマウスカーソルを動かしたときもonMouseMoveがハンドリングされてupdateされてしまい、微妙に位置が更新されている。。どう解決すればいいんだ
-    if (m_isFocus) {
-        m_player->update();
-    }
 }
 
 void GameState::initPosition()

@@ -8,8 +8,8 @@ class Player : public GameObject
 public:
     Player(int x, int y, int w, int h);
     ~Player();
-    void update();
-    void move();
+    void update(Screen* screen);
+    void move(Screen* screen);
     void render(Screen * screen);
     std::tuple<int, int> getMainPinPos(); // FIXME: float‚É“ˆê‚µ‚½‚Ù‚¤‚ª‚¢‚¢
     std::tuple<float, float> getSubPinPosRotated();
@@ -21,6 +21,7 @@ public:
     static const int m_collisionRadius = 3;
     Player* m_parent;
     Player* m_child;
+    bool m_movable;
 private:
     int m_width;
     int m_height;

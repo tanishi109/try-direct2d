@@ -14,9 +14,16 @@ SceneState::~SceneState()
 {
 }
 
-void SceneState::render()
+void SceneState::renderGameObjects()
 {
     for (auto gameObj = m_gameObjects.begin(); gameObj != m_gameObjects.end(); gameObj++) {
         (*gameObj)->render(m_screen);
+    }
+}
+
+void SceneState::updateGameObjects()
+{
+    for (auto gameObj = m_gameObjects.begin(); gameObj != m_gameObjects.end(); gameObj++) {
+        (*gameObj)->update(m_screen);
     }
 }

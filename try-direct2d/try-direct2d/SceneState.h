@@ -8,9 +8,10 @@ class SceneState
 public:
     SceneState();
     ~SceneState();
-    virtual void render();
+    void renderGameObjects();
+    void updateGameObjects();
     virtual void enter() {}
-    virtual SceneState* update() {return NULL;}
+    virtual SceneState* update() = 0;
     virtual void onMouseMove() {}
 protected:
     Screen* m_screen;

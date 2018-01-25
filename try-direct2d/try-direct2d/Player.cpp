@@ -10,7 +10,8 @@ m_height(h),
 m_degree(45),
 m_horizontalPinMargin(10),
 m_parent(NULL),
-m_child(NULL)
+m_child(NULL),
+m_movable(true)
 {
     m_x = x;
     m_y = y;
@@ -29,12 +30,14 @@ Player::~Player()
     }
 }
 
-void Player::update()
+void Player::update(Screen* screen)
 {
-    move();
+    if (m_movable) {
+        move(screen);
+    }
 }
 
-void Player::move()
+void Player::move(Screen* screen)
 {
     if (m_parent == NULL) {
         // 親nodeがいない場合はマウスを基準に移動
@@ -80,7 +83,7 @@ void Player::move()
 
     // 子を再帰的に移動
     if (m_child != NULL) {
-        m_child->move();
+        m_child->move(screen);
     }
 }
 
