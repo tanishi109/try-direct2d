@@ -14,7 +14,7 @@ m_isFocus(false)
 }
 
 // FIXME; こういうのやるならresourceに書くべき
-int SCROLL_DISTANCE = 100;
+int SCROLL_DISTANCE = 10;
 int SCROLL_SPEED = 5;
 int CHILD_COUNT = 3;
 
@@ -39,9 +39,11 @@ void GameState::enter()
     }
 
     initPosition();
+    Input::m_captureCursorMode = true;
 }
 
 // カーソルが中央から離れていたらスクロールさせる
+// TODO: 自分の手でスクロールしたいことある
 void GameState::scroll()
 {
     RECT windowRect;
@@ -51,36 +53,17 @@ void GameState::scroll()
     long height = windowRect.bottom - windowRect.top;
 
     POINT screenCenter = { width / 2, height / 2 };
-    ClientToScreen(Render::m_hwnd, &screenCenter);
 
-    POINT cursorPos;
-    GetCursorPos(&cursorPos);
+    float subPinX;
+    float subPinY;
+    std::tie(subPinX, subPinY) = m_player->getSubPinPosRotated();
+    std::tie(subPinX, subPinY) = m_screen->WorldToScreen(subPinX, subPinY);
 
-    float distance = Mathtool::getDistance(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
+    float distance = Mathtool::getDistance(screenCenter.x, screenCenter.y, subPinX, subPinY);
 
     if (distance > SCROLL_DISTANCE) {
-        float radian = Mathtool::getRadFromPos(screenCenter.x, screenCenter.y, cursorPos.x, cursorPos.y);
-
-        float newCursorX = cursorPos.x - std::cos(radian) * SCROLL_SPEED;
-        float newCursorY = cursorPos.y - std::sin(radian) * SCROLL_SPEED;
-
-        // プレイヤーをスクロールのために移動
-        POINT pt = { newCursorX, newCursorY };
-        ScreenToClient(Render::m_hwnd, &pt);
-        m_player->setSubPinPos(pt.x, pt.y);
-        // 子も再帰的に移動
-        Player* child = m_player->m_child;
-        while (child != NULL) {
-            int parentMainPinX;
-            int parentMainPinY;
-            std::tie(parentMainPinX, parentMainPinY) = child->m_parent->getMainPinPos();
-
-            child->setSubPinPos(parentMainPinX, parentMainPinY);
-
-            child = child->m_child;
-        }
-        // カーソルをスクロールのために移動
-        SetCursorPos(newCursorX, newCursorY);
+        // スクリーンをスクロール
+        float radian = Mathtool::getRadFromPos(screenCenter.x, screenCenter.y, subPinX, subPinY);
         m_screen->m_x += std::cos(radian) * SCROLL_SPEED;
         m_screen->m_y += std::sin(radian) * SCROLL_SPEED;
     }
@@ -130,13 +113,17 @@ SceneState* GameState::update()
 
     // Handle focus
     if (isMenuKeyDowned) {
+        // FIXME: onLeave的なのが欲しいね
         m_isFocus = false;
         ClipCursor(NULL);
+        Input::m_captureCursorMode = false;
+        ShowCursor(true);
         return new MenuState();
     }
 
     if (Input::GetMouseDownL() && !m_isFocus) {
         m_isFocus = true;
+        ShowCursor(false);
 
         RECT rc;
         GetWindowRect(Render::m_hwnd, &rc);
@@ -147,6 +134,8 @@ SceneState* GameState::update()
 
     if (m_isFocus) {
         scroll();
+    }
+    if (m_isFocus && (Input::GetMouseDeltaX() != 0 || Input::GetMouseDeltaY() != 0)) {
         m_player->move(m_screen);
     }
 

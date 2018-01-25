@@ -32,10 +32,14 @@ Player::~Player()
 void Player::move(Screen* screen)
 {
     if (m_parent == NULL) {
+
         // 親nodeがいない場合はマウスを基準に移動
-        int mouseX = Input::GetMousePosX();
-        int mouseY = Input::GetMousePosY();
-        std::tie(mouseX, mouseY) = screen->ScreenToWorld(mouseX, mouseY);
+        // FIXME: re-position と rotation に分けるとか
+        float sx;
+        float sy;
+        std::tie(sx, sy) = getSubPinPosRotated();
+        int mouseX = sx + Input::GetMouseDeltaX();
+        int mouseY = sy + Input::GetMouseDeltaY();
         int mainPinX;
         int mainPinY;
         std::tie(mainPinX, mainPinY) = getMainPinPos();
