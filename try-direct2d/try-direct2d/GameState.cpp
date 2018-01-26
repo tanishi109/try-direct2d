@@ -177,7 +177,6 @@ void GameState::initPosition()
     Player* player = m_player;
     int playerX;
     int playerY;
-    // FIXME: ƒƒ\ƒbƒh–¼Å‰¬•¶Žš‚ª‚¢‚¢‚È
     std::tie(playerX, playerY) = m_screen->screenToWorld(width / 2, height / 2);
     while (player != NULL) {
         player->setMainPinPos(playerX, playerY);
