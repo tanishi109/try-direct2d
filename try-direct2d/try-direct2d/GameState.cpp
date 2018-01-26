@@ -15,6 +15,7 @@ m_isFocus(false)
 
 // FIXME; こういうのやるならresourceに書くべき
 int SCROLL_DISTANCE = 10;
+int FOLLOW_DISTANCE = 60;
 int SCROLL_SPEED = 5;
 int CHILD_COUNT = 3;
 
@@ -62,10 +63,18 @@ void GameState::scroll()
     float distance = Mathtool::getDistance(screenCenter.x, screenCenter.y, subPinX, subPinY);
 
     if (distance > SCROLL_DISTANCE) {
-        // スクリーンをスクロール
         float radian = Mathtool::getRadFromPos(screenCenter.x, screenCenter.y, subPinX, subPinY);
-        m_screen->m_x += std::cos(radian) * SCROLL_SPEED;
-        m_screen->m_y += std::sin(radian) * SCROLL_SPEED;
+
+        if (distance > FOLLOW_DISTANCE) {
+            // 大きく離れていたらスクリーンをプレイヤー座標と一致
+            std::tie(subPinX, subPinY) = m_screen->ScreenToWorld(subPinX, subPinY);
+            m_screen->m_x = subPinX - std::cos(radian) * FOLLOW_DISTANCE - width / 2 ;
+            m_screen->m_y = subPinY - std::sin(radian) * FOLLOW_DISTANCE - height / 2;
+            return;
+        } else {
+            m_screen->m_x += std::cos(radian) * SCROLL_SPEED;
+            m_screen->m_y += std::sin(radian) * SCROLL_SPEED;
+        }
     }
 }
 
