@@ -13,7 +13,7 @@ Screen::~Screen()
 {
 }
 
-std::tuple<int, int> Screen::WorldToScreen(int x, int y)
+std::tuple<int, int> Screen::worldToScreen(int x, int y)
 {
     return {x - m_x, y - m_y};
 }

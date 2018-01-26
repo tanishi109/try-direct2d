@@ -58,7 +58,7 @@ void GameState::scroll()
     float subPinX;
     float subPinY;
     std::tie(subPinX, subPinY) = m_player->getSubPinPosRotated();
-    std::tie(subPinX, subPinY) = m_screen->WorldToScreen(subPinX, subPinY);
+    std::tie(subPinX, subPinY) = m_screen->worldToScreen(subPinX, subPinY);
 
     float distance = Mathtool::getDistance(screenCenter.x, screenCenter.y, subPinX, subPinY);
 

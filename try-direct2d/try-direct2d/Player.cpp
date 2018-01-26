@@ -90,13 +90,13 @@ void Player::render(Screen* screen)
     int mainPinY;
     // FIXME: []で分割代入できるはずだけど
     std::tie(mainPinX, mainPinY) = getMainPinPos();
-    std::tie(mainPinX, mainPinY) = screen->WorldToScreen(mainPinX, mainPinY);
+    std::tie(mainPinX, mainPinY) = screen->worldToScreen(mainPinX, mainPinY);
     Render::SetRotation(m_degree, mainPinX, mainPinY);
   
     // プレイヤーの矩形
     int playerX;
     int playerY;
-    std::tie(playerX, playerY) = screen->WorldToScreen(m_x, m_y);
+    std::tie(playerX, playerY) = screen->worldToScreen(m_x, m_y);
     Render::DrawRect(playerX, playerY, m_width, m_height, BrushType_black);
     // 当たり判定の円
     Render::DrawCircle(mainPinX, mainPinY, m_collisionRadius, BrushType_black);
