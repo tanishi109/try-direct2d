@@ -67,7 +67,7 @@ void GameState::scroll()
 
         if (distance > FOLLOW_DISTANCE) {
             // 大きく離れていたらスクリーンをプレイヤー座標と一致
-            std::tie(subPinX, subPinY) = m_screen->ScreenToWorld(subPinX, subPinY);
+            std::tie(subPinX, subPinY) = m_screen->screenToWorld(subPinX, subPinY);
             m_screen->m_x = subPinX - std::cos(radian) * FOLLOW_DISTANCE - width / 2 ;
             m_screen->m_y = subPinY - std::sin(radian) * FOLLOW_DISTANCE - height / 2;
             return;
@@ -178,7 +178,7 @@ void GameState::initPosition()
     int playerX;
     int playerY;
     // FIXME: メソッド名最初小文字がいいな
-    std::tie(playerX, playerY) = m_screen->ScreenToWorld(width / 2, height / 2);
+    std::tie(playerX, playerY) = m_screen->screenToWorld(width / 2, height / 2);
     while (player != NULL) {
         player->setMainPinPos(playerX, playerY);
         player = player->m_child;
