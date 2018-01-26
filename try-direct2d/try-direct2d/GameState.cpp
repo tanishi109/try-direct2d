@@ -175,8 +175,12 @@ void GameState::initPosition()
 
     // 中心に配置
     Player* player = m_player;
+    int playerX;
+    int playerY;
+    // FIXME: メソッド名最初小文字がいいな
+    std::tie(playerX, playerY) = m_screen->ScreenToWorld(width / 2, height / 2);
     while (player != NULL) {
-        player->setMainPinPos(width / 2, height / 2);
+        player->setMainPinPos(playerX, playerY);
         player = player->m_child;
     }
 }
