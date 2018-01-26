@@ -137,8 +137,6 @@ SceneState* GameState::update()
         RECT rc;
         GetWindowRect(Render::m_hwnd, &rc);
         ClipCursor(&rc);
-
-        setCursorOnPlayer();
     }
 
     if (m_isFocus) {
@@ -154,7 +152,6 @@ SceneState* GameState::update()
     if (hitTerrain != NULL) {
         if (hitTerrain->m_type == TerrainType_wall) {
             initPosition();
-            setCursorOnPlayer();
         }
         if (hitTerrain->m_type == TerrainType_goal) {
             Render::DrawText(0, 0, 100, 32, L"Clear!");
@@ -182,14 +179,4 @@ void GameState::initPosition()
         player->setMainPinPos(width / 2, height / 2);
         player = player->m_child;
     }
-}
-
-void GameState::setCursorOnPlayer()
-{
-    int playerX;
-    int playerY;
-    std::tie(playerX, playerY) = m_player->getSubPinPosRotated();
-    POINT playerPos = {playerX, playerY};
-    ClientToScreen(Render::m_hwnd, &playerPos);
-    SetCursorPos(playerPos.x, playerPos.y);
 }

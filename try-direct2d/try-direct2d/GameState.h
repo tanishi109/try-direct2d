@@ -18,6 +18,5 @@ private:
     void scroll();
     Terrain* checkCollision();
     void initPosition();
-    void setCursorOnPlayer();
 };
 
