@@ -27,6 +27,7 @@ private:
     static IDWriteTextFormat* m_textFormat;
     static ID2D1HwndRenderTarget* m_renderTarget;
     // FIXME: ブラシやテキストのフォーマットあらかじめ用意しておかないといけないのはどうにかならない?
+    // FIXME: スネークケースになってるの直す
     static ID2D1SolidColorBrush* m_brush; 
     static ID2D1SolidColorBrush* m_brush_white;
     static ID2D1SolidColorBrush* m_brush_black;

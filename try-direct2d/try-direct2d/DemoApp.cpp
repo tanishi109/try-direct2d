@@ -317,6 +317,7 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
 void DemoApp::EnterScene()
 {
+    // FIXME: Begin~EndDraw‚ª•K—v‚Á‚Û‚¢
     m_scene->enter();
 }
 
