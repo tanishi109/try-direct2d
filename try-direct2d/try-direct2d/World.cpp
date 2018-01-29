@@ -51,6 +51,9 @@ void World::render(Screen* screen)
         for (int y = 0; y < HEIGHT; y++) {
 
             Terrain* tile = m_tiles[x][y];
+            if (tile->m_type == TerrainType_floor) {
+                continue;
+            }
             Render::DrawCircle(
                 x * size - offsetX,
                 y * size - offsetY,

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Render.h"
 
+// FIXME: NULL => nullptrにしたほうがいいかも
+// FIXME: SafeReleaseしてないやつある
 ID2D1HwndRenderTarget* Render::m_renderTarget = NULL;
 HWND Render::m_hwnd = NULL;
 ID2D1Factory* Render::m_direct2dFactory = NULL;
@@ -10,6 +12,11 @@ ID2D1SolidColorBrush* Render::m_brush = NULL;
 ID2D1SolidColorBrush* Render::m_brush_white = NULL;
 ID2D1SolidColorBrush* Render::m_brush_black = NULL;
 ID2D1SolidColorBrush* Render::m_brush_pink = NULL;
+ID2D1SolidColorBrush* Render::m_bBrush = NULL;
+IWICBitmap* Render::m_wicBmp = NULL;
+ID2D1Bitmap* Render::m_direct2dBmp = NULL;
+ID2D1RenderTarget* Render::m_bmpRenderTarget = NULL;
+IWICImagingFactory* Render::m_wicImagingFactory = NULL;
 
 Render::Render()
 {
@@ -28,17 +35,20 @@ void Render::Begin()
 
     if (SUCCEEDED(hr)){
         m_renderTarget->BeginDraw();
+        m_bmpRenderTarget->BeginDraw();
     }
 }
 
 void Render::End()
 {
     m_renderTarget->EndDraw();
+    m_bmpRenderTarget->EndDraw();
 }
 
 void Render::Clear()
 {
     m_renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+    m_bmpRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 }
 
 void Render::DrawRect(int x, int y, int w, int h, BrushType type)
@@ -53,6 +63,7 @@ void Render::DrawRect(int x, int y, int w, int h, BrushType type)
 
     ID2D1SolidColorBrush* brush = getBrush(type);
     m_renderTarget->DrawRectangle(&rect, brush);
+    m_bmpRenderTarget->DrawRectangle(&rect, m_bBrush);
 }
 
 void Render::DrawCircle(int x, int y, int r, BrushType type)
@@ -65,6 +76,7 @@ void Render::DrawCircle(int x, int y, int r, BrushType type)
 
     ID2D1SolidColorBrush* brush = getBrush(type);
     m_renderTarget->FillEllipse(ellipse, brush);
+    m_bmpRenderTarget->FillEllipse(ellipse, m_bBrush);
 }
 
 // FIXME: 文字列まわりいろんな型がありそうなのでこれが適当か調べて
@@ -80,12 +92,30 @@ void Render::DrawText(int x, int y, int w, int h, std::wstring text)
         D2D1::RectF(x, y, w, h), // FIXME: ここもfloatにcast
         m_brush_black
     );
+
+    // いまは文字はスクショに含めていないが、引数で設定できてもいいかも
+    // m_bmpRenderTarget->DrawText();
 }
 
 void Render::SetRotation(float degree, float centerX, float centerY)
 {
     D2D1::Matrix3x2F matrix = D2D1::Matrix3x2F::Rotation(degree, D2D1::Point2F(centerX, centerY));
     m_renderTarget->SetTransform(matrix);
+    m_bmpRenderTarget->SetTransform(matrix);
+}
+
+void Render::TakeScreenShot()
+{
+    End();
+    HRESULT r = m_renderTarget->CreateBitmapFromWicBitmap(m_wicBmp, &m_direct2dBmp);
+    Begin();
+}
+
+void Render::DrawScreenShot()
+{
+    if (m_direct2dBmp != NULL) {
+        m_renderTarget->DrawBitmap(m_direct2dBmp);
+    }
 }
 
 HRESULT Render::CreateDeviceResources()
@@ -109,6 +139,18 @@ HRESULT Render::CreateDeviceResources()
             &m_renderTarget
         );
 
+        // bitmap描画用のrenderTarget
+        // FIXME: ここのサイズwindowサイズの変更に対応
+        m_wicImagingFactory->CreateBitmap(size.width, size.height, GUID_WICPixelFormat32bppPBGRA, WICBitmapCacheOnDemand, &m_wicBmp);
+
+        m_direct2dFactory->CreateWicBitmapRenderTarget(
+            m_wicBmp,
+            D2D1::RenderTargetProperties(
+                D2D1_RENDER_TARGET_TYPE_DEFAULT,
+                D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
+                96.0f, 96.0f
+            ),
+            &m_bmpRenderTarget);
 
         if (SUCCEEDED(hr))
         {
@@ -138,6 +180,13 @@ HRESULT Render::CreateDeviceResources()
                 &m_brush_pink
             );
         }
+        if (SUCCEEDED(hr))
+        {
+            hr = m_bmpRenderTarget->CreateSolidColorBrush(
+                D2D1::ColorF(D2D1::ColorF::LightGray),
+                &m_bBrush
+            );
+        }
     }
 
     return hr;
@@ -149,6 +198,17 @@ HRESULT Render::CreateDeviceIndependentResources()
 
     // Create a Direct2D factory.
     hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_direct2dFactory);
+
+    // bitmap書き出しのため
+    CoInitialize(nullptr);
+
+    CoCreateInstance(
+        CLSID_WICImagingFactory,
+        NULL,
+        CLSCTX_INPROC_SERVER,
+        IID_IWICImagingFactory,
+        (LPVOID*)&m_wicImagingFactory
+    );
 
     // 文字描画のため
     static const WCHAR msc_fontName[] = L"Verdana";

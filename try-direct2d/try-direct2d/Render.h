@@ -15,6 +15,8 @@ public:
     static void DrawCircle(int x, int y, int r, BrushType type);
     static void DrawText(int x, int y, int w, int h, std::wstring text);
     static void SetRotation(float degree, float centerX, float centerY);
+    static void TakeScreenShot();
+    static void DrawScreenShot();
     static HRESULT CreateDeviceResources();
     static HRESULT CreateDeviceIndependentResources();
 
@@ -32,5 +34,11 @@ private:
     static ID2D1SolidColorBrush* m_brush_white;
     static ID2D1SolidColorBrush* m_brush_black;
     static ID2D1SolidColorBrush* m_brush_pink;
+    static ID2D1SolidColorBrush* m_bBrush;
+    
+    static IWICBitmap* m_wicBmp;
+    static ID2D1Bitmap* m_direct2dBmp;
+    static ID2D1RenderTarget* m_bmpRenderTarget;
+    static IWICImagingFactory* m_wicImagingFactory;
 };
 

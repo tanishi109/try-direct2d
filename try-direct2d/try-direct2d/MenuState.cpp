@@ -26,6 +26,8 @@ SceneState* MenuState::update()
 {
     Render::Clear();
 
+    Render::DrawScreenShot();
+
     static const int width = 400;
     for (auto &pos : m_textPosList) {
         int index = &pos - &m_textPosList[0];

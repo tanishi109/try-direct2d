@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+
 // M_PIが定義されていないエラーが出るのでstdafx.cppの"#include stdafx.h"より前に移動した
 // #define _USE_MATH_DEFINES
 // #include <cmath>  
@@ -36,6 +37,7 @@
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
+#pragma comment(lib, "windowscodecs.lib")
 
 #ifdef _DEBUG
     template<typename... Args>
