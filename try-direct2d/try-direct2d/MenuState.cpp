@@ -20,6 +20,7 @@ MenuState::~MenuState()
 
 void MenuState::enter()
 {
+    Render::TakeScreenShot();
 }
 
 SceneState* MenuState::update()

@@ -128,8 +128,6 @@ SceneState* GameState::update()
         Input::m_captureCursorMode = false;
         ShowCursor(true);
 
-        Render::TakeScreenShot();
-
         return new MenuState();
     }
 
