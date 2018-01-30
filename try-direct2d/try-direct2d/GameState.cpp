@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameState.h"
-#include "MenuState.h"
+#include "CanvasMenuState.h"
 #include "CanvasState.h"
 #include "Input.h"
 #include "Render.h"
@@ -128,7 +128,7 @@ SceneState* GameState::update()
         Input::m_captureCursorMode = false;
         ShowCursor(true);
 
-        return new MenuState();
+        return new CanvasMenuState();
     }
 
     if (Input::GetMouseDownL() && !m_isFocus) {

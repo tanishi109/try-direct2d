@@ -60,9 +60,6 @@
     <ClInclude Include="Terrain.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MenuState.h">
-      <Filter>ヘッダー ファイル\States</Filter>
-    </ClInclude>
     <ClInclude Include="GameState.h">
       <Filter>ヘッダー ファイル\States</Filter>
     </ClInclude>
@@ -86,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CanvasMenuState.h">
+      <Filter>ヘッダー ファイル\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -119,9 +119,6 @@
     <ClCompile Include="Terrain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="MenuState.cpp">
-      <Filter>ソース ファイル\States</Filter>
-    </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>ソース ファイル\States</Filter>
     </ClCompile>
@@ -139,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasMenuState.cpp">
+      <Filter>ソース ファイル\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

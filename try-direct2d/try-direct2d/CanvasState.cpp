@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CanvasState.h"
-#include "MenuState.h"
+#include "CanvasMenuState.h"
 #include "Input.h"
 #include "Render.h"
 
@@ -55,7 +55,7 @@ SceneState* CanvasState::update()
 
     bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
     if (isMenuKeyDowned) {
-        return new MenuState();
+        return new CanvasMenuState();
     }
 
     return NULL;

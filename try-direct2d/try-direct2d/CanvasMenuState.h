@@ -2,11 +2,11 @@
 
 #include "SceneState.h"
 
-class MenuState : public SceneState
+class CanvasMenuState : public SceneState
 {
 public:
-    MenuState();
-    ~MenuState();
+    CanvasMenuState();
+    ~CanvasMenuState();
     virtual void enter();
     virtual SceneState* update();
     virtual void onMouseMove();

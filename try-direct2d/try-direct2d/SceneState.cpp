@@ -2,7 +2,7 @@
 #include "SceneState.h"
 
 #include "CanvasState.h"
-#include "MenuState.h"
+#include "CanvasMenuState.h"
 
 SceneState::SceneState() :
 m_screen(new Screen())

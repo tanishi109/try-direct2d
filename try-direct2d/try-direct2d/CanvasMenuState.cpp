@@ -1,29 +1,29 @@
 #include "stdafx.h"
 
 #include "SceneState.h"
-#include "MenuState.h"
+#include "CanvasMenuState.h"
 #include "CanvasState.h"
 #include "GameState.h"
 #include "Render.h"
 #include "Input.h"
 
-MenuState::MenuState() :
+CanvasMenuState::CanvasMenuState() :
 m_textPosList{{0, 0}, {30, 100}, {30, 200}},
 m_textList{L"Menu", L"push 1. Canvas Mode", L"push 2. Game Mode"}
 {
 }
 
 
-MenuState::~MenuState()
+CanvasMenuState::~CanvasMenuState()
 {
 }
 
-void MenuState::enter()
+void CanvasMenuState::enter()
 {
     Render::TakeScreenShot();
 }
 
-SceneState* MenuState::update()
+SceneState* CanvasMenuState::update()
 {
     Render::Clear();
 
@@ -52,6 +52,6 @@ SceneState* MenuState::update()
     return NULL;
 }
 
-void MenuState::onMouseMove()
+void CanvasMenuState::onMouseMove()
 {
 }
