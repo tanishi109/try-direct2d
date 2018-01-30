@@ -2,13 +2,13 @@
 #include "Scene.h"
 #include "SceneState.h"
 //#include "CanvasState.h"
-#include "GameState.h"
+#include "StageSelectState.h"
 #include "Render.h"
 
 Scene::Scene()
 {
     //m_state = new CanvasState();
-    m_state = new GameState();
+    m_state = new StageSelectState();
 }
 
 
