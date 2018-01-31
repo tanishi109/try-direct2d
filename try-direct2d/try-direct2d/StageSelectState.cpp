@@ -5,6 +5,8 @@
 #include "Input.h"
 #include "CanvasState.h"
 
+#include "Resource.h"
+
 StageSelectState::StageSelectState()
 {
 }
@@ -27,5 +29,30 @@ SceneState* StageSelectState::update()
         return new CanvasState();
     }
 
+    bool is0KeyDowned = Input::GetKey(0x30);
+
+    if (is0KeyDowned) {
+        log("load here\n");
+        loadStage();
+    }
+
     return NULL;
+}
+
+void StageSelectState::loadStage()
+{
+    std::ostringstream oss;
+    oss << "./" << DATA_FOLDER_NAME << "/test.dat";
+    std::ifstream ifs(oss.str().c_str(), std::ios::in | std::ios::binary);
+
+    if (!ifs)
+    {
+        log(":err, file open\n");
+        return;
+    }
+
+    World readWorld;
+
+    ifs.read((char *)&readWorld, sizeof(World));
+    CanvasState::m_world = &readWorld;
 }
