@@ -27,6 +27,9 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <direct.h>
 
 // M_PIが定義されていないエラーが出るのでstdafx.cppの"#include stdafx.h"より前に移動した
 // #define _USE_MATH_DEFINES

@@ -8,10 +8,10 @@ public:
     CanvasMenuState();
     ~CanvasMenuState();
     virtual void enter();
-    virtual SceneState* update();
-    virtual void onMouseMove();
+    virtual SceneState* update(); // FIXME: オーバーライドする側の定義でvirtual不要なのでは
+    void saveCanvas();
 private:
-    int m_textPosList[3][2];
-    std::wstring m_textList[3];
+    int m_textPosList[4][2];
+    std::wstring m_textList[4];
 };
 
