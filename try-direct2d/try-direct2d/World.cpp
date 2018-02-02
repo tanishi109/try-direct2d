@@ -69,7 +69,9 @@ TileMapRecord<World::WIDTH, World::HEIGHT> World::save(std::string fileId)
 {
     TileMapRecord<WIDTH, HEIGHT> tileMapRecord;
 
-    tileMapRecord.tileSize = 999;
+    tileMapRecord.tileSize = World::TILE_SIZE;
+    tileMapRecord.xPos = 0;
+    tileMapRecord.yPos = 0;
 
     strcpy_s(tileMapRecord.name, 16, "1st stage");
     strcpy_s(tileMapRecord.id, 16, fileId.c_str());
@@ -77,11 +79,28 @@ TileMapRecord<World::WIDTH, World::HEIGHT> World::save(std::string fileId)
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
             Terrain* tile = m_tiles[x][y];
-            // TODO: ƒ^ƒCƒ‹‚Ì“o˜^
-            //tile->m_type;
+            tileMapRecord.terrainTypeMatrix[x][y] = tile->m_type;
         }
     }
     return tileMapRecord;
+}
+
+void World::restore(TileMapRecord<WIDTH, HEIGHT> tileMapRecord)
+{
+    for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < HEIGHT; y++) {
+            TerrainType type = tileMapRecord.terrainTypeMatrix[x][y];
+            if (type == TerrainType_floor) {
+                m_tiles[x][y] = &m_floorTerrain;
+            }
+            if (type == TerrainType_wall) {
+                m_tiles[x][y] = &m_wallTerrain;
+            }
+            if (type == TerrainType_goal) {
+                m_tiles[x][y] = &m_goalTerrain;
+            }
+        }
+    }
 }
 
 // ŠOŽü‚©”»’è

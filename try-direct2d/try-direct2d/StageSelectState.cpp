@@ -63,6 +63,6 @@ void StageSelectState::loadTileMap()
     ifs.read(reinterpret_cast<char *>(&tileMapRecord), sizeof(tileMapRecord));
     ifs.close();
 
-    // TODO: “Ç‚Ýž‚ñ‚¾record‚©‚çWorld‚Ìm_tiles‚ð•œŒ³‚·‚é
-    log("id is %s\n", tileMapRecord.id);
+    // “Ç‚Ýž‚ñ‚¾record‚©‚çWorld‚Ìm_tiles‚ð•œŒ³‚·‚é
+    CanvasState::m_world->restore(tileMapRecord);
 }

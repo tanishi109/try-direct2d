@@ -18,6 +18,7 @@ public:
     void setTileFromPos(TerrainType type, int x, int y);
     void render(Screen* screen);
     TileMapRecord<WIDTH, HEIGHT> save(std::string fileId);
+    void restore(TileMapRecord<WIDTH, HEIGHT> tileMapRecord);
 private:
     Terrain m_floorTerrain;
     Terrain m_wallTerrain;
