@@ -4,6 +4,8 @@
 #include "Render.h"
 #include "Input.h"
 #include "CanvasState.h"
+#include "TileMapRecord.h"
+#include "Stringtool.h"
 
 #include "Resource.h"
 
@@ -18,7 +20,6 @@ StageSelectState::~StageSelectState()
 
 void StageSelectState::enter()
 {
-    log("Enter stage select state\n");
 }
 
 SceneState* StageSelectState::update()
@@ -32,18 +33,24 @@ SceneState* StageSelectState::update()
     bool is0KeyDowned = Input::GetKey(0x30);
 
     if (is0KeyDowned) {
-        log("load here\n");
-        loadStage();
+        loadTileMap();
     }
 
     return NULL;
 }
 
-void StageSelectState::loadStage()
+void StageSelectState::loadTileMap()
 {
-    std::ostringstream oss;
-    oss << "./" << DATA_FOLDER_NAME << "/test.dat";
-    std::ifstream ifs(oss.str().c_str(), std::ios::in | std::ios::binary);
+    std::string folderPath = Stringtool::GetAsString("./", DATA_FOLDER_NAME);
+
+    std::string fileName;
+    for (auto & p : std::experimental::filesystem::directory_iterator(folderPath)) {
+        fileName = Stringtool::GetAsString(p.path().filename());
+    }
+
+    // FIXME: 今は最後のファイル名をfilePathに指定しているが、後で開くファイルを選択できるようにする
+    std::string filePath = Stringtool::GetAsString(folderPath, "/", fileName);
+    std::ifstream ifs(filePath.c_str(), std::ios::in | std::ios::binary);
 
     if (!ifs)
     {
@@ -51,8 +58,11 @@ void StageSelectState::loadStage()
         return;
     }
 
-    World readWorld;
+    TileMapRecord<World::WIDTH, World::HEIGHT> tileMapRecord;
 
-    ifs.read((char *)&readWorld, sizeof(World));
-    CanvasState::m_world = &readWorld;
+    ifs.read(reinterpret_cast<char *>(&tileMapRecord), sizeof(tileMapRecord));
+    ifs.close();
+
+    // TODO: 読み込んだrecordからWorldのm_tilesを復元する
+    log("id is %s\n", tileMapRecord.id);
 }

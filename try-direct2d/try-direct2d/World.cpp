@@ -64,6 +64,26 @@ void World::render(Screen* screen)
     }
 }
 
+// m_tiles‚©‚çTileMapRecord‚ð•Ô‚·
+TileMapRecord<World::WIDTH, World::HEIGHT> World::save(std::string fileId)
+{
+    TileMapRecord<WIDTH, HEIGHT> tileMapRecord;
+
+    tileMapRecord.tileSize = 999;
+
+    strcpy_s(tileMapRecord.name, 16, "1st stage");
+    strcpy_s(tileMapRecord.id, 16, fileId.c_str());
+
+    for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < HEIGHT; y++) {
+            Terrain* tile = m_tiles[x][y];
+            // TODO: ƒ^ƒCƒ‹‚Ì“o˜^
+            //tile->m_type;
+        }
+    }
+    return tileMapRecord;
+}
+
 // ŠOŽü‚©”»’è
 bool World::isOuter(int x, int y)
 {

@@ -6,6 +6,8 @@
 #include "GameState.h"
 #include "Render.h"
 #include "Input.h"
+#include "TileMapRecord.h"
+#include "Stringtool.h"
 
 #include "Resource.h"
 
@@ -62,23 +64,23 @@ SceneState* CanvasMenuState::update()
         return new GameState();
     }
     if (is0KeyDowned) {
-        saveCanvas();
+        saveTileMap();
     }
 
     return NULL;
 }
 
-void CanvasMenuState::saveCanvas()
+void CanvasMenuState::saveTileMap()
 {
-    std::ostringstream oss;
-    oss << "./" << DATA_FOLDER_NAME;
-    _mkdir(oss.str().c_str());
 
-    oss.clear();
-    oss.str("");
+    std::string folderPath = Stringtool::GetAsString("./", DATA_FOLDER_NAME);
+    _mkdir(folderPath.c_str());
 
-    oss << "./" << DATA_FOLDER_NAME << "/test.dat";
-    std::ofstream ofs(oss.str().c_str(), std::ios::out | std::ios::trunc | std::ios::binary);
+    std::time_t time = std::time(nullptr);
+    std::string fileId = Stringtool::GetAsString(time);
+    std::string filePath = Stringtool::GetAsString(folderPath, "/", fileId, ".dat");
+
+    std::ofstream ofs(filePath, std::ios::out | std::ios::trunc | std::ios::binary);
 
     if (!ofs)
     {
@@ -86,7 +88,7 @@ void CanvasMenuState::saveCanvas()
         return;
     }
 
-    ofs.write(reinterpret_cast<char *>(CanvasState::m_world), sizeof(World));
-
-    log(":ok, file wrote\n");
+    TileMapRecord<World::WIDTH, World::HEIGHT> tileMapRecord = CanvasState::m_world->save(fileId);
+    ofs.write(reinterpret_cast<char *>(&tileMapRecord), sizeof(tileMapRecord));
+    ofs.close();
 }

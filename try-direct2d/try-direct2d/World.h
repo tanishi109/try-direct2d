@@ -2,6 +2,7 @@
 
 #include "Terrain.h"
 #include "GameObject.h"
+#include "TileMapRecord.h"
 
 class World : public GameObject
 {
@@ -16,6 +17,7 @@ public:
 
     void setTileFromPos(TerrainType type, int x, int y);
     void render(Screen* screen);
+    TileMapRecord<WIDTH, HEIGHT> save(std::string fileId);
 private:
     Terrain m_floorTerrain;
     Terrain m_wallTerrain;

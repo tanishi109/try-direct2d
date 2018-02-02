@@ -12,6 +12,6 @@ public:
 private:
     int m_textPosList[4][2];
     std::wstring m_textList[4];
-    void saveCanvas();
+    void saveTileMap();
 };
 

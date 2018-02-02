@@ -30,6 +30,8 @@
 #include <fstream>
 #include <sstream>
 #include <direct.h>
+#include <ctime>
+#include <filesystem>
 
 // M_PIが定義されていないエラーが出るのでstdafx.cppの"#include stdafx.h"より前に移動した
 // #define _USE_MATH_DEFINES

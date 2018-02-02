@@ -90,6 +90,12 @@
     <ClInclude Include="StageSelectState.h">
       <Filter>ヘッダー ファイル\States</Filter>
     </ClInclude>
+    <ClInclude Include="TileMapRecord.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Stringtool.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -145,6 +151,12 @@
     </ClCompile>
     <ClCompile Include="StageSelectState.cpp">
       <Filter>ソース ファイル\States</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapRecord.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Stringtool.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

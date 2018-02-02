@@ -10,6 +10,6 @@ public:
     virtual void enter();
     virtual SceneState* update();
 private:
-    void loadStage();
+    void loadTileMap();
 };
 
