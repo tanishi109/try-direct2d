@@ -2,3 +2,5 @@
 **/Debug
 **/Release
 try-direct2d/try-direct2d/data/
+try-direct2d-lint.cppcheck
+try-direct2d-lint-cppcheck-build-dir/
