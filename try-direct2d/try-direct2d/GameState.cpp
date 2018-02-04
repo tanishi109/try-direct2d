@@ -47,12 +47,9 @@ void GameState::enter()
 // TODO: 自分の手でスクロールしたいことある
 void GameState::scroll()
 {
-    RECT windowRect;
-    GetClientRect(Render::m_hwnd, &windowRect);
-
-    long width = windowRect.right - windowRect.left;
-    long height = windowRect.bottom - windowRect.top;
-
+    long width;
+    long height;
+    std::tie(width, height) = Render::GetClientSize();
     POINT screenCenter = { width / 2, height / 2 };
 
     float subPinX;
@@ -163,11 +160,9 @@ void GameState::update(Scene* scene)
 
 void GameState::initPosition()
 {
-    RECT rc;
-    GetClientRect(Render::m_hwnd, &rc);
-
-    int width = rc.right - rc.left;
-    int height = rc.bottom - rc.top;
+    long width;
+    long height;
+    std::tie(width, height) = Render::GetClientSize();
 
     // スタート地点が画面中央に来るようにscreenを配置
     m_screen->m_x = -1 * width / 2  + World::TILE_SIZE * 2;

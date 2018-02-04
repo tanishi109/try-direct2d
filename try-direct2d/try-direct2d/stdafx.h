@@ -32,13 +32,12 @@
 #include <direct.h>
 #include <ctime>
 #include <filesystem>
+#include <tuple> 
 
 // M_PIが定義されていないエラーが出るのでstdafx.cppの"#include stdafx.h"より前に移動した
 // #define _USE_MATH_DEFINES
 // #include <cmath>  
 
-// Player.hで使用してる
-// #include <tuple> 
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")

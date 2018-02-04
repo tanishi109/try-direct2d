@@ -275,13 +275,11 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
                 if (Input::m_captureCursorMode && Input::m_mouseDelta[0] == 0 && Input::m_mouseDelta[1] == 0) {
                     // 移動量がゼロなら中央に戻す
                     // FIXME: スクリーンの端に到達したときも中央に戻したい
-                    RECT windowRect;
-                    GetClientRect(hwnd, &windowRect);
-
-                    long width = windowRect.right - windowRect.left;
-                    long height = windowRect.bottom - windowRect.top;
-
+                    long width;
+                    long height;
+                    std::tie(width, height) = Render::GetClientSize();
                     POINT screenCenter = { width / 2, height / 2 };
+
                     // 中央に戻した際のdeltaは無効化
                     // FIXME: prevMousePosが正しくなくなるからいじらないで済ませたい気がする
                     Input::m_prevMousePos[0] = screenCenter.x;

@@ -17,6 +17,7 @@ public:
     static void SetRotation(float degree, float centerX, float centerY);
     static void TakeScreenShot();
     static void DrawScreenShot();
+    static std::tuple<long, long> GetClientSize();
     static HRESULT CreateDeviceResources();
     static HRESULT CreateDeviceIndependentResources();
 

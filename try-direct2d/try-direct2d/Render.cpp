@@ -118,6 +118,17 @@ void Render::DrawScreenShot()
     }
 }
 
+std::tuple<long, long> Render::GetClientSize()
+{
+    RECT windowRect;
+    GetClientRect(m_hwnd, &windowRect);
+
+    long width = windowRect.right - windowRect.left;
+    long height = windowRect.bottom - windowRect.top;
+
+    return {width, height};
+}
+
 HRESULT Render::CreateDeviceResources()
 {
     HRESULT hr = S_OK;
