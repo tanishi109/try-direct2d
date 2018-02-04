@@ -79,7 +79,7 @@ void Render::DrawCircle(int x, int y, int r, BrushType type)
     m_bmpRenderTarget->FillEllipse(ellipse, m_bBrush);
 }
 
-// FIXME: •¶š—ñ‚Ü‚í‚è‚¢‚ë‚ñ‚ÈŒ^‚ª‚ ‚è‚»‚¤‚È‚Ì‚Å‚±‚ê‚ª“K“–‚©’²‚×‚Ä
+// ID2D1RenderTarget::DrawText‚Ìˆø”‚ÌŠÖŒW‚Åwstring‚ğæ‚é
 void Render::DrawText(int x, int y, int w, int h, std::wstring text)
 {
     // Retrieve the size of the render target.
