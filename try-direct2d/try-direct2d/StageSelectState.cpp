@@ -6,6 +6,7 @@
 #include "CanvasState.h"
 #include "TileMapRecord.h"
 #include "Stringtool.h"
+#include "ScrollableList.h"
 
 #include "Resource.h"
 
@@ -20,6 +21,12 @@ StageSelectState::~StageSelectState()
 
 void StageSelectState::enter()
 {
+    ScrollableList* list = new ScrollableList();
+    list->m_marginPx[0] = 8;
+    list->m_marginPx[1] = 8;
+    list->m_marginPx[2] = 8;
+    list->m_marginPx[3] = 8;
+    m_gameObjects.push_back(list);
 }
 
 void StageSelectState::update(Scene* scene)
