@@ -37,7 +37,7 @@ void CanvasMenuState::enter()
     Render::TakeScreenShot();
 }
 
-SceneState* CanvasMenuState::update()
+void CanvasMenuState::update(Scene* scene)
 {
     Render::Clear();
 
@@ -58,16 +58,14 @@ SceneState* CanvasMenuState::update()
     bool is0KeyDowned = Input::GetKey(0x30);
 
     if (is1KeyDowned) {
-        return new CanvasState();
+        scene->pop();
     }
     if (is2KeyDowned) {
-        return new GameState();
+        scene->push(new GameState());
     }
     if (is0KeyDowned) {
         saveTileMap();
     }
-
-    return NULL;
 }
 
 void CanvasMenuState::saveTileMap()

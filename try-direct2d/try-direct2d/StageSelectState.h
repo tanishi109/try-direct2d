@@ -7,8 +7,8 @@ class StageSelectState : public SceneState
 public:
     StageSelectState();
     ~StageSelectState();
-    virtual void enter();
-    virtual SceneState* update();
+    void enter();
+    void update(Scene* scene);
 private:
     void loadTileMap();
 };

@@ -9,8 +9,8 @@ class GameState : public SceneState
 public:
     GameState();
     ~GameState();
-    virtual void enter();
-    virtual SceneState* update();
+    void enter();
+    void update(Scene* scene);
 private:
     Player* m_player;
     bool m_isFocus;

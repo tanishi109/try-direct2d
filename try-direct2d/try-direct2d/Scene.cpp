@@ -1,14 +1,13 @@
 #include "stdafx.h"
 #include "Scene.h"
 #include "SceneState.h"
-//#include "CanvasState.h"
 #include "StageSelectState.h"
 #include "Render.h"
 
-Scene::Scene()
+Scene::Scene() :
+m_currentState(new StageSelectState())
 {
-    //m_state = new CanvasState();
-    m_state = new StageSelectState();
+    push(m_currentState);
 }
 
 
@@ -18,24 +17,32 @@ Scene::~Scene()
 
 void Scene::enter()
 {
-    m_state->enter();
-};
+    m_currentState->enter();
+}
 
 void Scene::update()
 {
     Render::Clear();
-    m_state->renderGameObjects();
+    m_currentState->renderGameObjects();
 
-    SceneState* new_scene = m_state->update();
-
-    if (new_scene != NULL) {
-        delete m_state;
-        m_state = new_scene;
-        m_state->enter();
-    }
-};
+    m_currentState->update(this);
+}
 
 void Scene::onMouseMove()
 {
-    m_state->onMouseMove();
-};
+    m_currentState->onMouseMove();
+}
+
+void Scene::push(SceneState* state)
+{
+    m_stateStack.push_back(state);
+    m_currentState = m_stateStack.back();
+    enter();
+}
+
+void Scene::pop()
+{
+    m_stateStack.pop_back();
+    m_currentState = m_stateStack.back();
+    enter();
+}

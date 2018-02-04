@@ -21,7 +21,7 @@ void CanvasState::enter()
     m_gameObjects.push_back(m_world);
 }
 
-SceneState* CanvasState::update()
+void CanvasState::update(Scene* scene)
 {
     // •¶Žš‚Ì•`‰æ
     // FIXME: ‚±‚±‚à‚Á‚Æ‚¢‚¢•û–@‚È‚¢‚Ì? ${}‚Ý‚½‚¢‚È
@@ -55,10 +55,8 @@ SceneState* CanvasState::update()
 
     bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
     if (isMenuKeyDowned) {
-        return new CanvasMenuState();
+        scene->push(new CanvasMenuState());
     }
-
-    return NULL;
 }
 
 void CanvasState::onMouseMove()

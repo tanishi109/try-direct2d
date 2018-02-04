@@ -8,9 +8,9 @@ class CanvasState : public SceneState
 public:
     CanvasState();
     ~CanvasState();
-    virtual void enter();
-    virtual SceneState* update();
-    virtual void onMouseMove();
+    void enter();
+    void update(Scene* scene);
+    void onMouseMove();
     static World* m_world;
 private:
     HCURSOR m_grabCursor;

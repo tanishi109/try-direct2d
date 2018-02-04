@@ -22,12 +22,13 @@ void StageSelectState::enter()
 {
 }
 
-SceneState* StageSelectState::update()
+void StageSelectState::update(Scene* scene)
 {
     Render::DrawText(30, 30, 200, 30, L"Press Enter to create new stage");
 
     if (Input::GetKey(VK_RETURN)) {
-        return new CanvasState();
+        scene->push(new CanvasState());
+        return;
     }
 
     bool is0KeyDowned = Input::GetKey(0x30);
@@ -35,8 +36,6 @@ SceneState* StageSelectState::update()
     if (is0KeyDowned) {
         loadTileMap();
     }
-
-    return NULL;
 }
 
 void StageSelectState::loadTileMap()

@@ -1,5 +1,6 @@
 #pragma once
-#include "SceneState.h"
+
+class SceneState;
 
 class Scene
 {
@@ -9,6 +10,10 @@ public:
     virtual void enter();
     virtual void update();
     virtual void onMouseMove();
-    SceneState* m_state;
+    void push(SceneState* state);
+    void pop();
+private:
+    std::vector<SceneState*> m_stateStack;
+    SceneState* m_currentState;
 };
 

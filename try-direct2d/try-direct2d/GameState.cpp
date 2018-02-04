@@ -115,7 +115,7 @@ Terrain* GameState::checkCollision()
     return NULL;
 }
 
-SceneState* GameState::update()
+void GameState::update(Scene* scene)
 {
     // Menu
     bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
@@ -128,7 +128,8 @@ SceneState* GameState::update()
         Input::m_captureCursorMode = false;
         ShowCursor(true);
 
-        return new CanvasMenuState();
+        // TODO: GameMenuState‚É‘JˆÚ
+        scene->pop();
     }
 
     if (Input::GetMouseDownL() && !m_isFocus) {
@@ -158,8 +159,6 @@ SceneState* GameState::update()
             Render::DrawText(0, 0, 100, 32, L"Clear!");
         }
     }
-
-    return NULL;
 }
 
 void GameState::initPosition()
