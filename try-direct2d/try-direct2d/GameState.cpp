@@ -153,7 +153,7 @@ void GameState::update(Scene* scene)
             initPosition();
         }
         if (hitTerrain->m_type == TerrainType_goal) {
-            Render::DrawText(0, 0, 100, 32, L"Clear!");
+            Render::DrawString(0, 0, 100, 32, "Clear!");
         }
     }
 }

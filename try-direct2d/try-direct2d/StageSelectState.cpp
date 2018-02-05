@@ -31,7 +31,7 @@ void StageSelectState::enter()
 
 void StageSelectState::update(Scene* scene)
 {
-    Render::DrawText(30, 30, 200, 30, L"Press Enter to create new stage");
+    Render::DrawString(30, 30, 200, 30, "Press Enter to create new stage");
 
     if (Input::GetKey(VK_RETURN)) {
         scene->push(new CanvasState());

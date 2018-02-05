@@ -11,7 +11,7 @@ public:
     void update(Scene* scene);
 private:
     int m_textPosList[4][2];
-    std::wstring m_textList[4];
+    std::string m_textList[4];
     void saveTileMap();
 };
 

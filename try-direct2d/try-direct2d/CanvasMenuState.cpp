@@ -19,10 +19,10 @@ m_textPosList{
     {30, 300}
 },
 m_textList {
-    L"Menu",
-    L"push 1. Canvas Mode",
-    L"push 2. Game Mode",
-    L"push 0. Save this Canvas"
+    "Menu",
+    "push 1. Canvas Mode",
+    "push 2. Game Mode",
+    "push 0. Save this Canvas"
 }
 {
 }
@@ -48,9 +48,9 @@ void CanvasMenuState::update(Scene* scene)
         int index = &pos - &m_textPosList[0];
         int x = pos[0];
         int y = pos[1];
-        std::wstring text = m_textList[index];
+        std::string text = m_textList[index];
 
-        Render::DrawText(x, y, width, 40, text);
+        Render::DrawString(x, y, width, 40, text);
     }
 
     bool is1KeyDowned = Input::GetKey(0x31);

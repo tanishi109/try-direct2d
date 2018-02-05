@@ -13,7 +13,7 @@ public:
     static void Clear();
     static void DrawRect(int x, int y, int w, int h, BrushType type);
     static void DrawCircle(int x, int y, int r, BrushType type);
-    static void DrawText(int x, int y, int w, int h, std::wstring text);
+    static void DrawString(int x, int y, int w, int h, std::string string);
     static void SetRotation(float degree, float centerX, float centerY);
     static void TakeScreenShot();
     static void DrawScreenShot();

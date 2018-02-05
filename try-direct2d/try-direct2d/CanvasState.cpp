@@ -3,6 +3,7 @@
 #include "CanvasMenuState.h"
 #include "Input.h"
 #include "Render.h"
+#include "Stringtool.h"
 
 World* CanvasState::m_world = new World();
 
@@ -24,13 +25,8 @@ void CanvasState::enter()
 void CanvasState::update(Scene* scene)
 {
     // •¶Žš‚Ì•`‰æ
-    // FIXME: ‚±‚±‚à‚Á‚Æ‚¢‚¢•û–@‚È‚¢‚Ì? ${}‚Ý‚½‚¢‚È
-    std::wstring screenX = std::to_wstring(m_screen->m_x);
-    std::wstring screenY = std::to_wstring(m_screen->m_y);
-    std::wstring textLight = L"(";
-    std::wstring textMiddle = L", ";
-    std::wstring textRight = L")";
-    Render::DrawText(0, 0, 100, 40, textLight + screenX + textMiddle + screenY + textRight);
+    std::string posText = Stringtool::GetAsString("(", m_screen->m_x, ", ", m_screen->m_y, ")");
+    Render::DrawString(0, 0, 100, 40, posText);
 
     bool isMouseDownL = Input::GetMouseDownL();
     bool isGrabKeyDowned = Input::GetKey(VK_SPACE);

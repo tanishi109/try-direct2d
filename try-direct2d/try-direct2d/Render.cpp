@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Render.h"
+#include "Stringtool.h"
 
 // FIXME: SafeRelease‚µ‚Ä‚È‚¢‚â‚Â‚ ‚é
 ID2D1HwndRenderTarget* Render::m_renderTarget = nullptr;
@@ -78,15 +79,16 @@ void Render::DrawCircle(int x, int y, int r, BrushType type)
     m_bmpRenderTarget->FillEllipse(ellipse, m_bBrush);
 }
 
-// ID2D1RenderTarget::DrawText‚Ìˆø”‚ÌŠÖŒW‚Åwstring‚ðŽæ‚é
-void Render::DrawText(int x, int y, int w, int h, std::wstring text)
+void Render::DrawString(int x, int y, int w, int h, std::string string)
 {
+    // ID2D1HwndRenderTarget::DrawText‚ÍWCHAR‚ðˆø”‚ÉŽæ‚é‚Ì‚Åwstring‚É•ÏŠ·
+    std::wstring wstring = Stringtool::ToWString(string);
     // Retrieve the size of the render target.
     D2D1_SIZE_F renderTargetSize = m_renderTarget->GetSize();
 
     m_renderTarget->DrawText(
-        text.c_str(),
-        text.size(),
+        wstring.c_str(),
+        wstring.size(),
         m_textFormat,
         D2D1::RectF(x, y, w, h), // FIXME: ‚±‚±‚àfloat‚Écast
         m_brush_black
