@@ -32,9 +32,9 @@ int WINAPI WinMain(
     // by the process.
     // The return value is ignored, because we want to continue running in the
     // unlikely event that HeapSetInformation fails.
-    HeapSetInformation(NULL, HeapEnableTerminationOnCorruption, NULL, 0);
+    HeapSetInformation(nullptr, HeapEnableTerminationOnCorruption, nullptr, 0);
 
-    if (SUCCEEDED(CoInitialize(NULL)))
+    if (SUCCEEDED(CoInitialize(nullptr)))
     {
         {
             DemoApp app;

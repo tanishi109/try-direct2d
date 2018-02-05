@@ -10,11 +10,11 @@ inline void SafeRelease(
     Interface **ppInterfaceToRelease
 )
 {
-    if (*ppInterfaceToRelease != NULL)
+    if (*ppInterfaceToRelease != nullptr)
     {
         (*ppInterfaceToRelease)->Release();
 
-        (*ppInterfaceToRelease) = NULL;
+        (*ppInterfaceToRelease) = nullptr;
     }
 }
 
@@ -49,7 +49,7 @@ void DemoApp::RunMessageLoop()
 {
     MSG msg;
 
-    while (GetMessage(&msg, NULL, 0, 0))
+    while (GetMessage(&msg, nullptr, 0, 0))
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
@@ -73,9 +73,9 @@ HRESULT DemoApp::Initialize()
         wcex.cbClsExtra = 0;
         wcex.cbWndExtra = sizeof(LONG_PTR);
         wcex.hInstance = HINST_THISCOMPONENT;
-        wcex.hbrBackground = NULL;
-        wcex.lpszMenuName = NULL;
-        wcex.hCursor = LoadCursor(NULL, IDI_APPLICATION);
+        wcex.hbrBackground = nullptr;
+        wcex.lpszMenuName = nullptr;
+        wcex.hCursor = LoadCursor(nullptr, IDI_APPLICATION);
         wcex.lpszClassName = L"D2DDemoApp";
 
         RegisterClassEx(&wcex);
@@ -99,8 +99,8 @@ HRESULT DemoApp::Initialize()
             CW_USEDEFAULT,
             static_cast<UINT>(ceil(640.f * dpiX / 96.f)),
             static_cast<UINT>(ceil(480.f * dpiY / 96.f)),
-            NULL,
-            NULL,
+            nullptr,
+            nullptr,
             HINST_THISCOMPONENT,
             this
         );
@@ -144,7 +144,7 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
         result = 1;
 
         // ゲームループ用のタイマー
-        SetTimer(hwnd, 1, 16.666, NULL);
+        SetTimer(hwnd, 1, 16.666, nullptr);
     }
     else
     {
@@ -172,7 +172,7 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             case WM_DISPLAYCHANGE:
             {
-                InvalidateRect(hwnd, NULL, FALSE);
+                InvalidateRect(hwnd, nullptr, FALSE);
             }
             result = 0;
             wasHandled = true;
@@ -180,7 +180,7 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             case WM_PAINT:
             {
-                ValidateRect(hwnd, NULL);
+                ValidateRect(hwnd, nullptr);
             }
             result = 0;
             wasHandled = true;
@@ -208,7 +208,7 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             case WM_KEYUP:
             {
                 ReleaseCapture();
-                Input::m_keyDown = NULL;
+                Input::m_keyDown = -1;
             }
             result = 0;
             wasHandled = true;
@@ -260,10 +260,9 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
                 int mouseY = p.y;
 
                 // 差分を計算してmouseDeltaに持っておく
-                if (Input::m_prevMousePos[0] != NULL && Input::m_prevMousePos[1] != NULL) {
-                    Input::m_mouseDelta[0] = mouseX - Input::m_prevMousePos[0];
-                    Input::m_mouseDelta[1] = mouseY - Input::m_prevMousePos[1];
-                }
+                Input::m_mouseDelta[0] = mouseX - Input::m_prevMousePos[0];
+                Input::m_mouseDelta[1] = mouseY - Input::m_prevMousePos[1];
+
                 Input::m_prevMousePos[0] = mouseX;
                 Input::m_prevMousePos[1] = mouseY;
 

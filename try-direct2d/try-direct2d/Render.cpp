@@ -1,22 +1,21 @@
 #include "stdafx.h"
 #include "Render.h"
 
-// FIXME: NULL => nullptr‚É‚µ‚½‚Ù‚¤‚ª‚¢‚¢‚©‚à
 // FIXME: SafeRelease‚µ‚Ä‚È‚¢‚â‚Â‚ ‚é
-ID2D1HwndRenderTarget* Render::m_renderTarget = NULL;
-HWND Render::m_hwnd = NULL;
-ID2D1Factory* Render::m_direct2dFactory = NULL;
-IDWriteFactory* Render::m_dWriteFactory = NULL;
-IDWriteTextFormat* Render::m_textFormat = NULL;
-ID2D1SolidColorBrush* Render::m_brush = NULL;
-ID2D1SolidColorBrush* Render::m_brush_white = NULL;
-ID2D1SolidColorBrush* Render::m_brush_black = NULL;
-ID2D1SolidColorBrush* Render::m_brush_pink = NULL;
-ID2D1SolidColorBrush* Render::m_bBrush = NULL;
-IWICBitmap* Render::m_wicBmp = NULL;
-ID2D1Bitmap* Render::m_direct2dBmp = NULL;
-ID2D1RenderTarget* Render::m_bmpRenderTarget = NULL;
-IWICImagingFactory* Render::m_wicImagingFactory = NULL;
+ID2D1HwndRenderTarget* Render::m_renderTarget = nullptr;
+HWND Render::m_hwnd = nullptr;
+ID2D1Factory* Render::m_direct2dFactory = nullptr;
+IDWriteFactory* Render::m_dWriteFactory = nullptr;
+IDWriteTextFormat* Render::m_textFormat = nullptr;
+ID2D1SolidColorBrush* Render::m_brush = nullptr;
+ID2D1SolidColorBrush* Render::m_brush_white = nullptr;
+ID2D1SolidColorBrush* Render::m_brush_black = nullptr;
+ID2D1SolidColorBrush* Render::m_brush_pink = nullptr;
+ID2D1SolidColorBrush* Render::m_bBrush = nullptr;
+IWICBitmap* Render::m_wicBmp = nullptr;
+ID2D1Bitmap* Render::m_direct2dBmp = nullptr;
+ID2D1RenderTarget* Render::m_bmpRenderTarget = nullptr;
+IWICImagingFactory* Render::m_wicImagingFactory = nullptr;
 
 Render::Render()
 {
@@ -113,7 +112,7 @@ void Render::TakeScreenShot()
 
 void Render::DrawScreenShot()
 {
-    if (m_direct2dBmp != NULL) {
+    if (m_direct2dBmp != nullptr) {
         m_renderTarget->DrawBitmap(m_direct2dBmp);
     }
 }
@@ -215,7 +214,7 @@ HRESULT Render::CreateDeviceIndependentResources()
 
     CoCreateInstance(
         CLSID_WICImagingFactory,
-        NULL,
+        nullptr,
         CLSCTX_INPROC_SERVER,
         IID_IWICImagingFactory,
         (LPVOID*)&m_wicImagingFactory
@@ -239,7 +238,7 @@ HRESULT Render::CreateDeviceIndependentResources()
         // Create a DirectWrite text format object.
         hr = m_dWriteFactory->CreateTextFormat(
             msc_fontName,
-            NULL,
+            nullptr,
             DWRITE_FONT_WEIGHT_NORMAL,
             DWRITE_FONT_STYLE_NORMAL,
             DWRITE_FONT_STRETCH_NORMAL,
@@ -274,5 +273,5 @@ ID2D1SolidColorBrush* Render::getBrush(BrushType type)
         return m_brush_pink;
     }
 
-    return NULL;
+    return nullptr;
 }

@@ -3,10 +3,10 @@
 
 bool Input::m_mouseDownL = false;
 bool Input::m_mouseDownR = false;
-int Input::m_mousePos[2] = {0, 0}; // ç≈èâNULLÇ™Ç¢Ç¢Ç©Ç‡?
+int Input::m_mousePos[2] = {0, 0};
 int Input::m_mouseDelta[2] = {0, 0};
-int Input::m_prevMousePos[2] = {NULL, NULL};
-int Input::m_keyDown = NULL;
+int Input::m_prevMousePos[2] = {0, 0};
+int Input::m_keyDown = -1;
 bool Input::m_captureCursorMode = false;
 
 Input::Input()

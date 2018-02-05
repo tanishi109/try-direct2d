@@ -9,8 +9,8 @@ m_width(w),
 m_height(h),
 m_degree(45),
 m_horizontalPinMargin(10),
-m_parent(NULL),
-m_child(NULL)
+m_parent(nullptr),
+m_child(nullptr)
 {
     m_x = x;
     m_y = y;
@@ -20,7 +20,7 @@ m_child(NULL)
 Player::~Player()
 {
     Player* child = m_child;
-    while(child != NULL) {
+    while(child != nullptr) {
         Player* nextChild = child->m_child;
 
         delete m_child;
@@ -31,7 +31,7 @@ Player::~Player()
 
 void Player::move(Screen* screen)
 {
-    if (m_parent == NULL) {
+    if (m_parent == nullptr) {
 
         // 親nodeがいない場合はマウスを基準に移動
         // FIXME: re-position と rotation に分けるとか
@@ -79,7 +79,7 @@ void Player::move(Screen* screen)
     }
 
     // 子を再帰的に移動
-    if (m_child != NULL) {
+    if (m_child != nullptr) {
         m_child->move(screen);
     }
 }
@@ -104,7 +104,7 @@ void Player::render(Screen* screen)
     Render::SetRotation(0, 0, 0);
 
     // 子を再帰的に描画
-    if (m_child != NULL) {
+    if (m_child != nullptr) {
         m_child->render(screen);
     }
 }

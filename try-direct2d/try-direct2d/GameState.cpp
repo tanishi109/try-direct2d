@@ -92,7 +92,7 @@ Terrain* GameState::checkCollision()
             }
 
             Player* player = m_player;
-            while(player != NULL) {
+            while(player != nullptr) {
                 int mainPinX;
                 int mainPinY;
                 std::tie(mainPinX, mainPinY) = player->getMainPinPos();
@@ -109,7 +109,7 @@ Terrain* GameState::checkCollision()
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void GameState::update(Scene* scene)
@@ -121,7 +121,7 @@ void GameState::update(Scene* scene)
     if (isMenuKeyDowned) {
         // FIXME: onLeave的なのが欲しいね
         m_isFocus = false;
-        ClipCursor(NULL);
+        ClipCursor(nullptr);
         Input::m_captureCursorMode = false;
         ShowCursor(true);
 
@@ -148,7 +148,7 @@ void GameState::update(Scene* scene)
     // 当たり判定チェック
     // FIXME: 総当たり以外の方法がある
     Terrain* hitTerrain = checkCollision();
-    if (hitTerrain != NULL) {
+    if (hitTerrain != nullptr) {
         if (hitTerrain->m_type == TerrainType_wall) {
             initPosition();
         }
@@ -173,7 +173,7 @@ void GameState::initPosition()
     int playerX;
     int playerY;
     std::tie(playerX, playerY) = m_screen->screenToWorld(width / 2, height / 2);
-    while (player != NULL) {
+    while (player != nullptr) {
         player->setMainPinPos(playerX, playerY);
         player = player->m_child;
     }

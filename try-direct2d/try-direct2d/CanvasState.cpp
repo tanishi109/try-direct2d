@@ -7,8 +7,8 @@
 World* CanvasState::m_world = new World();
 
 CanvasState::CanvasState() :
-m_grabCursor(LoadCursor(NULL, IDC_SIZEALL)),
-m_defaultCursor(LoadCursor(NULL, IDC_ARROW))
+m_grabCursor(LoadCursor(nullptr, IDC_SIZEALL)),
+m_defaultCursor(LoadCursor(nullptr, IDC_ARROW))
 {
 }
 
