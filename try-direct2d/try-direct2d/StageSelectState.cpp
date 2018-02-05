@@ -22,8 +22,8 @@ StageSelectState::~StageSelectState()
 void StageSelectState::enter()
 {
     ScrollableList* list = new ScrollableList();
+    list->m_marginRate[1] = 0.5;
     list->m_marginPx[0] = 8;
-    list->m_marginPx[1] = 8;
     list->m_marginPx[2] = 8;
     list->m_marginPx[3] = 8;
     m_gameObjects.push_back(list);

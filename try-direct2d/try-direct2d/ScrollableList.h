@@ -11,6 +11,7 @@ public:
     // rate‚Æpx‚Ì‡Œv’l‚Å˜g‚Ì‘å‚«‚³‚ªŒˆ‚Ü‚é
     // ‡”Ô‚ÍŒv‰ñ‚è(top, right, bottom, left)
     int m_marginPx[4];
+    float m_marginRate[4];
 private:
 };
 
