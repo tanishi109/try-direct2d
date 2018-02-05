@@ -17,6 +17,7 @@ public:
 
         return string;
     }
+    static std::wstring ToWString(const std::string& refSrc);
 private:
     static std::string JoinAsString(std::string string);
 
