@@ -90,7 +90,7 @@ void Render::DrawString(int x, int y, int w, int h, std::string string)
         wstring.c_str(),
         wstring.size(),
         m_textFormat,
-        D2D1::RectF(x, y, w, h), // FIXME: ‚±‚±‚àfloat‚Écast
+        D2D1::RectF(x, y, x + w, y + h), // FIXME: ‚±‚±‚àfloat‚Écast
         m_brush_black
     );
 
@@ -245,7 +245,7 @@ HRESULT Render::CreateDeviceIndependentResources()
             DWRITE_FONT_STYLE_NORMAL,
             DWRITE_FONT_STRETCH_NORMAL,
             msc_fontSize,
-            L"", //locale
+            L"en-us", //locale
             &m_textFormat
         );
     }
