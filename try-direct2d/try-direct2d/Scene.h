@@ -7,6 +7,8 @@ class Scene
 public:
     Scene();
     ~Scene();
+    Scene(const Scene&) = delete;
+    Scene& operator=(const Scene&) = delete;
     virtual void enter();
     virtual void update();
     virtual void onMouseMove();
@@ -16,4 +18,3 @@ private:
     std::vector<SceneState*> m_stateStack;
     SceneState* m_currentState;
 };
-
