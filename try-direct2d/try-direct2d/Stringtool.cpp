@@ -10,7 +10,7 @@ Stringtool::~Stringtool()
 }
 
 
-std::string Stringtool::JoinAsString(std::string string)
+std::string Stringtool::JoinAsString(std::string& string)
 {
     return string;
 }

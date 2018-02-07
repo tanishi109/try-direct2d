@@ -19,10 +19,10 @@ public:
     }
     static std::wstring ToWString(const std::string& refSrc);
 private:
-    static std::string JoinAsString(std::string string);
+    static std::string JoinAsString(std::string& string);
 
     template<typename Head, typename... Rest>
-    static std::string JoinAsString(std::string string, Head head, Rest... rest)
+    static std::string JoinAsString(std::string& string, Head head, Rest... rest)
     {
         std::ostringstream oss;
         oss << string << head;
