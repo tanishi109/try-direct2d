@@ -124,7 +124,7 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
     if (message == WM_CREATE)
     {
         LPCREATESTRUCT pcs = (LPCREATESTRUCT)lParam;
-        DemoApp *pDemoApp = (DemoApp *)pcs->lpCreateParams;
+        DemoApp *pDemoApp = static_cast<DemoApp*>(pcs->lpCreateParams);
 
         ::SetWindowLongPtrW(
             hwnd,
