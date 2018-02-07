@@ -314,7 +314,12 @@ void DemoApp::UpdateScene()
     // FIXME: ‚Å‚©‚¢Begin~EndDraw‚ÅˆÍ‚ñ‚Å‚é‚Ì‚¢‚¢‚Ì‚©‚È?
     Render::Begin();
     m_scene->update();
-    Render::End();
+    HRESULT hr = Render::End();
+
+    if (hr == D2DERR_RECREATE_TARGET) {
+        hr = S_OK;
+        DiscardDeviceResources();
+    }
 }
 
 void DemoApp::OnResize(UINT width, UINT height)

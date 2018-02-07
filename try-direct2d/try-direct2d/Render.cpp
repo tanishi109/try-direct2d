@@ -39,10 +39,13 @@ void Render::Begin()
     }
 }
 
-void Render::End()
+HRESULT Render::End()
 {
-    m_renderTarget->EndDraw();
-    m_bmpRenderTarget->EndDraw();
+    HRESULT hr = S_OK;
+    hr = m_renderTarget->EndDraw();
+    hr = m_bmpRenderTarget->EndDraw();
+
+    return hr;
 }
 
 void Render::Clear()

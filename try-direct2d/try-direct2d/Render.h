@@ -9,7 +9,7 @@ public:
     ~Render();
 
     static void Begin();
-    static void End();
+    static HRESULT End();
     static void Clear();
     static void DrawRect(int x, int y, int w, int h, BrushType type);
     static void DrawCircle(int x, int y, int r, BrushType type);
