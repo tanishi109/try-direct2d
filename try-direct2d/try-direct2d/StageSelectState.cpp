@@ -21,18 +21,18 @@ StageSelectState::~StageSelectState()
 
 void StageSelectState::enter()
 {
-    ScrollableList* list = new ScrollableList();
-    list->m_marginRate[1] = 0.5;
-    list->m_marginPx[0] = 8;
-    list->m_marginPx[2] = 8;
-    list->m_marginPx[3] = 8;
+    ScrollableList* list = new ScrollableList({
+        "ham",
+        "spam",
+        "create new stage"
+    });
+    list->m_marginRate.assign(0.0, 0.5, 0.0, 0.0);
+    list->m_marginPx.assign(8, 8);
     m_gameObjects.push_back(list);
 }
 
 void StageSelectState::update(Scene* scene)
 {
-    Render::DrawString(30, 30, 200, 30, "Press Enter to create new stage");
-
     if (Input::GetKey(VK_RETURN)) {
         scene->push(new CanvasState());
         return;
