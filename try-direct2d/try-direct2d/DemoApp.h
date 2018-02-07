@@ -8,6 +8,8 @@ class DemoApp
 public:
     DemoApp();
     ~DemoApp();
+    DemoApp(const DemoApp&) = delete;
+    DemoApp& operator=(const DemoApp&) = delete;
 
     // Register the window class and call methods for instantiating drawing resources
     HRESULT Initialize();
