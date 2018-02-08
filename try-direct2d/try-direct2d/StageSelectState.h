@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneState.h"
+#include "ScrollableList.h"
 
 class StageSelectState : public SceneState
 {
@@ -10,6 +11,8 @@ public:
     void enter();
     void update(Scene* scene);
 private:
+    void loadSaveFiles();
     void loadTileMap();
+    static ScrollableList& m_list;
 };
 

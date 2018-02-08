@@ -6,9 +6,12 @@
 #include "CanvasState.h"
 #include "TileMapRecord.h"
 #include "Stringtool.h"
-#include "ScrollableList.h"
 
 #include "Constant.h"
+
+ScrollableList& StageSelectState::m_list = *new ScrollableList({
+    "create new stage"
+});
 
 StageSelectState::StageSelectState()
 {
@@ -21,14 +24,10 @@ StageSelectState::~StageSelectState()
 
 void StageSelectState::enter()
 {
-    ScrollableList* list = new ScrollableList({
-        "ham",
-        "spam",
-        "create new stage"
-    });
-    list->m_marginRate.assign(0.0, 0.5, 0.0, 0.0);
-    list->m_marginPx.assign(8, 8);
-    m_gameObjects.push_back(list);
+    loadSaveFiles();
+    m_list.m_marginRate.assign(0.0, 0.5, 0.0, 0.0);
+    m_list.m_marginPx.assign(8, 8);
+    m_gameObjects.push_back(&m_list);
 }
 
 void StageSelectState::update(Scene* scene)
@@ -42,6 +41,15 @@ void StageSelectState::update(Scene* scene)
 
     if (is0KeyDowned) {
         loadTileMap();
+    }
+}
+
+void StageSelectState::loadSaveFiles()
+{
+    std::string folderPath = Stringtool::GetAsString("./", Constant::DataFolderName);
+    for (auto & p : std::experimental::filesystem::directory_iterator(folderPath)) {
+        std::string fileName = Stringtool::GetAsString(p.path().filename());
+        m_list.m_contents.push_back(fileName);
     }
 }
 
