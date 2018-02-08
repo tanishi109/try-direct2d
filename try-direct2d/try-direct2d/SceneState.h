@@ -9,6 +9,8 @@ class SceneState
 public:
     SceneState();
     ~SceneState();
+    SceneState(const SceneState&) = delete;
+    SceneState& operator=(const SceneState&) = delete;
     void renderGameObjects();
     virtual void enter();
     virtual void update(Scene* scene) = 0;
