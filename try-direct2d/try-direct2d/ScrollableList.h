@@ -6,7 +6,7 @@
 class ScrollableList : public GameObject
 {
 public:
-    ScrollableList(std::initializer_list<std::string> contents);
+    explicit ScrollableList(std::initializer_list<std::string> contents);
     ~ScrollableList();
     void render(Screen* screen);
     // rate‚Æpx‚Ì‡Œv’l‚Å˜g‚Ì‘å‚«‚³‚ªŒˆ‚Ü‚é
