@@ -9,7 +9,7 @@
 #include "TileMapRecord.h"
 #include "Stringtool.h"
 
-#include "Resource.h"
+#include "Constant.h"
 
 CanvasMenuState::CanvasMenuState() :
 m_textPosList{
@@ -71,7 +71,7 @@ void CanvasMenuState::update(Scene* scene)
 void CanvasMenuState::saveTileMap()
 {
 
-    std::string folderPath = Stringtool::GetAsString("./", DATA_FOLDER_NAME);
+    std::string folderPath = Stringtool::GetAsString("./", Constant::DataFolderName);
     _mkdir(folderPath.c_str());
 
     std::time_t time = std::time(nullptr);

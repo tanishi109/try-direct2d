@@ -29,7 +29,3 @@
 #define _APS_NEXT_SYMED_VALUE		110
 #endif
 #endif
-
-// à»è„é©ìÆê∂ê¨
-
-#define DATA_FOLDER_NAME "data"

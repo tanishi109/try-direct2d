@@ -8,7 +8,7 @@
 #include "Stringtool.h"
 #include "ScrollableList.h"
 
-#include "Resource.h"
+#include "Constant.h"
 
 StageSelectState::StageSelectState()
 {
@@ -47,7 +47,7 @@ void StageSelectState::update(Scene* scene)
 
 void StageSelectState::loadTileMap()
 {
-    std::string folderPath = Stringtool::GetAsString("./", DATA_FOLDER_NAME);
+    std::string folderPath = Stringtool::GetAsString("./", Constant::DataFolderName);
 
     std::string fileName;
     for (auto & p : std::experimental::filesystem::directory_iterator(folderPath)) {
