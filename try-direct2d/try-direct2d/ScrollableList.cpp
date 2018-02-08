@@ -7,7 +7,8 @@ ScrollableList::ScrollableList(std::initializer_list<std::string> contents) :
 m_marginPx{*new Margin(0, 0, 0, 0)},
 m_marginRate{*new Margin(0, 0, 0, 0)},
 m_textMargin{*new Margin(0, 0, 8, 0)},
-m_contents(contents)
+m_contents(contents),
+m_pointedIndex(-1)
 {
 }
 
@@ -43,5 +44,16 @@ void ScrollableList::render(Screen* screen)
         // TODO: 右のtextMarginは反映してない
         Render::DrawString(x, y, textWidth, textHeight, m_contents[i]);
         offsetY += m_textMargin.top() + m_textMargin.bottom();
+
+        if (m_pointedIndex == i) {
+            Render::DrawRect(x, y, textWidth, textHeight, BrushType_pink);
+        }
     }
 }
+
+void ScrollableList::incrementPointer(int n)
+{
+    int size = static_cast<int>(m_contents.size());
+    m_pointedIndex = (m_pointedIndex + n + size) % size; // マイナス方向にループさせるためsizeを一回足している
+}
+

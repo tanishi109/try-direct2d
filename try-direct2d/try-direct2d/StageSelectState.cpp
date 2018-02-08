@@ -42,6 +42,13 @@ void StageSelectState::update(Scene* scene)
     if (is0KeyDowned) {
         loadTileMap();
     }
+
+    if (Input::GetKey(VK_UP)) {
+        m_list.incrementPointer(-1);
+    }
+    if (Input::GetKey(VK_DOWN)) {
+        m_list.incrementPointer(1);
+    }
 }
 
 void StageSelectState::loadSaveFiles()

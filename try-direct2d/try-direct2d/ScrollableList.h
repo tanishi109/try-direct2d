@@ -9,6 +9,7 @@ public:
     explicit ScrollableList(std::initializer_list<std::string> contents);
     ~ScrollableList();
     void render(Screen* screen);
+    void incrementPointer(int n);
 
     std::vector<std::string> m_contents;
     // rate‚Æpx‚Ì‡Œv’l‚Å˜g‚Ì‘å‚«‚³‚ªŒˆ‚Ü‚é
@@ -16,5 +17,6 @@ public:
     Margin& m_marginRate;
     Margin& m_textMargin;
 private:
+    int m_pointedIndex;
 };
 
