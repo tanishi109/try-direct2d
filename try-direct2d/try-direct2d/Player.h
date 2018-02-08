@@ -12,7 +12,6 @@ public:
     std::tuple<int, int> getMainPinPos(); // FIXME: float‚É“ˆê‚µ‚½‚Ù‚¤‚ª‚¢‚¢
     std::tuple<float, float> getSubPinPosRotated();
     void setMainPinPos(int x, int y);
-    void setSubPinPos(int x, int y);
     void addChild();
 
     float m_degree;
