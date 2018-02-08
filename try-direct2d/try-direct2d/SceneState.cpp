@@ -12,6 +12,7 @@ m_screen(new Screen())
 
 SceneState::~SceneState()
 {
+    delete m_screen;
 }
 
 void SceneState::enter()
