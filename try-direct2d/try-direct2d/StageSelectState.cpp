@@ -60,7 +60,7 @@ void StageSelectState::loadTileMap()
 
     if (!ifs)
     {
-        log(":err, file open\n");
+        Debug::log(":err, file open");
         return;
     }
 

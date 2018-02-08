@@ -82,7 +82,7 @@ void CanvasMenuState::saveTileMap()
 
     if (!ofs)
     {
-        log(":err, file open\n");
+        Debug::log(":err, file open");
         return;
     }
 

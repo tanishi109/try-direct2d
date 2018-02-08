@@ -44,10 +44,5 @@
 #pragma comment(lib, "windowscodecs.lib")
 
 #ifdef _DEBUG
-    template<typename... Args>
-    void log(char* text, Args... args) {
-        char buf[256];
-        sprintf_s(buf, text, args...);
-        OutputDebugStringA(buf);
-    }
+    #include "Debug.h" 
 #endif
