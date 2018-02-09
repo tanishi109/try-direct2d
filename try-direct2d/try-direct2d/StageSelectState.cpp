@@ -25,19 +25,24 @@ void StageSelectState::enter(Scene& scene)
     m_list.m_marginPx.assign(8, 8);
     m_gameObjects.push_back(&m_list);
 
-    m_onSelect = [&scene](int index){
+    m_onSelect = [&scene, this](int index){
+        // not selected
+        if (index == -1) {
+            return;
+        }
+        // create new stage
+        if (index == 0) {
+            scene.push(new CanvasState());
+            return;
+        }
+        // something selected
+        loadTileMap(index);
         scene.push(new CanvasState());
     };
 }
 
 void StageSelectState::update(Scene* scene)
 {
-    bool is0KeyDowned = Input::GetKey(0x30);
-
-    if (is0KeyDowned) {
-        loadTileMap();
-    }
-
     if (Input::GetKey(VK_UP)) {
         m_list.incrementPointer(-1);
     }
@@ -55,16 +60,10 @@ void StageSelectState::loadSaveFiles()
     }
 }
 
-void StageSelectState::loadTileMap()
+void StageSelectState::loadTileMap(int index)
 {
     std::string folderPath = Stringtool::GetAsString("./", Constant::DataFolderName);
-
-    std::string fileName;
-    for (auto & p : std::experimental::filesystem::directory_iterator(folderPath)) {
-        fileName = Stringtool::GetAsString(p.path().filename());
-    }
-
-    // FIXME: 今は最後のファイル名をfilePathに指定しているが、後で開くファイルを選択できるようにする
+    std::string fileName = m_list.m_contents[index];
     std::string filePath = Stringtool::GetAsString(folderPath, "/", fileName);
     std::ifstream ifs(filePath.c_str(), std::ios::in | std::ios::binary);
 

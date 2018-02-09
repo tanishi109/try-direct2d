@@ -12,7 +12,7 @@ public:
     void update(Scene* scene);
 private:
     void loadSaveFiles();
-    void loadTileMap();
+    void loadTileMap(int index);
     static std::function<void(int)> m_onSelect;
     static ScrollableList& m_list;
 };
