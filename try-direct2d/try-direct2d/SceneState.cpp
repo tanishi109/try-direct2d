@@ -15,7 +15,7 @@ SceneState::~SceneState()
     delete m_screen;
 }
 
-void SceneState::enter()
+void SceneState::enter(Scene& scene)
 {
 }
 

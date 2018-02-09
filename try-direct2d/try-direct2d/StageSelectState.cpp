@@ -18,7 +18,7 @@ StageSelectState::~StageSelectState()
 {
 }
 
-void StageSelectState::enter()
+void StageSelectState::enter(Scene& scene)
 {
     loadSaveFiles();
     m_list.m_marginRate.assign(0.0, 0.5, 0.0, 0.0);

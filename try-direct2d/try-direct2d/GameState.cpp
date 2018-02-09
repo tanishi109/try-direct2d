@@ -24,7 +24,7 @@ GameState::~GameState()
     delete m_player;
 }
 
-void GameState::enter()
+void GameState::enter(Scene& scene)
 {
     // World
     // TODO: CanvasStateから直接取ってきているが、外部ファイルとして保存して読み出す形式にしたい

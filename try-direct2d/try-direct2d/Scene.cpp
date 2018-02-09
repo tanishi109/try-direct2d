@@ -17,7 +17,7 @@ Scene::~Scene()
 
 void Scene::enter()
 {
-    m_currentState->enter();
+    m_currentState->enter(*this);
 }
 
 void Scene::update()

@@ -8,7 +8,7 @@ class CanvasState : public SceneState
 public:
     CanvasState();
     ~CanvasState();
-    void enter();
+    void enter(Scene& scene);
     void update(Scene* scene);
     void onMouseMove();
     static World* m_world;

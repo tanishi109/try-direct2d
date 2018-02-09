@@ -17,7 +17,7 @@ CanvasState::~CanvasState()
 {
 }
 
-void CanvasState::enter()
+void CanvasState::enter(Scene& scene)
 {
     m_gameObjects.push_back(m_world);
 }

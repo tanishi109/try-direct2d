@@ -7,7 +7,7 @@ class CanvasMenuState : public SceneState
 public:
     CanvasMenuState();
     ~CanvasMenuState();
-    void enter();
+    void enter(Scene& scene);
     void update(Scene* scene);
 private:
     int m_textPosList[4][2];

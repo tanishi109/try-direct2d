@@ -12,7 +12,7 @@ public:
     SceneState(const SceneState&) = delete;
     SceneState& operator=(const SceneState&) = delete;
     void renderGameObjects();
-    virtual void enter();
+    virtual void enter(Scene& scene);
     virtual void update(Scene* scene) = 0;
     virtual void onMouseMove();
 protected:

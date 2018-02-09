@@ -32,7 +32,7 @@ CanvasMenuState::~CanvasMenuState()
 {
 }
 
-void CanvasMenuState::enter()
+void CanvasMenuState::enter(Scene& scene)
 {
     Render::TakeScreenShot();
 }

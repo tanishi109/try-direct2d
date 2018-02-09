@@ -9,7 +9,7 @@ class GameState : public SceneState
 public:
     GameState();
     ~GameState();
-    void enter();
+    void enter(Scene& scene);
     void update(Scene* scene);
 private:
     Player* m_player;

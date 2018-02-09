@@ -8,7 +8,7 @@ class StageSelectState : public SceneState
 public:
     StageSelectState();
     ~StageSelectState();
-    void enter();
+    void enter(Scene& scene);
     void update(Scene* scene);
 private:
     void loadSaveFiles();
