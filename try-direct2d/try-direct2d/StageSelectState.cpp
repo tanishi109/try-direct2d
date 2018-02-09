@@ -9,10 +9,6 @@
 
 #include "Constant.h"
 
-ScrollableList& StageSelectState::m_list = *new ScrollableList({
-    "create new stage"
-});
-
 StageSelectState::StageSelectState()
 {
 }
@@ -32,10 +28,10 @@ void StageSelectState::enter()
 
 void StageSelectState::update(Scene* scene)
 {
-    if (Input::GetKey(VK_RETURN)) {
-        scene->push(new CanvasState());
-        return;
-    }
+    //if (Input::GetKey(VK_RETURN)) {
+    //    scene->push(new CanvasState());
+    //    return;
+    //}
 
     bool is0KeyDowned = Input::GetKey(0x30);
 
@@ -87,3 +83,14 @@ void StageSelectState::loadTileMap()
     // “Ç‚Ýž‚ñ‚¾record‚©‚çWorld‚Ìm_tiles‚ð•œŒ³‚·‚é
     CanvasState::m_world->restore(tileMapRecord);
 }
+
+std::function<void(int)> StageSelectState::m_onSelect = [](int index){
+    Debug::log("called!");
+};
+
+ScrollableList& StageSelectState::m_list = *new ScrollableList(
+StageSelectState::m_onSelect,
+{
+    "create new stage"
+});
+

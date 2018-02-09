@@ -2,13 +2,15 @@
 #include "ScrollableList.h"
 
 #include "Render.h"
+#include "Input.h"
 
-ScrollableList::ScrollableList(std::initializer_list<std::string> contents) :
+ScrollableList::ScrollableList(std::function<void(int)>& onSelect, std::initializer_list<std::string> contents) :
 m_marginPx{*new Margin(0, 0, 0, 0)},
 m_marginRate{*new Margin(0, 0, 0, 0)},
 m_textMargin{*new Margin(0, 0, 8, 0)},
 m_contents(contents),
-m_pointedIndex(-1)
+m_pointedIndex(-1),
+m_onSelect(onSelect)
 {
 }
 
@@ -49,6 +51,10 @@ void ScrollableList::render(Screen* screen)
             Render::DrawRect(x, y, textWidth, textHeight, BrushType_pink);
         }
     }
+
+    if (Input::GetKey(VK_RETURN)) {
+        m_onSelect(m_pointedIndex);
+    }
 }
 
 void ScrollableList::incrementPointer(int n)
@@ -56,4 +62,3 @@ void ScrollableList::incrementPointer(int n)
     int size = static_cast<int>(m_contents.size());
     m_pointedIndex = (m_pointedIndex + n + size) % size; // マイナス方向にループさせるためsizeを一回足している
 }
-

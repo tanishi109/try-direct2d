@@ -13,6 +13,7 @@ public:
 private:
     void loadSaveFiles();
     void loadTileMap();
+    static std::function<void(int)> m_onSelect;
     static ScrollableList& m_list;
 };
 
