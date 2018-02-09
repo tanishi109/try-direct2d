@@ -24,15 +24,14 @@ void StageSelectState::enter(Scene& scene)
     m_list.m_marginRate.assign(0.0, 0.5, 0.0, 0.0);
     m_list.m_marginPx.assign(8, 8);
     m_gameObjects.push_back(&m_list);
+
+    m_onSelect = [&scene](int index){
+        scene.push(new CanvasState());
+    };
 }
 
 void StageSelectState::update(Scene* scene)
 {
-    //if (Input::GetKey(VK_RETURN)) {
-    //    scene->push(new CanvasState());
-    //    return;
-    //}
-
     bool is0KeyDowned = Input::GetKey(0x30);
 
     if (is0KeyDowned) {
@@ -85,7 +84,7 @@ void StageSelectState::loadTileMap()
 }
 
 std::function<void(int)> StageSelectState::m_onSelect = [](int index){
-    Debug::log("called!");
+    // キャプチャが必要なのでsceneのenterで定義する
 };
 
 ScrollableList& StageSelectState::m_list = *new ScrollableList(
