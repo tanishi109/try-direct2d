@@ -6,8 +6,10 @@ bool Input::m_mouseDownR = false;
 int Input::m_mousePos[2] = {0, 0};
 int Input::m_mouseDelta[2] = {0, 0};
 int Input::m_prevMousePos[2] = {0, 0};
-int Input::m_keyDown = -1;
 bool Input::m_captureCursorMode = false;
+std::map<int, bool> Input::m_isKeyDownFrame;
+std::map<int, int> Input::m_keyDownFrameCount;
+int Input::INIT_KEY_DOWN_FRAME_COUNT = -1;
 
 Input::Input()
 {
@@ -50,5 +52,37 @@ int Input::GetMouseDeltaY()
 
 bool Input::GetKey(int keyCode)
 {
-    return m_keyDown == keyCode;
+    // TODO: ここのチェックまとめられないかな
+    if (Input::m_keyDownFrameCount.count(keyCode) == 0) {
+        return false;
+    }
+    return m_keyDownFrameCount[keyCode] != INIT_KEY_DOWN_FRAME_COUNT;
+}
+
+bool Input::GetKeyDown(int keyCode)
+{
+    if (Input::m_keyDownFrameCount.count(keyCode) == 0) {
+        return false;
+    }
+    return m_keyDownFrameCount[keyCode] == INIT_KEY_DOWN_FRAME_COUNT + 1;
+}
+
+bool Input::GetKeyPerFrame(int keyCode, int firstFrame, int repeatFrame)
+{
+    if (Input::m_keyDownFrameCount.count(keyCode) == 0) {
+        return false;
+    }
+
+    // 初回はfirstFrame経過時
+    if (m_keyDownFrameCount[keyCode] <= firstFrame) {
+        return m_keyDownFrameCount[keyCode] % firstFrame == 0;
+    }
+
+    // 初回より後はrepeatFrame毎
+    return m_keyDownFrameCount[keyCode] % repeatFrame == 0;
+}
+
+void Input::InitKeyDownFrameCount(int keyCode)
+{
+    m_keyDownFrameCount[keyCode] = INIT_KEY_DOWN_FRAME_COUNT;
 }

@@ -190,7 +190,9 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             case WM_KEYDOWN:
             {
                 SetCapture(hwnd);
-                Input::m_keyDown = wParam;
+
+                int k = static_cast<int>(wParam);
+                Input::m_isKeyDownFrame[k] = true;
             }
             result = 0;
             wasHandled = true;
@@ -199,7 +201,10 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
             case WM_KEYUP:
             {
                 ReleaseCapture();
-                Input::m_keyDown = -1;
+
+                int k = static_cast<int>(wParam);
+                Input::m_isKeyDownFrame[k] = false;
+                Input::InitKeyDownFrameCount(k);
             }
             result = 0;
             wasHandled = true;
@@ -243,6 +248,16 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             case WM_TIMER:
             {
+                for (auto p : Input::m_isKeyDownFrame) {
+                    if (p.second == true) {
+                        int k = p.first;
+                        if (Input::m_keyDownFrameCount.count(k) == 0) {
+                            Input::InitKeyDownFrameCount(k);
+                        }
+                        Input::m_keyDownFrameCount[k] += 1;
+                    }
+                }
+
                 // マウスカーソル座標に関する更新
                 POINT p;
                 GetCursorPos(&p);

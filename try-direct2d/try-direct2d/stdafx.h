@@ -34,6 +34,7 @@
 #include <filesystem>
 #include <tuple> 
 #include <functional> 
+#include <map>
 
 // M_PIが定義されていないエラーが出るのでstdafx.cppの"#include stdafx.h"より前に移動した
 // #define _USE_MATH_DEFINES
