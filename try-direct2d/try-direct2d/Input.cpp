@@ -52,37 +52,41 @@ int Input::GetMouseDeltaY()
 
 bool Input::GetKey(int keyCode)
 {
-    // TODO: ここのチェックまとめられないかな
-    if (Input::m_keyDownFrameCount.count(keyCode) == 0) {
-        return false;
-    }
-    return m_keyDownFrameCount[keyCode] != INIT_KEY_DOWN_FRAME_COUNT;
+    return CompareWithFrameCount(keyCode, [](int count){
+        return count != INIT_KEY_DOWN_FRAME_COUNT;
+    });
 }
 
 bool Input::GetKeyDown(int keyCode)
 {
-    if (Input::m_keyDownFrameCount.count(keyCode) == 0) {
-        return false;
-    }
-    return m_keyDownFrameCount[keyCode] == INIT_KEY_DOWN_FRAME_COUNT + 1;
+    return CompareWithFrameCount(keyCode, [](int count){
+        return count == INIT_KEY_DOWN_FRAME_COUNT + 1;
+    });
 }
 
 bool Input::GetKeyPerFrame(int keyCode, int firstFrame, int repeatFrame)
 {
-    if (Input::m_keyDownFrameCount.count(keyCode) == 0) {
-        return false;
-    }
-
-    // 初回はfirstFrame経過時
-    if (m_keyDownFrameCount[keyCode] <= firstFrame) {
-        return m_keyDownFrameCount[keyCode] % firstFrame == 0;
-    }
-
-    // 初回より後はrepeatFrame毎
-    return m_keyDownFrameCount[keyCode] % repeatFrame == 0;
+    return CompareWithFrameCount(keyCode, [&firstFrame, &repeatFrame](int count){
+        // 初回はfirstFrame経過時
+        if (count <= firstFrame) {
+            return count % firstFrame == 0;
+        }
+        // 初回より後はrepeatFrame毎
+        return count % repeatFrame == 0;
+    });
 }
 
 void Input::InitKeyDownFrameCount(int keyCode)
 {
     m_keyDownFrameCount[keyCode] = INIT_KEY_DOWN_FRAME_COUNT;
+}
+
+bool Input::CompareWithFrameCount(int keyCode, std::function<bool(int)> fn)
+{
+    // 取得するframeCountがない
+    if (m_keyDownFrameCount.count(keyCode) == 0) {
+        return false;
+    }
+
+    return fn(m_keyDownFrameCount[keyCode]);
 }
