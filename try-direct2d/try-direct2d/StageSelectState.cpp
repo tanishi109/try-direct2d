@@ -11,6 +11,9 @@
 
 StageSelectState::StageSelectState()
 {
+    m_list.m_marginRate.assign(0.0, 0.5, 0.0, 0.0);
+    m_list.m_marginPx.assign(8, 8);
+    m_gameObjects.push_back(&m_list);
 }
 
 
@@ -21,9 +24,6 @@ StageSelectState::~StageSelectState()
 void StageSelectState::enter(Scene& scene)
 {
     loadSaveFiles();
-    m_list.m_marginRate.assign(0.0, 0.5, 0.0, 0.0);
-    m_list.m_marginPx.assign(8, 8);
-    m_gameObjects.push_back(&m_list);
 
     m_onSelect = [&scene, this](int index){
         // not selected
