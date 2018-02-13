@@ -49,7 +49,7 @@ void CanvasState::update(Scene* scene)
         m_world->setTileFromPos(TerrainType_floor, mouseX + m_screen->m_x, mouseY + m_screen->m_y);
     }
 
-    bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
+    bool isMenuKeyDowned = Input::GetKeyDown(VK_ESCAPE);
     if (isMenuKeyDowned) {
         scene->push(new CanvasMenuState());
     }
