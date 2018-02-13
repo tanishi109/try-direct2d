@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneState.h"
+#include "ScrollableList.h"
 
 class CanvasMenuState : public SceneState
 {
@@ -10,8 +11,8 @@ public:
     void enter(Scene& scene);
     void update(Scene* scene);
 private:
-    int m_textPosList[4][2];
-    std::string m_textList[4];
     void saveTileMap();
+    static std::function<void(int)> m_onSelect;
+    static ScrollableList& m_list;
 };
 

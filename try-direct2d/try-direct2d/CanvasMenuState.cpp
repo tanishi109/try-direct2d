@@ -11,20 +11,21 @@
 
 #include "Constant.h"
 
-CanvasMenuState::CanvasMenuState() :
-m_textPosList{
-    {0, 0},
-    {30, 100},
-    {30, 200},
-    {30, 300}
-},
-m_textList {
-    "Menu",
-    "push 1. Canvas Mode",
-    "push 2. Game Mode",
-    "push 0. Save this Canvas"
-}
+std::function<void(int)> CanvasMenuState::m_onSelect = [](int index){
+};
+
+
+ScrollableList& CanvasMenuState::m_list = *new ScrollableList(m_onSelect, {
+    "Try to play", 
+    "Save as new", 
+    "Save this file (WIP)",
+    "Back to Stage Select"
+});
+
+CanvasMenuState::CanvasMenuState()
 {
+    m_list.m_marginPx.assign(8, 80);
+    m_gameObjects.push_back(&m_list);
 }
 
 
@@ -35,37 +36,32 @@ CanvasMenuState::~CanvasMenuState()
 void CanvasMenuState::enter(Scene& scene)
 {
     Render::TakeScreenShot();
+
+    m_onSelect = [&scene, this](int index){
+        if (index == 0) {
+            scene.push(new GameState());
+            return;
+        }
+        if (index == 1) {
+            saveTileMap();
+            return;
+        }
+        if (index == 2) {
+            // TODO: ã‘‚«•Û‘¶‚Å‚«‚é‚æ‚¤‚É‚·‚é
+            saveTileMap();
+            return;
+        }
+        if (index == 3) {
+            scene.pop();
+            scene.pop();
+            return;
+        }
+    };
 }
 
 void CanvasMenuState::update(Scene* scene)
 {
-    Render::Clear();
-
     Render::DrawScreenShot();
-
-    static const int width = 400;
-    for (auto &pos : m_textPosList) {
-        int index = &pos - &m_textPosList[0];
-        int x = pos[0];
-        int y = pos[1];
-        std::string text = m_textList[index];
-
-        Render::DrawString(x, y, width, 40, text);
-    }
-
-    bool is1KeyDowned = Input::GetKey(0x31);
-    bool is2KeyDowned = Input::GetKey(0x32);
-    bool is0KeyDowned = Input::GetKey(0x30);
-
-    if (is1KeyDowned) {
-        scene->pop();
-    }
-    if (is2KeyDowned) {
-        scene->push(new GameState());
-    }
-    if (is0KeyDowned) {
-        saveTileMap();
-    }
 }
 
 void CanvasMenuState::saveTileMap()
