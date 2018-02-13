@@ -118,7 +118,7 @@ void Render::TakeScreenShot()
 void Render::DrawScreenShot()
 {
     if (m_direct2dBmp != nullptr) {
-        m_renderTarget->DrawBitmap(m_direct2dBmp);
+        m_renderTarget->DrawBitmap(m_direct2dBmp, nullptr, 0.5); // TODO: opacity‚ðƒxƒ^‘Å‚¿‚µ‚È‚¢
     }
 }
 
