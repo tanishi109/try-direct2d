@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameState.h"
-#include "CanvasMenuState.h"
+#include "GameMenuState.h"
 #include "CanvasState.h"
 #include "Input.h"
 #include "Render.h"
@@ -114,19 +114,15 @@ Terrain* GameState::checkCollision()
 
 void GameState::update(Scene* scene)
 {
-    // Menu
-    bool isMenuKeyDowned = Input::GetKey(VK_ESCAPE);
-
-    // Handle focus
-    if (isMenuKeyDowned) {
+    if (Input::GetKeyDown(VK_ESCAPE)) {
         // FIXME: onLeave“I‚È‚Ì‚ª—~‚µ‚¢‚Ë
         m_isFocus = false;
         ClipCursor(nullptr);
         Input::m_captureCursorMode = false;
         ShowCursor(true);
 
-        // TODO: GameMenuState‚É‘JˆÚ
-        scene->pop();
+        scene->push(new GameMenuState());
+        return;
     }
 
     if (Input::GetMouseDownL() && !m_isFocus) {

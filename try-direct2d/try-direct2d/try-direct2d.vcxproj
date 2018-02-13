@@ -144,6 +144,7 @@
     <ClInclude Include="Constant.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DemoApp.h" />
+    <ClInclude Include="GameMenuState.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Margin.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Constant.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DemoApp.cpp" />
+    <ClCompile Include="GameMenuState.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Input.cpp" />
