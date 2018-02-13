@@ -52,8 +52,15 @@ void ScrollableList::render(Screen* screen)
         }
     }
 
-    if (Input::GetKey(VK_RETURN)) {
+    // FIXME: input‚Írender()‚¶‚á‚È‚­‚Äupdate()“I‚ÈŠÖ”‚Åˆ—‚µ‚½‚¢
+    if (Input::GetKeyDown(VK_RETURN)) {
         m_onSelect(m_pointedIndex);
+    }
+    if (Input::GetKeyPerFrame(static_cast<int>(VK_UP))) {
+        incrementPointer(-1);
+    }
+    if (Input::GetKeyPerFrame(static_cast<int>(VK_DOWN))) {
+        incrementPointer(1);
     }
 }
 

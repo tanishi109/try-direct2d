@@ -43,12 +43,6 @@ void StageSelectState::enter(Scene& scene)
 
 void StageSelectState::update(Scene* scene)
 {
-    if (Input::GetKeyPerFrame(static_cast<int>(VK_UP))) {
-        m_list.incrementPointer(-1);
-    }
-    if (Input::GetKeyPerFrame(static_cast<int>(VK_DOWN))) {
-        m_list.incrementPointer(1);
-    }
 }
 
 void StageSelectState::loadSaveFiles()
