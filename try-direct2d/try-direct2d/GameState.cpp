@@ -125,6 +125,12 @@ void GameState::update(Scene* scene)
         return;
     }
 
+    if (!m_isFocus) {
+        Render::DrawString(0, 0, 300, 30, "Click to start playing");
+    } else {
+        Render::DrawString(0, 0, 300, 30, "Push escape key to open menu");
+    }
+
     if (Input::GetMouseDownL() && !m_isFocus) {
         m_isFocus = true;
         ShowCursor(false);
@@ -149,7 +155,10 @@ void GameState::update(Scene* scene)
             initPosition();
         }
         if (hitTerrain->m_type == TerrainType_goal) {
-            Render::DrawString(0, 0, 100, 32, "Clear!");
+            int width;
+            int height;
+            std::tie(width, height) = Render::GetClientSize();
+            Render::DrawString(width / 2 - 50, height / 2 - 50, 100, 32, "Clear!");
         }
     }
 }
