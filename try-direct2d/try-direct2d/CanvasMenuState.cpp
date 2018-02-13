@@ -62,6 +62,10 @@ void CanvasMenuState::enter(Scene& scene)
 void CanvasMenuState::update(Scene* scene)
 {
     Render::DrawScreenShot();
+
+    if (Input::GetKeyDown(VK_ESCAPE)) {
+        scene->pop();
+    }
 }
 
 void CanvasMenuState::saveTileMap()
