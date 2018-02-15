@@ -17,7 +17,7 @@ public:
     static void DrawString(int x, int y, int w, int h, std::string string);
     static void SetRotation(float degree, float centerX, float centerY);
     static void TakeScreenShot();
-    static void DrawScreenShot();
+    static void DrawScreenShot(int zIndex);
     // ï`âÊópä÷êîÇ±Ç±Ç‹Ç≈
     static std::tuple<long, long> GetClientSize();
     static HRESULT CreateDeviceResources();

@@ -136,13 +136,18 @@ void Render::TakeScreenShot()
     });
 }
 
-void Render::DrawScreenShot()
+void Render::DrawScreenShot(int zIndex)
 {
+    int prevIndex = m_zIndex;
+    m_zIndex = zIndex;
+
     m_renderQueue[m_zIndex].push_back([](){
         if (m_direct2dBmp != nullptr) {
-            m_renderTarget->DrawBitmap(m_direct2dBmp, nullptr, 0.5); // TODO: opacity‚ðƒxƒ^‘Å‚¿‚µ‚È‚¢
+            m_renderTarget->DrawBitmap(m_direct2dBmp);
         }
     });
+
+    m_zIndex = prevIndex;
 }
 
 std::tuple<long, long> Render::GetClientSize()

@@ -37,7 +37,7 @@ void GameMenuState::enter(Scene& scene)
 
 void GameMenuState::update(Scene* scene)
 {
-    Render::DrawScreenShot();
+    Render::DrawScreenShot(0);
 
     if (Input::GetKeyDown(VK_ESCAPE)) {
         scene->pop();

@@ -61,7 +61,7 @@ void CanvasMenuState::enter(Scene& scene)
 
 void CanvasMenuState::update(Scene* scene)
 {
-    Render::DrawScreenShot();
+    Render::DrawScreenShot(0);
 
     if (Input::GetKeyDown(VK_ESCAPE)) {
         scene->pop();
