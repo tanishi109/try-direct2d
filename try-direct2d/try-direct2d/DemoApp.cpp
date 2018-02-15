@@ -171,7 +171,10 @@ LRESULT CALLBACK DemoApp::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             case WM_PAINT:
             {
-                ValidateRect(hwnd, nullptr);
+                PAINTSTRUCT ps;
+                BeginPaint(hwnd, &ps);
+                pDemoApp->Paint();
+                EndPaint(hwnd, &ps);
             }
             result = 0;
             wasHandled = true;
@@ -326,9 +329,19 @@ void DemoApp::EnterScene()
 
 void DemoApp::UpdateScene()
 {
-    // FIXME: ‚Å‚©‚¢Begin~EndDraw‚ÅˆÍ‚ñ‚Å‚é‚Ì‚¢‚¢‚Ì‚©‚È?
-    Render::Begin();
     m_scene->update();
+    InvalidateRect(Render::m_hwnd, nullptr, true);
+}
+
+void DemoApp::Paint()
+{
+    Render::Begin();
+    Render::Clear();
+    for (auto queue : Render::m_renderQueue) {
+        for (auto renderFn : queue) {
+            renderFn();
+        }
+    }
     HRESULT hr = Render::End();
 
     if (hr == D2DERR_RECREATE_TARGET) {

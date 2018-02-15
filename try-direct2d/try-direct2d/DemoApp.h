@@ -25,6 +25,7 @@ private:
 
     void EnterScene();
     void UpdateScene();
+    void Paint();
 
     // Resize the render target.
     void OnResize(

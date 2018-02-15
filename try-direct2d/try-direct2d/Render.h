@@ -11,17 +11,20 @@ public:
     static void Begin();
     static HRESULT End();
     static void Clear();
+    // •`‰æ—pŠÖ”
     static void DrawRect(int x, int y, int w, int h, BrushType type);
     static void DrawCircle(int x, int y, int r, BrushType type);
     static void DrawString(int x, int y, int w, int h, std::string string);
     static void SetRotation(float degree, float centerX, float centerY);
     static void TakeScreenShot();
     static void DrawScreenShot();
+    // •`‰æ—pŠÖ”‚±‚±‚Ü‚Å
     static std::tuple<long, long> GetClientSize();
     static HRESULT CreateDeviceResources();
     static HRESULT CreateDeviceIndependentResources();
 
     static HWND m_hwnd;
+
 private:
     static ID2D1SolidColorBrush* getBrush(BrushType type);
 
@@ -41,5 +44,10 @@ private:
     static ID2D1Bitmap* m_direct2dBmp;
     static ID2D1RenderTarget* m_bmpRenderTarget;
     static IWICImagingFactory* m_wicImagingFactory;
+
+    // •`‰æ€”õ: m_zIndex”Ô–Ú‚Ìlist‚É•`‰æ—pŠÖ”‚ğ’Ç‰Á‚µ‚Ä‚¢‚­
+    // •`‰æ: 0”Ô–Ú‚Ìlist‚©‚ç‡‚É—v‘f‚Æ‚µ‚Ä‚ÂŠÖ”‚ğÀs
+    static std::list<std::function<void()>> m_renderQueue[3];
+    static int m_zIndex;
 };
 

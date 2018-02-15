@@ -22,7 +22,6 @@ void Scene::enter()
 
 void Scene::update()
 {
-    Render::Clear();
     m_currentState->renderGameObjects();
 
     m_currentState->update(this);

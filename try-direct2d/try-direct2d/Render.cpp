@@ -18,6 +18,9 @@ ID2D1Bitmap* Render::m_direct2dBmp = nullptr;
 ID2D1RenderTarget* Render::m_bmpRenderTarget = nullptr;
 IWICImagingFactory* Render::m_wicImagingFactory = nullptr;
 
+int Render::m_zIndex = 1;
+std::list<std::function<void()>> Render::m_renderQueue[3];
+
 Render::Render()
 {
 }
@@ -45,6 +48,10 @@ HRESULT Render::End()
     hr = m_renderTarget->EndDraw();
     hr = m_bmpRenderTarget->EndDraw();
 
+    for (auto& queue : m_renderQueue) {
+        queue.clear();
+    }
+
     return hr;
 }
 
@@ -63,10 +70,12 @@ void Render::DrawRect(int x, int y, int w, int h, BrushType type)
         x + w,
         y + h
     );
-
     ID2D1SolidColorBrush* brush = getBrush(type);
-    m_renderTarget->DrawRectangle(&rect, brush);
-    m_bmpRenderTarget->DrawRectangle(&rect, m_bBrush);
+
+    m_renderQueue[m_zIndex].push_back([rect, brush](){
+        m_renderTarget->DrawRectangle(&rect, brush);
+        m_bmpRenderTarget->DrawRectangle(&rect, m_bBrush);
+    });
 }
 
 void Render::DrawCircle(int x, int y, int r, BrushType type)
@@ -78,8 +87,11 @@ void Render::DrawCircle(int x, int y, int r, BrushType type)
     );
 
     ID2D1SolidColorBrush* brush = getBrush(type);
-    m_renderTarget->FillEllipse(ellipse, brush);
-    m_bmpRenderTarget->FillEllipse(ellipse, m_bBrush);
+
+    m_renderQueue[m_zIndex].push_back([ellipse, brush](){
+        m_renderTarget->FillEllipse(ellipse, brush);
+        m_bmpRenderTarget->FillEllipse(ellipse, m_bBrush);
+    });
 }
 
 void Render::DrawString(int x, int y, int w, int h, std::string string)
@@ -87,39 +99,50 @@ void Render::DrawString(int x, int y, int w, int h, std::string string)
     // ID2D1HwndRenderTarget::DrawTextはWCHARを引数に取るのでwstringに変換
     std::wstring wstring = Stringtool::ToWString(string);
     // Retrieve the size of the render target.
+    // TODO: これ不要っぽい
     D2D1_SIZE_F renderTargetSize = m_renderTarget->GetSize();
 
-    m_renderTarget->DrawText(
-        wstring.c_str(),
-        wstring.size(),
-        m_textFormat,
-        D2D1::RectF(x, y, x + w, y + h), // FIXME: ここもfloatにcast
-        m_brush_black
-    );
+    D2D1_RECT_F rect = D2D1::RectF(x, y, x + w, y + h); // FIXME: ここもfloatにcast
 
-    // いまは文字はスクショに含めていないが、引数で設定できてもいいかも
-    // m_bmpRenderTarget->DrawText();
+    m_renderQueue[m_zIndex].push_back([wstring, rect](){
+        m_renderTarget->DrawText(
+            wstring.c_str(),
+            wstring.size(),
+            m_textFormat,
+            rect,
+            m_brush_black
+        );
+        // TODO: スクリーンショットへの描画を選択できるように
+    });
 }
 
 void Render::SetRotation(float degree, float centerX, float centerY)
 {
-    D2D1::Matrix3x2F matrix = D2D1::Matrix3x2F::Rotation(degree, D2D1::Point2F(centerX, centerY));
-    m_renderTarget->SetTransform(matrix);
-    m_bmpRenderTarget->SetTransform(matrix);
+    D2D1_POINT_2F point = D2D1::Point2F(centerX, centerY);
+
+    m_renderQueue[m_zIndex].push_back([degree, point](){
+        D2D1::Matrix3x2F matrix = D2D1::Matrix3x2F::Rotation(degree, point);
+        m_renderTarget->SetTransform(matrix);
+        m_bmpRenderTarget->SetTransform(matrix);
+    });
 }
 
 void Render::TakeScreenShot()
 {
-    End();
-    HRESULT r = m_renderTarget->CreateBitmapFromWicBitmap(m_wicBmp, &m_direct2dBmp);
-    Begin();
+    m_renderQueue[m_zIndex].push_back([](){
+        End();
+        HRESULT r = m_renderTarget->CreateBitmapFromWicBitmap(m_wicBmp, &m_direct2dBmp);
+        Begin();
+    });
 }
 
 void Render::DrawScreenShot()
 {
-    if (m_direct2dBmp != nullptr) {
-        m_renderTarget->DrawBitmap(m_direct2dBmp, nullptr, 0.5); // TODO: opacityをベタ打ちしない
-    }
+    m_renderQueue[m_zIndex].push_back([](){
+        if (m_direct2dBmp != nullptr) {
+            m_renderTarget->DrawBitmap(m_direct2dBmp, nullptr, 0.5); // TODO: opacityをベタ打ちしない
+        }
+    });
 }
 
 std::tuple<long, long> Render::GetClientSize()
