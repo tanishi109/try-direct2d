@@ -28,6 +28,10 @@ World::~World()
 
 void World::setTileFromPos(TerrainType type, int x, int y)
 {
+    if (x < 0 || y < 0) {
+        // TODO: マイナス方向にタイル置けるようにしたい
+        return;
+    }
     int tileX = std::floor(x / TILE_SIZE);
     int tileY = std::floor(y / TILE_SIZE);
 
@@ -55,8 +59,8 @@ void World::render(Screen* screen)
                 continue;
             }
             Render::DrawCircle(
-                x * size - offsetX,
-                y * size - offsetY,
+                x * size - offsetX + size / 2, // Tileに収まるように調整
+                y * size - offsetY + size / 2,
                 size / 2,
                 tile->m_color
             );

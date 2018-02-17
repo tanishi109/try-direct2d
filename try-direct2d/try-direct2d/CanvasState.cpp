@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Stringtool.h"
+#include "BrushType.h"
 
 World* CanvasState::m_world = new World();
 
@@ -37,21 +38,29 @@ void CanvasState::update(Scene* scene)
         SetCursor(m_defaultCursor);
     }
 
+    // タイルに対する操作
+    int mouseX = Input::GetMousePosX();
+    int mouseY = Input::GetMousePosY();
+    std::tie(mouseX, mouseY) = m_screen->screenToWorld(mouseX, mouseY);
+    int tileX = std::floor(mouseX / World::TILE_SIZE) * World::TILE_SIZE;
+    int tileY = std::floor(mouseY / World::TILE_SIZE) * World::TILE_SIZE;
+    std::tie(tileX, tileY) = m_screen->worldToScreen(tileX , tileY);
+    // Show target tile
+    Render::DrawRect(tileX, tileY, World::TILE_SIZE, World::TILE_SIZE, BrushType_green);
+
     if (isMouseDownL && !isGrabKeyDowned) {
-        const int mouseX = Input::GetMousePosX();
-        const int mouseY = Input::GetMousePosY();
-        m_world->setTileFromPos(TerrainType_wall, mouseX + m_screen->m_x, mouseY + m_screen->m_y);
+        m_world->setTileFromPos(TerrainType_wall, mouseX, mouseY);
     }
     bool isMouseDownR = Input::GetMouseDownR();
     if (isMouseDownR && !isGrabKeyDowned) {
-        const int mouseX = Input::GetMousePosX();
-        const int mouseY = Input::GetMousePosY();
-        m_world->setTileFromPos(TerrainType_floor, mouseX + m_screen->m_x, mouseY + m_screen->m_y);
+        m_world->setTileFromPos(TerrainType_floor, mouseX, mouseY);
     }
 
+    // メニュー表示
     bool isMenuKeyDowned = Input::GetKeyDown(VK_ESCAPE);
     if (isMenuKeyDowned) {
         scene->push(new CanvasMenuState());
+        return;
     }
 }
 
