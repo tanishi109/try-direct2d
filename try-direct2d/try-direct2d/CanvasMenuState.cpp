@@ -52,8 +52,7 @@ void CanvasMenuState::enter(Scene& scene)
             return;
         }
         if (index == 3) {
-            scene.pop();
-            scene.pop();
+            scene.pop(2);
             return;
         }
     };
