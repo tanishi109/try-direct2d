@@ -4,12 +4,14 @@
 #include "Render.h"
 #include "Input.h"
 
+int INITIAL_INDEX = -1;
+
 ScrollableList::ScrollableList(std::function<void(int)>& onSelect, std::initializer_list<std::string> contents) :
 m_marginPx{*new Margin(0, 0, 0, 0)},
 m_marginRate{*new Margin(0, 0, 0, 0)},
 m_textMargin{*new Margin(0, 0, 8, 0)},
 m_contents(contents),
-m_pointedIndex(-1),
+m_pointedIndex(INITIAL_INDEX),
 m_onSelect(onSelect)
 {
 }
@@ -67,5 +69,13 @@ void ScrollableList::render(Screen* screen)
 void ScrollableList::incrementPointer(int n)
 {
     int size = static_cast<int>(m_contents.size());
+
+    if (m_pointedIndex + n == INITIAL_INDEX - 1) {
+        // pointedIndexが-1のときに-1進めたら
+        // 一番後ろを指す
+        m_pointedIndex = size - 1;
+        return;
+    }
+
     m_pointedIndex = (m_pointedIndex + n + size) % size; // マイナス方向にループさせるためsizeを一回足している
 }
