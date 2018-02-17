@@ -13,7 +13,7 @@ public:
     virtual void update();
     virtual void onMouseMove();
     void push(SceneState* state);
-    void pop();
+    void pop(unsigned int times = 1);
 private:
     std::vector<SceneState*> m_stateStack;
     SceneState* m_currentState;

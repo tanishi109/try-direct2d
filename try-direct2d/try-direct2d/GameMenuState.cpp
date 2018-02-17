@@ -28,8 +28,7 @@ void GameMenuState::enter(Scene& scene)
 
     m_onSelect = [&scene, this](int index){
         if (index == 0) {
-            scene.pop();
-            scene.pop();
+            scene.pop(3);
             return;
         }
     };

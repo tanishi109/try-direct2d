@@ -39,9 +39,11 @@ void Scene::push(SceneState* state)
     enter();
 }
 
-void Scene::pop()
+void Scene::pop(unsigned int times)
 {
-    m_stateStack.pop_back();
+    for (int n = 0; n < times; n++) {
+        m_stateStack.pop_back();
+    }
     m_currentState = m_stateStack.back();
     enter();
 }
