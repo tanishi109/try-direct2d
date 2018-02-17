@@ -9,6 +9,8 @@
 
 #include "Constant.h"
 
+std::map<std::string, SaveFile> StageSelectState::m_saveFiles;
+
 StageSelectState::StageSelectState()
 {
     m_list.m_marginRate.assign(0.0, 0.5, 0.0, 0.0);
@@ -50,8 +52,12 @@ void StageSelectState::loadSaveFiles()
     std::string folderPath = Stringtool::GetAsString("./", Constant::DataFolderName);
     for (auto & p : std::experimental::filesystem::directory_iterator(folderPath)) {
         std::string fileName = Stringtool::GetAsString(p.path().filename());
-        m_list.m_contents.push_back(fileName);
+        if (m_saveFiles.count(fileName) == 0) {
+            m_saveFiles[fileName] = *new SaveFile{ fileName };
+            m_list.m_contents.push_back(fileName);
+        }
     }
+
 }
 
 void StageSelectState::loadTileMap(int index)
