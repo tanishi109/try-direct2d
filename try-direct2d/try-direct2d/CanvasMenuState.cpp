@@ -11,14 +11,15 @@
 
 #include "Constant.h"
 
+std::string CanvasMenuState::m_fileId;
+
 std::function<void(int)> CanvasMenuState::m_onSelect = [](int index){
 };
 
 
 ScrollableList& CanvasMenuState::m_list = *new ScrollableList(m_onSelect, {
     "Try to play", 
-    "Save as new", 
-    "Save this file (WIP)",
+    "Save", 
     "Back to Stage Select"
 });
 
@@ -43,15 +44,11 @@ void CanvasMenuState::enter(Scene& scene)
             return;
         }
         if (index == 1) {
-            saveTileMap();
+            m_fileId = getFileId();
+            saveTo(m_fileId);
             return;
         }
         if (index == 2) {
-            // TODO: è„èëÇ´ï€ë∂Ç≈Ç´ÇÈÇÊÇ§Ç…Ç∑ÇÈ
-            saveTileMap();
-            return;
-        }
-        if (index == 3) {
             scene.pop(2);
             return;
         }
@@ -67,16 +64,23 @@ void CanvasMenuState::update(Scene* scene)
     }
 }
 
-void CanvasMenuState::saveTileMap()
+std::string CanvasMenuState::getFileId()
 {
+    if (!m_fileId.empty()) {
+        return m_fileId;
+    }
+    std::time_t time = std::time(nullptr);
+    std::string fileId = Stringtool::GetAsString(time);
 
+    return fileId;
+}
+
+void CanvasMenuState::saveTo(std::string fileId)
+{
     std::string folderPath = Stringtool::GetAsString("./", Constant::DataFolderName);
     _mkdir(folderPath.c_str());
 
-    std::time_t time = std::time(nullptr);
-    std::string fileId = Stringtool::GetAsString(time);
     std::string filePath = Stringtool::GetAsString(folderPath, "/", fileId, ".dat");
-
     std::ofstream ofs(filePath, std::ios::out | std::ios::trunc | std::ios::binary);
 
     if (!ofs)

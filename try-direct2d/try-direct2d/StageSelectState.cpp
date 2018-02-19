@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Input.h"
 #include "CanvasState.h"
+#include "CanvasMenuState.h"
 #include "TileMapRecord.h"
 #include "Stringtool.h"
 
@@ -34,6 +35,8 @@ void StageSelectState::enter(Scene& scene)
         }
         // create new stage
         if (index == 0) {
+            CanvasMenuState::m_fileId = "";
+            CanvasState::m_world = new World();
             scene.push(new CanvasState());
             return;
         }
@@ -53,7 +56,7 @@ void StageSelectState::loadSaveFiles()
     for (auto & p : std::experimental::filesystem::directory_iterator(folderPath)) {
         std::string fileName = Stringtool::GetAsString(p.path().filename());
         if (m_saveFiles.count(fileName) == 0) {
-            m_saveFiles[fileName] = *new SaveFile{ fileName };
+            m_saveFiles[fileName] = *new SaveFile{ fileName }; // FIXME: .dat‚ğŠÜ‚ñ‚Å‚¢‚é
             m_list.m_contents.push_back(fileName);
         }
     }
@@ -80,6 +83,9 @@ void StageSelectState::loadTileMap(int index)
 
     // “Ç‚İ‚ñ‚¾record‚©‚çWorld‚Ìm_tiles‚ğ•œŒ³‚·‚é
     CanvasState::m_world->restore(tileMapRecord);
+
+    // fileId‚ğCanvasMenuState‚É“Ç‚İ‚ñ‚Å‚¨‚­
+    CanvasMenuState::m_fileId = tileMapRecord.id;
 }
 
 std::function<void(int)> StageSelectState::m_onSelect = [](int index){
