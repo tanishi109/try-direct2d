@@ -23,7 +23,8 @@ ScrollableList& CanvasMenuState::m_list = *new ScrollableList(m_onSelect, {
     "Back to Stage Select"
 });
 
-CanvasMenuState::CanvasMenuState()
+CanvasMenuState::CanvasMenuState() :
+m_showTextCount{0}
 {
     m_list.m_marginPx.assign(8, 80);
     m_gameObjects.push_back(&m_list);
@@ -46,6 +47,9 @@ void CanvasMenuState::enter(Scene& scene)
         if (index == 1) {
             m_fileId = getFileId();
             saveTo(m_fileId);
+            if (this->m_showTextCount <= 0) {
+                this->m_showTextCount = 90;
+            }
             return;
         }
         if (index == 2) {
@@ -61,6 +65,15 @@ void CanvasMenuState::update(Scene* scene)
 
     if (Input::GetKeyDown(VK_ESCAPE)) {
         scene->pop();
+    }
+
+    if (m_showTextCount > 0) {
+        m_showTextCount --;
+        int h;
+        std::tie(std::ignore, h) = Render::GetClientSize();
+        int textWidth = 80;
+        int textHeight = 30;
+        Render::DrawString(0, h - textHeight, textWidth, textHeight, "Saved!");
     }
 }
 

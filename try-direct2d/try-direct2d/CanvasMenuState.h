@@ -17,5 +17,7 @@ private:
 
     static std::function<void(int)> m_onSelect;
     static ScrollableList& m_list;
+
+    int m_showTextCount;
 };
 
