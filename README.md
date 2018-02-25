@@ -23,14 +23,14 @@ direct2dを使ったゲームの習作です。
 
 ## メニュー画面
 
-![image](https://user-images.githubusercontent.com/5266152/36132956-ae173e3a-10bd-11e8-9c93-a1ca29069c0c.png)
+![image](https://user-images.githubusercontent.com/5266152/36644099-ad228d1a-1a98-11e8-8126-8c961a2e64ed.png)
 
 - 上下キー: 項目を選択
 - エンターキー: 確定
 
 ## キャンバス画面
 
-![image](https://user-images.githubusercontent.com/5266152/35228249-9a23c7ea-ffd3-11e7-81d0-168d3d7786a5.png)
+![image](https://user-images.githubusercontent.com/5266152/36644112-cd1b2532-1a98-11e8-8279-8f27e6a5241d.png)
 
 - クリック(左): 壁(緑の円)を置く
 - 右クリック: 床(白いエリア)を置く
