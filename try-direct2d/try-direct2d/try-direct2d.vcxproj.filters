@@ -13,11 +13,29 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル\States">
+    <Filter Include="ヘッダー ファイル\Scene">
       <UniqueIdentifier>{b5dd57f8-8588-4e58-b668-c1ca7ded777f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\States">
+    <Filter Include="ヘッダー ファイル\Scene\States">
+      <UniqueIdentifier>{cf42d612-2e5a-4a1b-a71a-c433a8c15442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{dc3f5b2e-1601-4a04-9a12-e243673cbe7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\States">
+      <UniqueIdentifier>{da6979da-0a65-4201-9a79-c854cd125d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{1b97916e-086f-4c47-96b6-1df9cb9bc7a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player\States">
+      <UniqueIdentifier>{921cab4a-6ff7-4814-b214-00b521e56305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Player">
+      <UniqueIdentifier>{1b39e64b-4ee3-4d6d-b097-778cea95a78f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Player\States">
+      <UniqueIdentifier>{4ba82a19-90a0-41a7-8189-708e3ca766df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,15 +57,6 @@
     <ClInclude Include="DemoApp.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CanvasState.h">
-      <Filter>ヘッダー ファイル\States</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -58,12 +67,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Terrain.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>ヘッダー ファイル\States</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Mathtool.h">
@@ -84,12 +87,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CanvasMenuState.h">
-      <Filter>ヘッダー ファイル\States</Filter>
-    </ClInclude>
-    <ClInclude Include="StageSelectState.h">
-      <Filter>ヘッダー ファイル\States</Filter>
-    </ClInclude>
     <ClInclude Include="TileMapRecord.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -108,8 +105,29 @@
     <ClInclude Include="Debug.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="SceneState.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="StageSelectState.h">
+      <Filter>ヘッダー ファイル\Scene\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>ヘッダー ファイル\Scene\States</Filter>
+    </ClInclude>
     <ClInclude Include="GameMenuState.h">
-      <Filter>ヘッダー ファイル\States</Filter>
+      <Filter>ヘッダー ファイル\Scene\States</Filter>
+    </ClInclude>
+    <ClInclude Include="CanvasState.h">
+      <Filter>ヘッダー ファイル\Scene\States</Filter>
+    </ClInclude>
+    <ClInclude Include="CanvasMenuState.h">
+      <Filter>ヘッダー ファイル\Scene\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -120,15 +138,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DemoApp.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CanvasState.cpp">
-      <Filter>ソース ファイル\States</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
@@ -143,12 +152,6 @@
     <ClCompile Include="Terrain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>ソース ファイル\States</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Mathtool.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -160,12 +163,6 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CanvasMenuState.cpp">
-      <Filter>ソース ファイル\States</Filter>
-    </ClCompile>
-    <ClCompile Include="StageSelectState.cpp">
-      <Filter>ソース ファイル\States</Filter>
     </ClCompile>
     <ClCompile Include="TileMapRecord.cpp">
       <Filter>ソース ファイル</Filter>
@@ -185,8 +182,29 @@
     <ClCompile Include="Debug.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SceneState.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasMenuState.cpp">
+      <Filter>ソース ファイル\Scene\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>ソース ファイル\Scene\States</Filter>
+    </ClCompile>
+    <ClCompile Include="CanvasState.cpp">
+      <Filter>ソース ファイル\Scene\States</Filter>
+    </ClCompile>
     <ClCompile Include="GameMenuState.cpp">
-      <Filter>ソース ファイル\States</Filter>
+      <Filter>ソース ファイル\Scene\States</Filter>
+    </ClCompile>
+    <ClCompile Include="StageSelectState.cpp">
+      <Filter>ソース ファイル\Scene\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
