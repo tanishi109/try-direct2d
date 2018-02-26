@@ -34,8 +34,9 @@ void Scene::onMouseMove()
 
 void Scene::push(SceneState* state)
 {
-    m_stateStack.push_back(state);
-    m_currentState = m_stateStack.back();
+    std::shared_ptr<SceneState> p(state);
+    m_stateStack.push_back(p);
+    m_currentState = m_stateStack.back().get();
     enter();
 }
 
@@ -44,6 +45,6 @@ void Scene::pop(unsigned int times)
     for (int n = 0; n < times; n++) {
         m_stateStack.pop_back();
     }
-    m_currentState = m_stateStack.back();
+    m_currentState = m_stateStack.back().get();
     enter();
 }

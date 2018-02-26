@@ -31,16 +31,15 @@ m_player(new Player(0, 0, 50, 10))
 
 GameState::~GameState()
 {
+    // FIXME: IdleState‚Å‚â‚Á‚Ä‚¢‚é‚±‚Æ‚ÌŒãˆ—‚Å‚ ‚é‚±‚Æ‚ª•ª‚©‚è‚É‚­‚¢
+    ClipCursor(nullptr);
+    Input::m_captureCursorMode = false;
+    while(ShowCursor(true) < 0);
 }
 
 void GameState::enter(Scene& scene)
 {
     m_player->m_onGoal = [&scene](){
-        // FIXME: IdleState‚Å‚â‚Á‚Ä‚¢‚é‚±‚Æ‚ÌŒãˆ—‚Å‚ ‚é‚±‚Æ‚ª•ª‚©‚è‚É‚­‚¢
-        ClipCursor(nullptr);
-        Input::m_captureCursorMode = false;
-        ShowCursor(true);
-
         scene.pop(2);
     };
 

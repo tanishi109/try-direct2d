@@ -20,7 +20,7 @@ ControllableState::~ControllableState()
 void ControllableState::enter(Player& player)
 {
     Input::m_captureCursorMode = true;
-    ShowCursor(false);
+    while(ShowCursor(false) > 0);
 
     RECT rc;
     GetWindowRect(Render::m_hwnd, &rc);

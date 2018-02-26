@@ -8,7 +8,7 @@ class SceneState
 {
 public:
     SceneState();
-    ~SceneState();
+    virtual ~SceneState();
     SceneState(const SceneState&) = delete;
     SceneState& operator=(const SceneState&) = delete;
     void renderGameObjects();

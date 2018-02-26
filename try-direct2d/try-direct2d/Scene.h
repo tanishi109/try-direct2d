@@ -15,6 +15,6 @@ public:
     void push(SceneState* state);
     void pop(unsigned int times = 1);
 private:
-    std::vector<SceneState*> m_stateStack;
+    std::vector<std::shared_ptr<SceneState>> m_stateStack;
     SceneState* m_currentState;
 };
