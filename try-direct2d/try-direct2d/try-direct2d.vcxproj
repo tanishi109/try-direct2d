@@ -150,6 +150,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Margin.h" />
+    <ClInclude Include="MissedState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScrollableList.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Margin.cpp" />
     <ClCompile Include="Mathtool.cpp" />
     <ClCompile Include="CanvasMenuState.cpp" />
+    <ClCompile Include="MissedState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="Render.cpp" />

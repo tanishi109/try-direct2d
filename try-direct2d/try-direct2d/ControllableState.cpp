@@ -6,6 +6,7 @@
 #include "Constant.h"
 #include "CanvasState.h"
 #include "Collision.h"
+#include "MissedState.h"
 
 ControllableState::ControllableState()
 {
@@ -30,17 +31,7 @@ void ControllableState::update(Player& player, Screen& screen)
     Terrain* hitTerrain = checkCollision(player);
     if (hitTerrain != nullptr) {
         if (hitTerrain->m_type == TerrainType_wall) {
-            // スタート地点に戻す
-            int x;
-            int y;
-            std::tie(x, y) = CanvasState::m_world->m_startPos;
-            player.setMainPinPos(x, y);
-            Player* focusedPlayer = &player;
-            while (focusedPlayer != nullptr) {
-                focusedPlayer->setMainPinPos(x, y);
-                focusedPlayer->m_degree = 45;
-                focusedPlayer = focusedPlayer->m_child;
-            }
+            player.m_currentState = new MissedState();
         }
         if (hitTerrain->m_type == TerrainType_goal) {
             int width;

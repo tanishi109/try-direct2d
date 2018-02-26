@@ -138,6 +138,9 @@
     <ClInclude Include="IdleState.h">
       <Filter>ヘッダー ファイル\Player\States</Filter>
     </ClInclude>
+    <ClInclude Include="MissedState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -223,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="IdleState.cpp">
       <Filter>ソース ファイル\Player\States</Filter>
+    </ClCompile>
+    <ClCompile Include="MissedState.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
