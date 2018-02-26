@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Input.h"
 #include "CanvasState.h"
+#include "GameState.h"
 #include "CanvasMenuState.h"
 #include "TileMapRecord.h"
 #include "Stringtool.h"
@@ -12,7 +13,8 @@
 
 std::map<std::string, SaveFile> StageSelectState::m_saveFiles;
 
-StageSelectState::StageSelectState()
+StageSelectState::StageSelectState() :
+m_selectedIndex(-1)
 {
     m_list.m_marginRate.assign(0.0, 0.5, 0.0, 0.0);
     m_list.m_marginPx.assign(8, 8);
@@ -26,6 +28,8 @@ StageSelectState::~StageSelectState()
 
 void StageSelectState::enter(Scene& scene)
 {
+    m_selectedIndex = -1;
+
     loadSaveFiles();
 
     m_onSelect = [&scene, this](int index){
@@ -41,13 +45,34 @@ void StageSelectState::enter(Scene& scene)
             return;
         }
         // something selected
-        loadTileMap(index);
-        scene.push(new CanvasState());
+        m_selectedIndex = index;
     };
 }
 
 void StageSelectState::update(Scene* scene)
 {
+    if (m_selectedIndex != -1) {
+        int width;
+        int height;
+        std::tie(width, height) = Render::GetClientSize();
+        int textWidth = width / 2;
+        int textHeight = 60;
+        Render::DrawString(width / 2, height - textHeight, textWidth, textHeight, "press P to play | press E to edit stage (escape to back)");
+
+        if (Input::GetKeyDown(VK_ESCAPE)) {
+            m_selectedIndex = -1;
+        }
+        if (Input::GetKeyDown(0x45)) {
+            // E key downed
+            loadTileMap(m_selectedIndex);
+            scene->push(new CanvasState());
+        }
+        if (Input::GetKeyDown(0x50)) {
+            // P key downed
+            loadTileMap(m_selectedIndex);
+            scene->push(new GameState());
+        }
+    }
 }
 
 void StageSelectState::loadSaveFiles()

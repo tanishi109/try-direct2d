@@ -39,10 +39,12 @@ GameState::~GameState()
 
 void GameState::enter(Scene& scene)
 {
-    m_player->m_onGoal = [&scene](){
-        scene.pop(2);
+    m_player->m_onGoal = [&scene, this](){
+        // stageSelect -> canvas -> menu -> game ‚©
+        // stageSelect -> game ‚©‚Å–ß‚·‰ñ”‚ªˆá‚¤
+        int backCount = scene.findHistory(typeid(CanvasState)) ? 2 : 1;
+        scene.pop(backCount);
     };
-
 }
 
 void GameState::update(Scene* scene)

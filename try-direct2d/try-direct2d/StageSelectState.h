@@ -20,5 +20,6 @@ private:
     static std::function<void(int)> m_onSelect;
     static ScrollableList& m_list;
     static std::map<std::string, SaveFile> m_saveFiles;
+    int m_selectedIndex;
 };
 

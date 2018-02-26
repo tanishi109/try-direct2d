@@ -48,3 +48,15 @@ void Scene::pop(unsigned int times)
     m_currentState = m_stateStack.back().get();
     enter();
 }
+
+bool Scene::findHistory(const type_info& typeInfo)
+{
+    bool found = false;
+    std::for_each(m_stateStack.begin(), m_stateStack.end(), [&found, &typeInfo](auto statePtr){
+        if (typeid(*statePtr) == typeInfo) {
+            found = true;
+        }
+    });
+
+    return found;
+}

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameMenuState.h"
+#include "CanvasState.h"
 #include "Render.h"
 #include "Input.h"
 
@@ -28,7 +29,10 @@ void GameMenuState::enter(Scene& scene)
 
     m_onSelect = [&scene, this](int index){
         if (index == 0) {
-            scene.pop(3);
+            // canvas -> menu -> game -> menu ‚©
+            // game -> menu ‚©‚Å–ß‚·‰ñ”‚ªˆá‚¤
+            int backCount = scene.findHistory(typeid(CanvasState)) ? 3 : 2;
+            scene.pop(backCount);
             return;
         }
     };
