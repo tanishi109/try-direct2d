@@ -7,7 +7,7 @@ class GoaledState : public PlayerState
 public:
     GoaledState();
     ~GoaledState();
-    void update(Player& player, Screen& screen, Scene& scene);
+    PlayerState* update(Player& player, Screen& screen);
 private:
     int m_stateTimer;
 };

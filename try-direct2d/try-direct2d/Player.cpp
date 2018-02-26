@@ -13,7 +13,8 @@ m_degree(45),
 m_horizontalPinMargin(10),
 m_parent(nullptr),
 m_child(nullptr),
-m_currentState{new IdleState()}
+m_currentState{new IdleState()},
+m_onGoal{}
 {
     m_x = x;
     m_y = y;
@@ -32,9 +33,13 @@ Player::~Player()
     }
 }
 
-void Player::update(Screen& screen, Scene& scene)
+void Player::update(Screen& screen)
 {
-    m_currentState->update(*this, screen, scene);
+    PlayerState* newState = m_currentState->update(*this, screen);
+    if (newState != nullptr) {
+        m_currentState = newState;
+        m_currentState->enter(*this);
+    }
 }
 
 void Player::move(Screen* screen)

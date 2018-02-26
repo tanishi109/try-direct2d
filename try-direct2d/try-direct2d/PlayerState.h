@@ -9,5 +9,6 @@ class PlayerState
 public:
     PlayerState();
     ~PlayerState();
-    virtual void update(Player& player, Screen& screen, Scene& scene) = 0;
+    virtual void enter(Player& player);
+    virtual PlayerState* update(Player& player, Screen& screen) = 0;
 };

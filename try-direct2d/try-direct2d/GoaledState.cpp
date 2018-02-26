@@ -11,16 +11,18 @@ GoaledState::~GoaledState()
 {
 }
 
-void GoaledState::update(Player& player, Screen& screen, Scene& scene)
+PlayerState* GoaledState::update(Player& player, Screen& screen)
 {
     m_stateTimer--;
 
     if (m_stateTimer <= 0) {
-        scene.pop(2);
+        player.m_onGoal();
     }
 
     int width;
     int height;
     std::tie(width, height) = Render::GetClientSize();
     Render::DrawString(width / 2 - 50, height / 2 - 50, 100, 32, "Clear!");
+
+    return nullptr;
 }

@@ -6,7 +6,10 @@ PlayerState::PlayerState()
 {
 }
 
-
 PlayerState::~PlayerState()
+{
+}
+
+void PlayerState::enter(Player& player)
 {
 }

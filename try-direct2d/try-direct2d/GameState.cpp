@@ -31,29 +31,29 @@ m_player(new Player(0, 0, 50, 10))
 
 GameState::~GameState()
 {
-    delete m_player;
 }
 
 void GameState::enter(Scene& scene)
 {
-    Input::m_captureCursorMode = true;
-}
-
-void GameState::update(Scene* scene)
-{
-    if (Input::GetKeyDown(VK_ESCAPE)) {
-        // FIXME: onLeave的なのが欲しいね
+    m_player->m_onGoal = [&scene](){
         // FIXME: IdleStateでやっていることの後処理であることが分かりにくい
         ClipCursor(nullptr);
         Input::m_captureCursorMode = false;
         ShowCursor(true);
 
+        scene.pop(2);
+    };
+
+}
+
+void GameState::update(Scene* scene)
+{
+    if (Input::GetKeyDown(VK_ESCAPE)) {
         scene->push(new GameMenuState());
         return;
     }
 
-    // FIXME: playerにsceneも渡すより、onGoalハンドラを持たせて実行したほうがいいかな?
-    m_player->update(*m_screen, *scene);
+    m_player->update(*m_screen);
 }
 
 void GameState::initPosition()

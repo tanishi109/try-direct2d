@@ -17,7 +17,17 @@ ControllableState::~ControllableState()
 {
 }
 
-void ControllableState::update(Player& player, Screen& screen, Scene& scene)
+void ControllableState::enter(Player& player)
+{
+    Input::m_captureCursorMode = true;
+    ShowCursor(false);
+
+    RECT rc;
+    GetWindowRect(Render::m_hwnd, &rc);
+    ClipCursor(&rc);
+}
+
+PlayerState* ControllableState::update(Player& player, Screen& screen)
 {
     Render::DrawString(0, 0, 300, 30, "Push escape key to stop game");
 
@@ -32,12 +42,14 @@ void ControllableState::update(Player& player, Screen& screen, Scene& scene)
     Terrain* hitTerrain = checkCollision(player);
     if (hitTerrain != nullptr) {
         if (hitTerrain->m_type == TerrainType_wall) {
-            player.m_currentState = new MissedState();
+            return new MissedState();
         }
         if (hitTerrain->m_type == TerrainType_goal) {
-            player.m_currentState = new GoaledState();
+            return new GoaledState();
         }
     }
+
+    return nullptr;
 }
 
 // カーソルが中央から離れていたらスクロールさせる

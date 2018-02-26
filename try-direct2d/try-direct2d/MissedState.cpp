@@ -13,7 +13,7 @@ MissedState::~MissedState()
 {
 }
 
-void MissedState::update(Player& player, Screen& screen, Scene& scene)
+PlayerState* MissedState::update(Player& player, Screen& screen)
 {
     m_stateTimer--;
 
@@ -32,6 +32,8 @@ void MissedState::update(Player& player, Screen& screen, Scene& scene)
             focusedPlayer = focusedPlayer->m_child;
         }
 
-        player.m_currentState = new ControllableState();
+        return new ControllableState();
     }
+
+    return nullptr;
 }
