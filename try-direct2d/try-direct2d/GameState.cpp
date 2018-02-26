@@ -7,20 +7,11 @@
 #include "Mathtool.h"
 #include "Collision.h"
 
-GameState::GameState() :
-m_player(new Player(0, 0, 50, 10))
-{
-}
-
 // FIXME; こういうのやるならresourceに書くべき
 int CHILD_COUNT = 3;
 
-GameState::~GameState()
-{
-    delete m_player;
-}
-
-void GameState::enter(Scene& scene)
+GameState::GameState() :
+m_player(new Player(0, 0, 50, 10))
 {
     // World
     // TODO: CanvasStateから直接取ってきているが、外部ファイルとして保存して読み出す形式にしたい
@@ -36,6 +27,15 @@ void GameState::enter(Scene& scene)
     }
 
     initPosition();
+}
+
+GameState::~GameState()
+{
+    delete m_player;
+}
+
+void GameState::enter(Scene& scene)
+{
     Input::m_captureCursorMode = true;
 }
 
