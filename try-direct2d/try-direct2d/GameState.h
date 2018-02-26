@@ -13,10 +13,6 @@ public:
     void update(Scene* scene);
 private:
     Player* m_player;
-    bool m_isFocus;
-
-    void scroll();
-    Terrain* checkCollision();
     void initPosition();
 };
 

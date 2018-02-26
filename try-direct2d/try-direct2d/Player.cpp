@@ -3,6 +3,8 @@
 #include "Render.h"
 #include "Mathtool.h"
 #include "Input.h"
+#include "PlayerState.h"
+#include "IdleState.h"
 
 Player::Player(int x, int y, int w, int h) :
 m_width(w),
@@ -10,7 +12,8 @@ m_height(h),
 m_degree(45),
 m_horizontalPinMargin(10),
 m_parent(nullptr),
-m_child(nullptr)
+m_child(nullptr),
+m_currentState{new IdleState()}
 {
     m_x = x;
     m_y = y;
@@ -27,6 +30,11 @@ Player::~Player()
 
         child = nextChild;
     }
+}
+
+void Player::update(Screen& screen)
+{
+    m_currentState->update(*this, screen);
 }
 
 void Player::move(Screen* screen)

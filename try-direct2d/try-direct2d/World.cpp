@@ -19,6 +19,11 @@ m_goalTerrain(TerrainType_goal, BrushType_pink)
             }
         }
     }
+
+    int width;
+    int height;
+    std::tie(width, height) = Render::GetClientSize();
+    m_startPos = std::make_tuple(TILE_SIZE * 2, TILE_SIZE * 2);
 }
 
 

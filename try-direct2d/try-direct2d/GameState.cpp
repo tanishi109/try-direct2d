@@ -8,15 +8,11 @@
 #include "Collision.h"
 
 GameState::GameState() :
-m_player(new Player(0, 0, 50, 10)),
-m_isFocus(false)
+m_player(new Player(0, 0, 50, 10))
 {
 }
 
 // FIXME; こういうのやるならresourceに書くべき
-int SCROLL_DISTANCE = 10;
-int FOLLOW_DISTANCE = 60;
-int SCROLL_SPEED = 5;
 int CHILD_COUNT = 3;
 
 GameState::~GameState()
@@ -43,80 +39,11 @@ void GameState::enter(Scene& scene)
     Input::m_captureCursorMode = true;
 }
 
-// カーソルが中央から離れていたらスクロールさせる
-// TODO: 自分の手でスクロールしたいことある
-void GameState::scroll()
-{
-    long width;
-    long height;
-    std::tie(width, height) = Render::GetClientSize();
-    POINT screenCenter = { width / 2, height / 2 };
-
-    float subPinX;
-    float subPinY;
-    std::tie(subPinX, subPinY) = m_player->getSubPinPosRotated();
-    std::tie(subPinX, subPinY) = m_screen->worldToScreen(subPinX, subPinY);
-
-    float distance = Mathtool::getDistance(screenCenter.x, screenCenter.y, subPinX, subPinY);
-
-    if (distance > SCROLL_DISTANCE) {
-        float radian = Mathtool::getRadFromPos(screenCenter.x, screenCenter.y, subPinX, subPinY);
-
-        if (distance > FOLLOW_DISTANCE) {
-            // 大きく離れていたらスクリーンをプレイヤー座標と一致
-            std::tie(subPinX, subPinY) = m_screen->screenToWorld(subPinX, subPinY);
-            m_screen->m_x = subPinX - std::cos(radian) * FOLLOW_DISTANCE - width / 2 ;
-            m_screen->m_y = subPinY - std::sin(radian) * FOLLOW_DISTANCE - height / 2;
-            return;
-        } else {
-            m_screen->m_x += std::cos(radian) * SCROLL_SPEED;
-            m_screen->m_y += std::sin(radian) * SCROLL_SPEED;
-        }
-    }
-}
-
-Terrain* GameState::checkCollision()
-{
-    bool isHit = false;
-    int size = CanvasState::m_world->TILE_SIZE;
-
-    for (int x = 0; x < CanvasState::m_world->WIDTH; x++) {
-        for (int y = 0; y < CanvasState::m_world->HEIGHT; y++) {
-
-            Terrain* tile = CanvasState::m_world->m_tiles[x][y];
-
-            // floorなら衝突チェックはしない
-            // FIXME: Terrainにcollidable的なフィールドを足す
-            if (tile->m_type == TerrainType_floor) {
-                continue;
-            }
-
-            Player* player = m_player;
-            while(player != nullptr) {
-                int mainPinX;
-                int mainPinY;
-                std::tie(mainPinX, mainPinY) = player->getMainPinPos();
-                isHit = Collision::CheckCircleCollision(
-                    x * size, y * size, size / 2,
-                    mainPinX, mainPinY, player->m_collisionRadius
-                );
-                if (isHit) {
-                    return tile;
-                }
-                // 子がいればその当たり判定もチェック
-                player = player->m_child;
-            }
-        }
-    }
-
-    return nullptr;
-}
-
 void GameState::update(Scene* scene)
 {
     if (Input::GetKeyDown(VK_ESCAPE)) {
         // FIXME: onLeave的なのが欲しいね
-        m_isFocus = false;
+        // FIXME: IdleStateでやっていることの後処理であることが分かりにくい
         ClipCursor(nullptr);
         Input::m_captureCursorMode = false;
         ShowCursor(true);
@@ -125,42 +52,7 @@ void GameState::update(Scene* scene)
         return;
     }
 
-    if (!m_isFocus) {
-        Render::DrawString(0, 0, 300, 30, "Click to start playing");
-    } else {
-        Render::DrawString(0, 0, 300, 30, "Push escape key to open menu");
-    }
-
-    if (Input::GetMouseDownL() && !m_isFocus) {
-        m_isFocus = true;
-        ShowCursor(false);
-
-        RECT rc;
-        GetWindowRect(Render::m_hwnd, &rc);
-        ClipCursor(&rc);
-    }
-
-    if (m_isFocus) {
-        scroll();
-    }
-    if (m_isFocus && (Input::GetMouseDeltaX() != 0 || Input::GetMouseDeltaY() != 0)) {
-        m_player->move(m_screen);
-    }
-
-    // 当たり判定チェック
-    // FIXME: 総当たり以外の方法がある
-    Terrain* hitTerrain = checkCollision();
-    if (hitTerrain != nullptr) {
-        if (hitTerrain->m_type == TerrainType_wall) {
-            initPosition();
-        }
-        if (hitTerrain->m_type == TerrainType_goal) {
-            int width;
-            int height;
-            std::tie(width, height) = Render::GetClientSize();
-            Render::DrawString(width / 2 - 50, height / 2 - 50, 100, 32, "Clear!");
-        }
-    }
+    m_player->update(*m_screen);
 }
 
 void GameState::initPosition()
@@ -174,12 +66,12 @@ void GameState::initPosition()
     m_screen->m_y = -1 * height / 2 + World::TILE_SIZE * 2;
 
     // 中心に配置
-    Player* player = m_player;
+    Player* targetPlayer = m_player;
     int playerX;
     int playerY;
     std::tie(playerX, playerY) = m_screen->screenToWorld(width / 2, height / 2);
-    while (player != nullptr) {
-        player->setMainPinPos(playerX, playerY);
-        player = player->m_child;
+    while (targetPlayer != nullptr) {
+        targetPlayer->setMainPinPos(playerX, playerY);
+        targetPlayer = targetPlayer->m_child;
     }
 }

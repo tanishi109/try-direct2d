@@ -14,6 +14,7 @@ public:
     static const int HEIGHT = 20;
     static const int TILE_SIZE = 32;
     Terrain* m_tiles[WIDTH][HEIGHT];
+    std::tuple<int, int> m_startPos;
 
     void setTileFromPos(TerrainType type, int x, int y);
     void render(Screen* screen);
