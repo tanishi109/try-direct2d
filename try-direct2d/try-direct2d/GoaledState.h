@@ -2,11 +2,11 @@
 #include "PlayerState.h"
 #include "Player.h"
 
-class MissedState : public PlayerState
+class GoaledState : public PlayerState
 {
 public:
-    MissedState();
-    ~MissedState();
+    GoaledState();
+    ~GoaledState();
     void update(Player& player, Screen& screen, Scene& scene);
 private:
     int m_stateTimer;

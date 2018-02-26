@@ -148,6 +148,7 @@
     <ClInclude Include="GameMenuState.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="GoaledState.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Margin.h" />
     <ClInclude Include="MissedState.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="GameMenuState.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GoaledState.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Margin.cpp" />

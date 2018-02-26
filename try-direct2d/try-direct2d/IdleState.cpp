@@ -12,7 +12,7 @@ IdleState::~IdleState()
 {
 }
 
-void IdleState::update(Player& player, Screen& screen)
+void IdleState::update(Player& player, Screen& screen, Scene& scene)
 {
     Render::DrawString(0, 0, 300, 30, "Click to start playing");
 

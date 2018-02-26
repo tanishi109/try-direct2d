@@ -139,7 +139,10 @@
       <Filter>ヘッダー ファイル\Player\States</Filter>
     </ClInclude>
     <ClInclude Include="MissedState.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Player\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GoaledState.h">
+      <Filter>ヘッダー ファイル\Player\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,7 +231,10 @@
       <Filter>ソース ファイル\Player\States</Filter>
     </ClCompile>
     <ClCompile Include="MissedState.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Player\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GoaledState.cpp">
+      <Filter>ソース ファイル\Player\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

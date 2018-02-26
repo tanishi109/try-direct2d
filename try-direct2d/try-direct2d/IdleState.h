@@ -8,5 +8,5 @@ class IdleState : public PlayerState
 public:
     IdleState();
     ~IdleState();
-    void update(Player& player, Screen& screen);
+    void update(Player& player, Screen& screen, Scene& scene);
 };

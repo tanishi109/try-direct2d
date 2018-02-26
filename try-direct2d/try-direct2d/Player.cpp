@@ -32,9 +32,9 @@ Player::~Player()
     }
 }
 
-void Player::update(Screen& screen)
+void Player::update(Screen& screen, Scene& scene)
 {
-    m_currentState->update(*this, screen);
+    m_currentState->update(*this, screen, scene);
 }
 
 void Player::move(Screen* screen)

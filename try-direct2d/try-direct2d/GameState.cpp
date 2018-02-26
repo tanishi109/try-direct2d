@@ -52,7 +52,8 @@ void GameState::update(Scene* scene)
         return;
     }
 
-    m_player->update(*m_screen);
+    // FIXME: playerにsceneも渡すより、onGoalハンドラを持たせて実行したほうがいいかな?
+    m_player->update(*m_screen, *scene);
 }
 
 void GameState::initPosition()

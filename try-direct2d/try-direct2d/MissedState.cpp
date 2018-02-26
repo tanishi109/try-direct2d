@@ -13,7 +13,7 @@ MissedState::~MissedState()
 {
 }
 
-void MissedState::update(Player& player, Screen& screen)
+void MissedState::update(Player& player, Screen& screen, Scene& scene)
 {
     m_stateTimer--;
 

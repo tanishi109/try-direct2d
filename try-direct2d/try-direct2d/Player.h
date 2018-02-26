@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Scene.h"
 
 class PlayerState;
 
@@ -15,7 +16,7 @@ public:
     std::tuple<float, float> getSubPinPosRotated();
     void setMainPinPos(int x, int y);
     void addChild();
-    void update(Screen& screen);
+    void update(Screen& screen, Scene& scene);
 
     float m_degree;
     static const int m_collisionRadius = 3;

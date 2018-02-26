@@ -7,6 +7,7 @@
 #include "CanvasState.h"
 #include "Collision.h"
 #include "MissedState.h"
+#include "GoaledState.h"
 
 ControllableState::ControllableState()
 {
@@ -16,7 +17,7 @@ ControllableState::~ControllableState()
 {
 }
 
-void ControllableState::update(Player& player, Screen& screen)
+void ControllableState::update(Player& player, Screen& screen, Scene& scene)
 {
     Render::DrawString(0, 0, 300, 30, "Push escape key to stop game");
 
@@ -34,10 +35,7 @@ void ControllableState::update(Player& player, Screen& screen)
             player.m_currentState = new MissedState();
         }
         if (hitTerrain->m_type == TerrainType_goal) {
-            int width;
-            int height;
-            std::tie(width, height) = Render::GetClientSize();
-            Render::DrawString(width / 2 - 50, height / 2 - 50, 100, 32, "Clear!");
+            player.m_currentState = new GoaledState();
         }
     }
 }
